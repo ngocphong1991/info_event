@@ -1,0 +1,46 @@
+{% extends "CMSAdminBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/admin/assets/bootstrap/css/bootstrap-fileupload.css') }}" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/assets/chosen-bootstrap/chosen/chosen.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/assets/uniform/css/uniform.default.css') }}" />
+{% endblock %}
+
+{% block title %}User - New{% endblock %}
+
+{% block content %}
+<div class="span12">
+    <!-- BEGIN VALIDATION STATES-->
+    <div class="widget orange">
+        <div class="widget-title">
+            <h4><i class="icon-reorder"></i> User Form</h4>
+            <span class="tools">
+               <a class="icon-chevron-down" href="javascript:;"></a>
+               <a class="icon-remove" href="javascript:;"></a>
+            </span>
+        </div>
+        <div class="widget-body form">
+            <!-- BEGIN FORM-->
+            {{ form(form, { 'attr': {'class': 'cmxform form-horizontal'}}) }}
+            <!-- END FORM-->
+        </div>
+    </div>
+    <!-- END VALIDATION STATES-->
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('bundles/admin/assets/chosen-bootstrap/chosen/chosen.jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/admin/assets/uniform/jquery.uniform.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/admin/assets/bootstrap/js/bootstrap-fileupload.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        //Javascripts for radio input
+        $(" input[type=radio], input[type=checkbox]").uniform();
+        
+        //Setup select box
+        $(".chzn-select").chosen(); 
+        $(".chzn-select-deselect").chosen({allow_single_deselect:true});
+    });
+</script>
+{% endblock %}

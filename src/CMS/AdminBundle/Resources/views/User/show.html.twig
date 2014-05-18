@@ -1,0 +1,59 @@
+{% extends "CMSAdminBundle::layout.html.twig" %}
+
+{% block title %}User - Detail{% endblock %}
+
+{% block content %}
+<div class="span12">
+    <!-- BEGIN VALIDATION STATES-->
+    <div class="widget red">
+        <div class="widget-title">
+            <h4><i class="icon-reorder"></i> User Detail</h4>
+            <span class="tools">
+               <a class="icon-chevron-down" href="javascript:;"></a>
+               <a class="icon-remove" href="javascript:;"></a>
+            </span>
+        </div>
+        <div class="widget-body form cmxform form-horizontal">
+            <div class="control-group ">
+                <label class="control-label">Id</label>
+                <div class="controls">
+                    <span>{{ entity.id }}</span>
+                </div>
+            </div>
+            <div class="control-group ">
+                <label class="control-label">Username</label>
+                <div class="controls">
+                    <span>{{ entity.username }}</span>
+                </div>
+            </div>
+            <div class="control-group ">
+                <label class="control-label">Email</label>
+                <div class="controls">
+                    <span>{{ entity.email }}</span>
+                </div>
+            </div>
+            <div class="control-group ">
+                <label class="control-label">Is active</label>
+                <div class="controls">
+                    <span>{{ entity.isActive }}</span>
+                </div>
+            </div>
+            <div class="control-group ">
+                <label class="control-label">Roles</label>
+                <div class="controls">
+                    <span>{% for role in entity.roles %}{{role.name}}{% endfor %}</span>
+                </div>
+            </div>
+            <div class="form-actions">
+                <a class="btn btn-danger" href="{{ path('user_edit', { 'id': entity.id }) }}">
+                    Edit
+                </a>
+                <a class="btn btn-warning" href="{{ path('user_delete', { 'id': entity.id }) }}">
+                    Delete
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- END VALIDATION STATES-->
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% if pageCount > 1 %}
+<div class="row-fluid">
+    <div class="span6 hidden-phone">
+        <div id="editable-sample_info" class="dataTables_info">Showing 1 to {{ numItemsPerPage }} of {{ totalCount }} entries</div>
+    </div>
+    <div class="span6">
+        <div class="dataTables_paginate paging_bootstrap pagination">
+            <ul>
+                {% if first is defined and current != first %}
+                    <li class="first">
+                        <a href="{{ path(route, query|merge({(pageParameterName): first})) }}">First</a>
+                    </li>
+                {% endif %}
+
+                {% if previous is defined %}
+                    <li class="prev">
+                        <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}">Previous</a>
+                    <li>
+                {% endif %}
+
+                {% for page in pagesInRange %}
+                    {% if page != current %}
+                        <li>
+                            <a href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+                        </li>
+                    {% else %}
+                        <li class="active">
+                            <a href="#">{{ page }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if next is defined %}
+                    <li class="next">
+                        <a href="{{ path(route, query|merge({(pageParameterName): next})) }}">Next</a>
+                    </li>
+                {% endif %}
+
+                {% if last is defined and current != last %}
+                    <li class="last">
+                        <a href="{{ path(route, query|merge({(pageParameterName): last})) }}">Last</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endif %}

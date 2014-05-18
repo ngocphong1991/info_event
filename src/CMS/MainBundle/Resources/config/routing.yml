@@ -1,0 +1,4 @@
+cms_admin_default:
+    resource: "@CMSMainBundle/Controller/DefaultController.php"
+    type:     annotation
+    prefix:   /

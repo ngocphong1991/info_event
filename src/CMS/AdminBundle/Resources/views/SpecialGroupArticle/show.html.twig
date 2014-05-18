@@ -1,0 +1,55 @@
+{% extends "CMSAdminBundle::layout.html.twig" %}
+
+{% block title %}Special Group - Detail{% endblock %}
+
+{% block content %}
+    <div class="span12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="widget red">
+            <div class="widget-title">
+                <h4><i class="icon-reorder"></i> Special Group Detail</h4>
+            <span class="tools">
+               <a class="icon-chevron-down" href="javascript:;"></a>
+               <a class="icon-remove" href="javascript:;"></a>
+            </span>
+            </div>
+            <div class="widget-body form cmxform form-horizontal">
+                <div class="control-group ">
+                    <label class="control-label">Id</label>
+                    <div class="controls">
+                        <span>{{ entity.id }}</span>
+                    </div>
+                </div>
+                <div class="control-group ">
+                    <label class="control-label">Name</label>
+                    <div class="controls">
+                        <span>{{ entity.name }}</span>
+                    </div>
+                </div>
+                <div class="control-group ">
+                    <label class="control-label">Is active</label>
+                    <div class="controls">
+                        <span>{% if entity.isActive == 1 %}Yes{% else %}No{% endif %}</span>
+                    </div>
+                </div>
+                {% if entity.articles|length %}
+                <div class="control-group ">
+                    <label class="control-label">Articles</label>
+                    <div class="controls">
+                        <span>{% for article in entity.articles %}<a href="{{ path('article_edit', { 'id': article.id }) }}" title="{{article.title}}">{{article.title}}</a>. {% endfor %}</span>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="form-actions">
+                    <a class="btn btn-danger" href="{{ path('specgrp_edit', { 'id': entity.id }) }}">
+                        Edit
+                    </a>
+                    <a class="btn btn-warning" href="{{ path('specgrp_delete', { 'id': entity.id }) }}">
+                        Delete
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+{% endblock %}

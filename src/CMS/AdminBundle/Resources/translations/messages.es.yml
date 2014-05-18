@@ -1,0 +1,11 @@
+head:
+  description: Pequeño tutorial en Symfony2
+  keywords: tutorial, Symfony2
+menu:
+  home: Inicio
+  company: Empresa
+  whoweare: ¿Quiénes somos?
+sections:
+  home: Este es el contenido de la página principal
+  company: Aquí iría la presentación de la empresa
+  whoweare: Aquí iría el listado de empleados

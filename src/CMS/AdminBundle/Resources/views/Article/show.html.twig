@@ -1,0 +1,115 @@
+{% extends "CMSAdminBundle::layout.html.twig" %}
+
+{% block title %}Article - Detail{% endblock %}
+
+{% block content %}
+    <div class="span12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="widget red">
+            <div class="widget-title">
+                <h4><i class="icon-reorder"></i> Article Detail</h4>
+            <span class="tools">
+               <a class="icon-chevron-down" href="javascript:;"></a>
+               <a class="icon-remove" href="javascript:;"></a>
+            </span>
+            </div>
+            <div class="widget-body form cmxform form-horizontal">
+                <div class="control-group ">
+                    <label class="control-label">Id</label>
+                    <div class="controls">
+                        <span>{{ entity.id }}</span>
+                    </div>
+                </div>
+                <div class="control-group ">
+                    <label class="control-label">Title</label>
+                    <div class="controls">
+                        <span>{{ entity.title }}</span>
+                    </div>
+                </div>
+                {% if entity.dateStart %}
+                <div class="control-group ">
+                    <label class="control-label">Avatar</label>
+                    <div class="controls">
+                        <div class="mws-form-item avatar">
+                        <span class="thumbnail span5">
+    					<img src="{{ asset('uploads/article/') }}{{ entity.image }}" alt="{{ entity.title }}" />
+                        </span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="control-group ">
+                    <label class="control-label">Create date</label>
+                    <div class="controls">
+                        <span>{{ entity.dateCreate|date('d-m-Y h:i a') }}</span>
+                    </div>
+                </div>
+                {% if entity.dateStart %}
+                <div class="control-group ">
+                    <label class="control-label">Date Start</label>
+                    <div class="controls">
+                        <span>{{ entity.dateStart|date('d-m-Y h:i a') }}</span>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="control-group ">
+                    <label class="control-label">Description</label>
+                    <div class="controls">
+                        <span>{{ entity.description|raw('html') }}</span>
+                    </div>
+                </div>
+                {% if entity.groupArticle %}
+                <div class="control-group ">
+                    <label class="control-label">Group</label>
+                    <div class="controls">
+                        <span><a href="{{ path('grouparticle_show', { 'id': entity.groupArticle.id }) }}" title="{{ entity.groupArticle.name }}">{{ entity.groupArticle.name }}</a></span>
+                    </div>
+                </div>
+                {% endif %}
+                {% if entity.specialGroupArticle|length %}
+                    <div class="control-group ">
+                        <label class="control-label">Special Group</label>
+                        <div class="controls">
+                            <span>{% for specialGroup in entity.specialGroupArticle %}<a href="{{ path('specgrp_show', { 'id': specialGroup.id }) }}" title="{{specialGroup.name}}">{{specialGroup.name}}</a>, {% endfor %}</span>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="control-group ">
+                    <label class="control-label">Views</label>
+                    <div class="controls">
+                        <span>{{ entity.views }}</span>
+                    </div>
+                </div>
+                <div class="control-group ">
+                    <label class="control-label">Is active</label>
+                    <div class="controls">
+                        <span>{% if entity.isActive == 1 %}Yes{% else %}No{% endif %}</span>
+                    </div>
+                </div>
+                <div class="control-group ">
+                    <label class="control-label">Is special</label>
+                    <div class="controls">
+                        <span>{% if entity.isSpecial == 1 %}Yes{% else %}No{% endif %}</span>
+                    </div>
+                </div>
+                {% if entity.tags|length %}
+                    <div class="control-group ">
+                        <label class="control-label">Tags</label>
+                        <div class="controls">
+                            <span>{% for tag in entity.tags %}<a href="{{ path('tag_show', { 'id': tag.id }) }}" title="{{tag.name}}">{{tag.name}}</a>, {% endfor %}</span>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="form-actions">
+                    <a class="btn btn-danger" href="{{ path('article_edit', { 'id': entity.id }) }}">
+                        Edit
+                    </a>
+                    <a class="btn btn-warning" href="{{ path('article_delete', { 'id': entity.id }) }}">
+                        Delete
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+{% endblock %}

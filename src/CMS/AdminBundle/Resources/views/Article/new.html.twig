@@ -1,0 +1,63 @@
+{% extends "CMSAdminBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/admin/assets/bootstrap/css/bootstrap-fileupload.css') }}" rel="stylesheet" />
+<link href="{{ asset('bundles/admin/assets/DateTimePicker/DateTimePicker.min.css') }}" rel="stylesheet" />
+<!--[if lt IE 9]>
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/assets/DateTimePicker/DateTimePicker-ltie9.min.css') }}" />
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/assets/chosen-bootstrap/chosen/chosen.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.css') }}" />
+{% endblock %}
+
+{% block title %}Article - New{% endblock %}
+
+{% block content %}
+<div class="span12">
+    <!-- BEGIN VALIDATION STATES-->
+    <div class="widget orange">
+        <div class="widget-title">
+            <h4><i class="icon-reorder"></i> Job Form</h4>
+            <span class="tools">
+               <a class="icon-chevron-down" href="javascript:;"></a>
+               <a class="icon-remove" href="javascript:;"></a>
+            </span>
+        </div>
+        <div class="widget-body form">
+            <!-- BEGIN FORM-->
+            {{ form(form, { 'attr': {'class': 'cmxform form-horizontal'}}) }}
+            <!-- END FORM-->
+        </div>
+    </div>
+    <!-- END VALIDATION STATES-->
+
+    <div id="dtBox"></div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('bundles/admin/assets/chosen-bootstrap/chosen/chosen.jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/admin/assets/DateTimePicker/DateTimePicker.min.js') }}"></script>
+<!--[if lt IE 9]>
+<script type="text/javascript" src="{{ asset('bundles/admin/assets/DateTimePicker/DateTimePicker-ltie9.min.js') }}"></script>
+<![endif]-->
+<script type="text/javascript" src="{{ asset('bundles/admin/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/admin/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/admin/assets/bootstrap/js/bootstrap-fileupload.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        //Setup select box
+        $(".chzn-select").chosen(); 
+        $(".chzn-select-deselect").chosen({allow_single_deselect:true});
+        
+        //Setup text area editor
+        $('textarea[id="article_description"]').wysihtml5({
+        	"html": true, //Button which allows you to edit the generated HTML. Default false
+        	"color": true //Button to change color of font  
+        });
+
+        //Setup date time picker
+        $("#dtBox").DateTimePicker();
+    });
+</script>
+{% endblock %}

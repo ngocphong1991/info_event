@@ -1,0 +1,24 @@
+{% extends "CMSAdminBundle::layout.html.twig" %}
+
+{% block title %}Role - Edit{% endblock %}
+
+{% block content %}
+<div class="span12">
+    <!-- BEGIN VALIDATION STATES-->
+    <div class="widget orange">
+        <div class="widget-title">
+            <h4><i class="icon-reorder"></i> Role Form</h4>
+            <span class="tools">
+               <a class="icon-chevron-down" href="javascript:;"></a>
+               <a class="icon-remove" href="javascript:;"></a>
+            </span>
+        </div>
+        <div class="widget-body form">
+            <!-- BEGIN FORM-->
+            {{ form(form, { 'attr': {'class': 'cmxform form-horizontal'}}) }}
+            <!-- END FORM-->
+        </div>
+    </div>
+    <!-- END VALIDATION STATES-->
+</div>
+{% endblock %}

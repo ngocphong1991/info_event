@@ -1,0 +1,53 @@
+{% extends "CMSAdminBundle::layout.html.twig" %}
+
+{% block title %}Article Group -Detail{% endblock %}
+
+{% block content %}
+<div class="span12">
+    <!-- BEGIN VALIDATION STATES-->
+    <div class="widget red">
+        <div class="widget-title">
+            <h4><i class="icon-reorder"></i> Article Group Detail</h4>
+            <span class="tools">
+               <a class="icon-chevron-down" href="javascript:;"></a>
+               <a class="icon-remove" href="javascript:;"></a>
+            </span>
+        </div>
+        <div class="widget-body form cmxform form-horizontal">
+            <div class="control-group ">
+                <label class="control-label">Id</label>
+                <div class="controls">
+                    <span>{{ entity.id }}</span>
+                </div>
+            </div>
+            <div class="control-group ">
+                <label class="control-label">Name</label>
+                <div class="controls">
+                    <span>{{ entity.name }}</span>
+                </div>
+            </div>
+            <div class="control-group ">
+                <label class="control-label">Url</label>
+                <div class="controls">
+                    <span>{{ entity.url }}</span>
+                </div>
+            </div>
+            <div class="control-group ">
+                <label class="control-label">Is Active</label>
+                <div class="controls">
+                    <span>{% if entity.isActive == 1 %}Yes{% else %}No{% endif %}</span>
+                </div>
+            </div>
+            <div class="form-actions">
+                <a class="btn btn-danger" href="{{ path('grouparticle_edit', { 'id': entity.id }) }}">
+                    Edit
+                </a>
+                <a class="btn btn-warning" href="{{ path('grouparticle_delete', { 'id': entity.id }) }}">
+                    Delete
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- END VALIDATION STATES-->
+</div>
+{% endblock %}

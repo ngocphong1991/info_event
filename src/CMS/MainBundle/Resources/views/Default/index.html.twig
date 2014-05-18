@@ -1,0 +1,69 @@
+{% extends "CMSMainBundle::layout.html.twig" %}
+{% block content %}
+    <div class="blog-banner">
+        <div class="row">
+            <div class="col-sm-8 blog-banner-main">
+                {% for special in specialGroup %}
+                <div class="flipper">
+                    <div class="flipper-1">
+                        <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ special.url }}" title="{{ special.name }}">
+                            <img alt="{{ special.name }}" src="{{ asset('uploads/group/145x145/') }}s_{{ special.image }}" >
+                        </a>
+                    </div>
+                    <div class="flipper-2">
+                        <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ special.url }}" title="{{ special.name }}">
+                            <img alt="{{ special.name }}" src="{{ asset('uploads/group/145x145/') }}s_{{ special.imageActive }}" />
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-sm-4 blog-banner-slide-bar">
+                {% for special in specialGroup %}
+                    <ul class="newest active">
+                    {% for article in special.articles %}
+                        {% if loop.index < 3 %}
+                        <li>
+                            <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ article.url }}" title="{{ article.title }}"><img src="{{ asset('uploads/article/300x300/') }}m_{{ article.image }}" alt="{{ article.title }}"></a>
+                            <a class="opacity" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-8 blog-main">
+
+            {% for entity in pagination %}
+            <div class="blog-post">
+                <h2 class="blog-post-title">{{ entity.title }}</h2>
+                <p class="blog-post-meta">{% if entity.datecreate %}{{ entity.datecreate|date('H:i d/m/Y') }}{% endif %}</p>
+                <div class="blog-post-image">
+                    <img src="{{ asset('uploads/article/') }}{{ entity.image }}" alt="{{ entity.title }}">
+                </div>
+                <div class="blog-post-description">
+                    {{ entity.sortDescription }} ....
+                </div>
+                <p class="blog-post-view-more"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ entity.url }}" title="Xem tiếp">Xem tiếp</a></p>
+            </div><!-- /.blog-post -->
+            {% endfor %}
+            {{ knp_pagination_render(pagination) }}
+            <ul class="pagination pagination-custom">
+                <li class="disabled"><span>Đầu</span></li>
+                <li class="active"><span>1 <span class="sr-only">(current)</span></span></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">Cuối</a></li>
+            </ul>
+
+        </div><!-- /.blog-main -->
+        {{ render(controller("CMSMainBundle:Default:rightSlideBar"))}}
+    </div><!-- /.row -->
+{% endblock %}

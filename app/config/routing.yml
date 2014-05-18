@@ -1,0 +1,7 @@
+cms_main:
+    resource: "@CMSMainBundle/Resources/config/routing.yml"
+    prefix:   /
+
+cms_admin:
+    resource: "@CMSAdminBundle/Resources/config/routing.yml"
+    prefix:   /admin

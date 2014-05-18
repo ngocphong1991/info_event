@@ -1,0 +1,71 @@
+{% extends "CMSAdminBundle::layout.html.twig" %}
+
+{% block title %}Article{% endblock %}
+
+{% block content %}
+<div class="span12">
+    <!-- BEGIN BASIC PORTLET-->
+    <div class="widget red">
+        <div class="widget-title">
+            <h4><i class="icon-reorder"></i> List Article Table</h4>
+        <span class="tools">
+            <a class="icon-chevron-down" href="javascript:;"></a>
+            <a class="icon-remove" href="javascript:;"></a>
+        </span>
+        </div>
+        <div class="widget-body">
+            <div class="clearfix">
+                 <div class="btn-group">
+                     <a href="{{ path('article_new') }}" class="btn green">
+                         Add New <i class="icon-plus"></i>
+                     </a>
+                 </div>
+                 <div class="btn-group pull-right">
+                     <button data-toggle="dropdown" class="btn dropdown-toggle">Tools <i class="icon-angle-down"></i>
+                     </button>
+                     <ul class="dropdown-menu pull-right">
+                         <li><a href="#">Delete All</a></li>
+                         <li><a href="#">Save as PDF</a></li>
+                         <li><a href="#">Export to Excel</a></li>
+                     </ul>
+                 </div>
+             </div>
+             <div class="space15"></div>
+            <table class="table table-striped table-bordered table-advance table-hover">
+                <thead>
+                <tr>
+                    <th class="sorting_disabled"><input class="group-checkable" type="checkbox"></th>
+                    <th class="hidden-phone">{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'Title', 'a.title') }}</th>
+                    <th>Group</th>
+                    <th class="hidden-phone">{{ knp_pagination_sortable(pagination, 'Date Create', 'a.dateCreate') }}</th>
+                    <th class="hidden-phone">{{ knp_pagination_sortable(pagination, 'Views', 'a.views') }}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for entity in pagination %}
+                    <tr>
+                        <td class="checkbox-column">
+                            <input class="checkboxes" type="checkbox">
+                        </td>
+                        <td class="hidden-phone">{{entity.id}}</td>
+                        <td>{{entity.title}}</td>
+                        <td>{% if entity.groupArticle %}{{entity.groupArticle.name}}{% endif %}</td>
+                        <td class="hidden-phone">{% if entity.datecreate %}{{ entity.datecreate|date('H:i:s d-m-Y') }}{% endif %}</td>
+                        <td class="hidden-phone">{{entity.views}}</td>
+                        <td>
+                            <a class="btn btn-success" title="Show" href="{{ path('article_show', { 'id': entity.id }) }}"><i class="icon-search"></i></a>
+                            <a class="btn btn-primary" title="Edit" href="{{ path('article_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i></a>
+                            <a class="btn btn-danger" title="Delete" href="{{ path('article_delete', { 'id': entity.id }) }}"><i class="icon-trash"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+    <!-- END BASIC PORTLET-->
+</div>
+{% endblock %}

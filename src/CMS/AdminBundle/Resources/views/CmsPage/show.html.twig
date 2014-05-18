@@ -1,0 +1,71 @@
+{% extends "CMSAdminBundle::layout.html.twig" %}
+
+{% block title %}CMS Page - Detail{% endblock %}
+
+{% block content %}
+    <div class="span12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="widget red">
+            <div class="widget-title">
+                <h4><i class="icon-reorder"></i> CMS Page Detail</h4>
+            <span class="tools">
+               <a class="icon-chevron-down" href="javascript:;"></a>
+               <a class="icon-remove" href="javascript:;"></a>
+            </span>
+            </div>
+            <div class="widget-body form cmxform form-horizontal">
+                <div class="control-group ">
+                    <label class="control-label">Id</label>
+                    <div class="controls">
+                        <span>{{ entity.id }}</span>
+                    </div>
+                </div>
+                <div class="control-group ">
+                    <label class="control-label">Title</label>
+                    <div class="controls">
+                        <span>{{ entity.title }}</span>
+                    </div>
+                </div>
+                <div class="control-group ">
+                    <label class="control-label">Description</label>
+                    <div class="controls">
+                        <span>{{ entity.description|raw('html') }}</span>
+                    </div>
+                </div>
+                <div class="control-group ">
+                    <label class="control-label">Keywords</label>
+                    <div class="controls">
+                        <span>{{ entity.keywords }}</span>
+                    </div>
+                </div>
+                <div class="control-group ">
+                    <label class="control-label">Url Page</label>
+                    <div class="controls">
+                        <span>{{ entity.url }}</span>
+                    </div>
+                </div>
+                <div class="control-group ">
+                    <label class="control-label">Date Create</label>
+                    <div class="controls">
+                        <span>{{ entity.dateCreate|date('d-m-Y H:i:s') }}</span>
+                    </div>
+                </div>
+                <div class="control-group ">
+                    <label class="control-label">Is active</label>
+                    <div class="controls">
+                        <span>{% if entity.isActive == 1 %}Yes{% else %}No{% endif %}</span>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <a class="btn btn-danger" href="{{ path('cmspage_edit', { 'id': entity.id }) }}">
+                        Edit
+                    </a>
+                    <a class="btn btn-warning" href="{{ path('cmspage_delete', { 'id': entity.id }) }}">
+                        Delete
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+{% endblock %}

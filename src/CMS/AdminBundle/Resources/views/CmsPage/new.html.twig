@@ -1,0 +1,42 @@
+{% extends "CMSAdminBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.css') }}" />
+{% endblock %}
+
+{% block title %}CMS Page - New{% endblock %}
+
+{% block content %}
+    <div class="span12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="widget orange">
+            <div class="widget-title">
+                <h4><i class="icon-reorder"></i> Job Form</h4>
+            <span class="tools">
+               <a class="icon-chevron-down" href="javascript:;"></a>
+               <a class="icon-remove" href="javascript:;"></a>
+            </span>
+            </div>
+            <div class="widget-body form">
+                <!-- BEGIN FORM-->
+                {{ form(form, { 'attr': {'class': 'cmxform form-horizontal'}}) }}
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/admin/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/admin/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            //Setup text area editor
+            $('textarea[id="cms_adminbundle_cmspage_description"]').wysihtml5({
+                "html": true, //Button which allows you to edit the generated HTML. Default false
+                "color": true //Button to change color of font
+            });
+        });
+    </script>
+{% endblock %}

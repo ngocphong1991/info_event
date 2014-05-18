@@ -1,0 +1,21 @@
+parameters:
+#    cms_admin.example.class: CMS\AdminBundle\Example
+
+services:
+    cms_admin.menu_builder:
+        class: CMS\AdminBundle\Menu\MenuBuilder
+        arguments: ["@knp_menu.factory"]
+
+    cms_admin.menu.main:
+        class: Knp\Menu\MenuItem # the service definition requires setting the class
+        factory_service: cms_admin.menu_builder
+        factory_method: createMainMenu
+        arguments: ["@request"]
+        scope: request # needed as we have the request as a dependency here
+        tags:
+            - { name: knp_menu.menu, alias: main } # The alias is what is used to retrieve the menu
+
+    form.type.datepicker:
+        class: "CMS\AdminBundle\Form\DatePickerType"
+        tags:
+          - { name: form.type, alias: datePicker }

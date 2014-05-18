@@ -1,0 +1,25 @@
+	
+Installer project: php composer.phar install
+
+Download symfony framework: php composer.phar create-project symfony/framework-standard-edition Symfony 2.3.0
+
+Create bundle: php app/console generate:bundle --namespace=Acme/StoreBundle
+
+Create database: php app/console doctrine:database:create
+
+Create one Entity (model): php app/console doctrine:generate:entity 
+
+Create all Entity by mapping database (model): php app/console doctrine:mapping:import --force AcmeBlogBundle annotation
+
+Generating all Getters and Setters: php app/console doctrine:generate:entities AcmeStoreBundle
+
+Generating only one Getters and Setters: php app/console doctrine:generate:entities Seeker/AdminBundle/Entity/CategoryJob
+
+Update database after change Entity: php app/console doctrine:schema:update --force
+
+Clear cache: php app/console cache:clear --env=prod
+
+Generating a CRUD Controller Based on a Doctrine Entity: 
+	php app/console generate:doctrine:crud --entity=AcmeBlogBundle:Post --format=annotation --with-write --no-interaction
+OR
+	php app/console generate:doctrine:crud

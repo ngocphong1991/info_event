@@ -1,0 +1,44 @@
+cms_admin_default:
+    resource: "@CMSAdminBundle/Controller/DefaultController.php"
+    type:     annotation
+    prefix:   /
+
+cms_admin_article:
+    resource: "@CMSAdminBundle/Controller/ArticleController.php"
+    type:     annotation
+    prefix:   /article
+
+cms_admin_grparticle:
+    resource: "@CMSAdminBundle/Controller/GroupArticleController.php"
+    type:     annotation
+    prefix:   /grparticle
+    
+cms_admin_security:
+    resource: "@CMSAdminBundle/Controller/SecurityController.php"
+    type:     annotation
+    prefix:   /security
+
+cms_admin_user:
+    resource: "@CMSAdminBundle/Controller/UserController.php"
+    type:     annotation
+    prefix:   /user
+
+cms_admin_role:
+    resource: "@CMSAdminBundle/Controller/RoleController.php"
+    type:     annotation
+    prefix:   /role
+
+cms_admin_tag:
+    resource: "@CMSAdminBundle/Controller/TagController.php"
+    type:     annotation
+    prefix:   /tag
+
+cms_admin_specgrp:
+    resource: "@CMSAdminBundle/Controller/SpecialGroupArticleController.php"
+    type:     annotation
+    prefix:   /specgrp
+
+cms_admin_cmspage:
+    resource: "@CMSAdminBundle/Controller/CmsPageController.php"
+    type:     annotation
+    prefix:   /cmspage

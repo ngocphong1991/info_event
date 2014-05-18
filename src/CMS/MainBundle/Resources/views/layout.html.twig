@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="{{ asset('bundles/main/ico/favicon.ico') }}">
+
+    <title>Thông tin sự kiện - {% block title %}{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('bundles/main/css/bootstrap-full.css') }}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ asset('bundles/main/css/style.css') }}" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="{{ asset('bundles/main/js/ie8-responsive-file-warning.js') }}"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="{{ asset('bundles/main/js/html5shiv.js') }}"></script>
+    <script src="{{ asset('bundles/main/js/respond.min.js') }}"></script>
+    <![endif]-->
+
+    <script type="text/javascript">
+        var base_url = "{{ app.request.schemeAndHttpHost }}/{{ app.request.getBaseURL() }}";
+    </script>
+</head>
+
+<body>
+<div class="header">
+    <div class="container">
+        <div class="logo"><a href="#" title="Home"><img src="{{ asset('bundles/main/img/logo.png') }}"></a></div>
+        <div class="banner"><img src="{{ asset('bundles/main/img/banner.png') }}"></div>
+    </div>
+</div>
+<div class="nav-top">
+    <div class="container">
+        {{ render(controller("CMSMainBundle:Default:menuTop"))}}
+    </div>
+</div>
+
+<div class="container wrapper">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<div class="footer">
+    <div class="nav-bot">
+        <div class="container">
+            <nav class="blog-nav">
+                <a href="#" title="Home page"><img src="{{ asset('bundles/main/img/logo-footer.png') }}" alt="thonginsukien.info"></a>
+                <a class="blog-nav-item active" href="#">Home</a>
+                <a class="blog-nav-item" href="#">New features</a>
+                <a class="blog-nav-item" href="#">Press</a>
+                <a class="blog-nav-item" href="#">New hires</a>
+                <a class="blog-nav-item" href="#">About</a>
+            </nav>
+        </div>
+    </div>
+    <div class="footer-content container">
+        asdasd
+    </div>
+</div>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="{{ asset('bundles/main/js/jquery.min.js') }}"></script>
+<script src="{{ asset('bundles/main/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('bundles/main/js/docs.min.js') }}"></script>
+<script src="{{ asset('bundles/main/js/common.js') }}"></script>
+<script>
+    var $i = 0;
+    var flat = 0;
+    var $lenght = $(".blog-banner-main .flipper").length;
+    $(document).ready(function(){
+        $('.nav-top').click(function(){
+            $('.newest.active').fadeOut().removeClass('active').next().fadeIn().addClass('active');
+
+        });
+        setTimeout("counter($lenght)",3000);
+    });
+    function counter(lenght)
+    {
+        $lenght = lenght;
+        if($i < $lenght){
+            var element = ".blog-banner-main .flipper:eq("+$i+")";
+            $(element).poFlip({
+                effect : 'random'
+            });
+            flat++;
+        }else{
+            $i = 0;
+            flat = 0;
+
+            var element = ".blog-banner-main .flipper:eq("+$i+")";
+            $(element).poFlip({
+                effect : 'random'
+            });
+            flat++;
+        }
+
+        if(flat==2){
+            $i++;
+            flat = 0;
+        }
+        setTimeout("counter($lenght)",3000);
+    }
+</script>
+</body>
+</html>

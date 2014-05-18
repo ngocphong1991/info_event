@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+   <meta charset="utf-8" />
+   <title>Admin Panel - {% block title %}{% endblock %}</title>
+   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+   <meta content="Admin Panel" name="description" />
+   <meta content="Admin Panel" name="author" />
+   <link href="{{ asset('bundles/admin/assets/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
+   <link href="{{ asset('bundles/admin/assets/bootstrap/css/bootstrap-responsive.min.css') }}" rel="stylesheet" />
+   <link href="{{ asset('bundles/admin/assets/font-awesome/css/font-awesome.css') }}" rel="stylesheet" />
+   <link href="{{ asset('bundles/admin/assets/data-tables/DT_bootstrap.css') }}" rel="stylesheet" />
+   <link href="{{ asset('bundles/admin/css/style.css') }}" rel="stylesheet" />
+   <link href="{{ asset('bundles/admin/css/style-responsive.css') }}" rel="stylesheet" />
+   <link href="{{ asset('bundles/admin/css/style-default.css') }}" data-source="{{ asset('bundles/admin/css/') }}" rel="stylesheet" id="style_color" />
+   <link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/assets/bootstrap-colorpicker/css/colorpicker.css') }}" />
+   {% block stylesheets %}
+   {% endblock %}
+    <script type="text/javascript">
+        var base_url = "{{ app.request.schemeAndHttpHost }}";
+        if(base_url == 'http://localhost') base_url = 'http://localhost/FlatCMS/web';
+    </script>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="fixed-top">
+   <!-- BEGIN HEADER -->
+   <div id="header" class="navbar navbar-inverse navbar-fixed-top">
+       <!-- BEGIN TOP NAVIGATION BAR -->
+       <div class="navbar-inner">
+           <div class="container-fluid">
+               <!--BEGIN SIDEBAR TOGGLE-->
+               <div class="sidebar-toggle-box hidden-phone">
+                   <div class="icon-reorder"></div>
+               </div>
+               <!--END SIDEBAR TOGGLE-->
+               <!-- BEGIN LOGO -->
+               <a class="brand" href="index.html">
+                   <img src="{{ asset('bundles/admin/img/logo.png') }}" alt="HR" />
+               </a>
+               <!-- END LOGO -->
+               <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+               <a class="btn btn-navbar collapsed" id="main_menu_trigger" data-toggle="collapse" data-target=".nav-collapse">
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                   <span class="arrow"></span>
+               </a>
+               <div class="top-nav ">
+                   <ul class="nav pull-right top-menu" >
+                       <!-- BEGIN USER LOGIN DROPDOWN -->
+                       <li class="dropdown">
+                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                              <img src="{{ asset('bundles/admin/img/avatar1_small.jpg') }}" alt="{{app.security.token.user.username}}">
+                               <span class="username">{{app.security.token.user.username}}</span>
+                               <b class="caret"></b>
+                           </a>
+                           <ul class="dropdown-menu extended logout">
+                               <li><a href="{{ path('user_show', { 'id': app.security.token.user.id }) }}"><i class="icon-user"></i> My Profile</a></li>
+                               <li><a href="{{ path('user_edit', { 'id': app.security.token.user.id }) }}"><i class="icon-cog"></i> Change Password</a></li>
+                               <li><a href="{{ logout_url('main') }}"><i class="icon-key"></i> Log Out</a></li>
+                           </ul>
+                       </li>
+                       <!-- END USER LOGIN DROPDOWN -->
+                   </ul>
+                   <!-- END TOP NAVIGATION MENU -->
+               </div>
+           </div>
+       </div>
+       <!-- END TOP NAVIGATION BAR -->
+   </div>
+   <!-- END HEADER -->
+   <!-- BEGIN CONTAINER -->
+   <div id="container" class="row-fluid">
+      <!-- BEGIN SIDEBAR -->
+      <div class="sidebar-scroll">
+        <div id="sidebar" class="nav-collapse collapse">
+
+         <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
+         <div class="navbar-inverse">
+            <form class="navbar-search visible-phone">
+               <input type="text" class="search-query" placeholder="Search" />
+            </form>
+         </div>
+         <!-- END RESPONSIVE QUICK SEARCH FORM -->
+         <!-- BEGIN SIDEBAR MENU -->
+          <ul class="sidebar-menu">
+              <li class="sub-menu">
+                  <a href="javascript:;">
+                      <i class="icon-tasks"></i>
+                      <span>Group Article</span>
+                      <span class="arrow"></span>
+                  </a>
+                  <ul class="sub">
+                      <li {% if app.request.get('_route') == 'grouparticle' %}class="active"{% endif %}><a href="{{ path('grouparticle') }}">Group Articles</a></li>
+                      <li {% if app.request.get('_route') == 'grouparticle_new' %}class="active"{% endif %}><a href="{{ path('grouparticle_new') }}">New Group</a></li>
+                      <li {% if app.request.get('_route') == 'specgrp' %}class="active"{% endif %}><a href="{{ path('specgrp') }}">Special Group</a></li>
+                      <li {% if app.request.get('_route') == 'specgrp_new' %}class="active"{% endif %}><a href="{{ path('specgrp_new') }}">New Special Group</a></li>
+                  </ul>
+              </li>
+              <li class="sub-menu">
+                  <a href="javascript:;">
+                      <i class="icon-book"></i>
+                      <span>Article</span>
+                      <span class="arrow"></span>
+                  </a>
+                  <ul class="sub">
+                      <li {% if app.request.get('_route') == 'article' %}class="active"{% endif %}><a href="{{ path('article') }}">Articles</a></li>
+                      <li {% if app.request.get('_route') == 'article_new' %}class="active"{% endif %}><a href="{{ path('article_new') }}">New Article</a></li>
+                      <li {% if app.request.get('_route') == 'tag' %}class="active"{% endif %}><a href="{{ path('tag') }}">Tags</a></li>
+                      <li {% if app.request.get('_route') == 'tag_new' %}class="active"{% endif %}><a href="{{ path('tag_new') }}">New Tag</a></li>
+                  </ul>
+              </li>
+              <li class="sub-menu">
+                  <a href="javascript:;">
+                      <i class="icon-file-alt"></i>
+                      <span>CMS Pages</span>
+                      <span class="arrow"></span>
+                  </a>
+                  <ul class="sub">
+                      <li {% if app.request.get('_route') == 'cmspage' %}class="active"{% endif %}><a href="{{ path('cmspage') }}">List CMS Pages</a></li>
+                      <li {% if app.request.get('_route') == 'cmspage_new' %}class="active"{% endif %}><a href="{{ path('cmspage_new') }}">New CMS Pages</a></li>
+                  </ul>
+              </li>
+              <li class="sub-menu">
+                  <a href="javascript:;">
+                      <i class="icon-user"></i>
+                      <span>Users &amp; Roles</span>
+                      <span class="arrow"></span>
+                  </a>
+                  <ul class="sub">
+                      <li {% if app.request.get('_route') == 'user' %}class="active"{% endif %}><a href="{{ path('user') }}">Users</a></li>
+                      <li {% if app.request.get('_route') == 'user_new' %}class="active"{% endif %}><a href="{{ path('user_new') }}">New User</a></li>
+                      <li {% if app.request.get('_route') == 'role' %}class="active"{% endif %}><a href="{{ path('role') }}">Roles</a></li>
+                      <li {% if app.request.get('_route') == 'role_new' %}class="active"{% endif %}><a href="{{ path('role_new') }}">New Role</a></li>
+                  </ul>
+              </li>
+              <li>
+                  <a href="#">
+                    <i class="icon-wrench"></i>
+                    <span>Setting</span>
+                  </a>
+              </li>
+          </ul>
+         <!-- END SIDEBAR MENU -->
+      </div>
+      </div>
+      <!-- END SIDEBAR -->
+      <!-- BEGIN PAGE -->
+      <div id="main-content">
+         <!-- BEGIN PAGE CONTAINER-->
+         <div class="container-fluid">
+            <!-- BEGIN PAGE HEADER-->
+            <div class="row-fluid">
+               <div class="span12">
+                   <!-- BEGIN THEME CUSTOMIZER-->
+                   <div id="theme-change" class="hidden-phone">
+                       <i class="icon-cogs"></i>
+                        <span class="settings">
+                            <span class="text">Theme Color:</span>
+                            <span class="colors">
+                                <span class="color-default" data-style="default"></span>
+                                <span class="color-green" data-style="green"></span>
+                                <span class="color-gray" data-style="gray"></span>
+                                <span class="color-purple" data-style="purple"></span>
+                                <span class="color-red" data-style="red"></span>
+                            </span>
+                        </span>
+                   </div>
+                   <!-- END THEME CUSTOMIZER-->
+                  <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                   <h3 class="page-title">
+                     Dashboard
+                   </h3>
+                   {{ knp_menu_render('main') }}
+                   <!-- END PAGE TITLE & BREADCRUMB-->
+               </div>
+            </div>
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            {% for flashMessage in app.session.flashbag.get('successfull') %}
+            <div class="flash-notice alert-success alert">
+             {{ flashMessage|raw('html') }}
+            </div>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('error') %}
+            <div class="flash-notice alert-danger alert">
+             {{ flashMessage|raw('html') }}
+            </div>
+            {% endfor %}
+            <div class="row-fluid">
+                {% block content %}
+                {% endblock %}
+            </div>
+            <!-- END PAGE CONTENT-->
+         </div>
+         <!-- END PAGE CONTAINER-->
+      </div>
+      <!-- END PAGE -->
+   </div>
+   <!-- END CONTAINER -->
+
+   <!-- BEGIN FOOTER -->
+   <div id="footer">
+       2014 &copy; FlatCMS Version 1.0.
+   </div>
+   <!-- END FOOTER -->
+
+   <!-- BEGIN JAVASCRIPTS -->
+   <!-- Load javascripts at bottom, this will reduce page load time -->
+   <script src="{{ asset('bundles/admin/js/jquery-1.8.3.min.js') }}"></script>
+   <script src="{{ asset('bundles/admin/js/jquery.nicescroll.js') }}" type="text/javascript"></script>
+   <script type="text/javascript" src="{{ asset('bundles/admin/assets/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+   <script src="{{ asset('bundles/admin/assets/bootstrap/js/bootstrap.min.js') }}"></script>
+
+   <!-- ie8 fixes -->
+   <!--[if lt IE 9]>
+   <script src="{{ asset('bundles/admin/js/excanvas.js') }}"></script>
+   <script src="{{ asset('bundles/admin/js/respond.js') }}"></script>
+   <![endif]-->
+
+   <!--common script for all pages-->
+   <script src="{{ asset('bundles/admin/js/common-scripts.js') }}"></script>
+   <script>
+        $(document).ready(function(){
+           $('.active').parent().parent().addClass('active');
+           $('#search-form').attr('action','{{ path(app.request.get('_route')|split('_')[0]) }}');
+        });
+   </script>
+{% block javascripts %}
+{% endblock %}
+   <!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

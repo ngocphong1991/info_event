@@ -1,0 +1,40 @@
+security:
+    encoders:
+        CMS\AdminBundle\Entity\User:
+            algorithm:        sha512
+            encode_as_base64: true
+            iterations:       10
+ 
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_USER]
+ 
+    providers:
+        user_db:
+            entity: { class: CMS\AdminBundle\Entity\User, property: username }
+ 
+    firewalls:
+        main:
+            pattern: /.*
+            provider: user_db
+            form_login:
+                login_path: _cms_admin_security_login
+                check_path: _cms_admin_security_login_check
+                always_use_default_target_path: false
+                default_target_path: article
+                remember_me: true
+            logout:
+                path: _cms_admin_security_logout
+                target: _cms_admin_security_login
+            remember_me:
+                key: cms_office_hub_76543211
+                lifetime: 31536000
+                path: /
+                domain: ~
+            security: true
+            anonymous: true
+    access_control:
+        - { path: ^/admin/security/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    
