@@ -17,10 +17,12 @@ class DefaultController extends Controller
     {
         $weblangs = $this->container->getParameter('langs');
         $lang = $this->getRequest()->getPreferredLanguage($weblangs);
- 
+
+        return $this->redirect($this->generateUrl('article'));
+        /*
         return $this->redirect(
                 $this->generateUrl('index', array('_locale' => $lang))
-                );
+                );*/
     }
  
     /**

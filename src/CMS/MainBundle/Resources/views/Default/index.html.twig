@@ -1,4 +1,5 @@
 {% extends "CMSMainBundle::layout.html.twig" %}
+{% block title %}Trang chủ{% endblock %}
 {% block content %}
     <div class="blog-banner">
         <div class="row">
@@ -20,7 +21,7 @@
             </div>
             <div class="col-sm-4 blog-banner-slide-bar">
                 {% for special in specialGroup %}
-                    <ul class="newest active">
+                    <ul class="newest">
                     {% for article in special.articles %}
                         {% if loop.index < 3 %}
                         <li>
@@ -41,10 +42,12 @@
 
             {% for entity in pagination %}
             <div class="blog-post">
-                <h2 class="blog-post-title">{{ entity.title }}</h2>
+                <h2 class="blog-post-title"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ entity.url }}" title="{{ entity.title }}">{{ entity.title }}</a></h2>
                 <p class="blog-post-meta">{% if entity.datecreate %}{{ entity.datecreate|date('H:i d/m/Y') }}{% endif %}</p>
                 <div class="blog-post-image">
-                    <img src="{{ asset('uploads/article/') }}{{ entity.image }}" alt="{{ entity.title }}">
+                    <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ entity.url }}" title="{{ entity.title }}">
+                        <img src="{{ asset('uploads/article/') }}{{ entity.image }}" alt="{{ entity.title }}">
+                    </a>
                 </div>
                 <div class="blog-post-description">
                     {{ entity.sortDescription }} ....

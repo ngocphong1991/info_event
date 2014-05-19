@@ -1,5 +1,0 @@
-<nav class="blog-nav">
-    {% for entity in menus %}
-    <a class="blog-nav-item" title="{{ entity.name }}" href="{{ app.request.schemeAndHttpHost }}/{{ app.request.getBaseURL() }}/{{ entity.url }}">{{ entity.name }}</a>
-    {%  endfor %}
-</nav>

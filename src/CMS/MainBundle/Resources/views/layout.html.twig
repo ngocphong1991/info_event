@@ -40,7 +40,7 @@
 </div>
 <div class="nav-top">
     <div class="container">
-        {{ render(controller("CMSMainBundle:Default:menuTop"))}}
+        {{ render(controller("CMSMainBundle:Default:menu", {'position':'top'}))}}
     </div>
 </div>
 
@@ -63,10 +63,17 @@
         </div>
     </div>
     <div class="footer-content container">
-        asdasd
+        {{ render(controller("CMSMainBundle:Default:menu", {'position':'bot'}))}}
+        <div class="row info">
+            <p>Bản quyền © 2014 thongtinsukien.info<br>
+            Ghi rõ nguồn thongtinsukien.info khi phát hành lại thông tin từ website này.<br>
+            Website đang trong quá trình thử nghiệm, chờ cấp phép của Bộ Thông Tin và Truyền Thông
+            </p>
+        </div>
     </div>
 </div>
 
+<div class="trigger"></div>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
@@ -79,13 +86,39 @@
     var $i = 0;
     var flat = 0;
     var $lenght = $(".blog-banner-main .flipper").length;
-    $(document).ready(function(){
-        $('.nav-top').click(function(){
-            $('.newest.active').fadeOut().removeClass('active').next().fadeIn().addClass('active');
 
+    $(document).ready(function(){
+        /* --- Setup right slide bar scroll ---*/
+        // define value
+        var $scrollDom = $('.blog-sidebar .view-best');
+        var $triggerDom = $('.trigger');
+        var $viewTop = $scrollDom.offset().top-20;
+        var $margin = ($(window).width() - $('.wrapper').width())/2 -15;
+        $scrollDom.clone().appendTo(".trigger");
+
+        // fix margin value when window resize
+        $(window).resize(function(){
+            $margin = ($(window).width() - $('.wrapper').width())/2 -15;
+            $triggerDom.css('right',$margin);
         });
+
+        // scroll event process
+        $(window).scroll(function(){
+            if($(this).scrollTop()>=$viewTop){
+                $scrollDom.css('display','none');
+                $triggerDom.css({right: $margin, display: 'block', top: ($(this).scrollTop()+20)+'px'});
+            }else{
+                $scrollDom.css('display','block');
+                $triggerDom.css('display','none');
+            }
+        });
+        /* --- END Setup right slide bar scroll ---*/
+
+        // setup flip banner event
+        $(".newest:eq(0)").addClass('active');
         setTimeout("counter($lenght)",3000);
     });
+
     function counter(lenght)
     {
         $lenght = lenght;
@@ -107,6 +140,8 @@
         }
 
         if(flat==2){
+            var $newFeed = ".newest:eq("+$i+")";
+            $($newFeed).fadeOut().removeClass('active').next().fadeIn().addClass('active');
             $i++;
             flat = 0;
         }

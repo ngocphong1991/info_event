@@ -9,10 +9,33 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/{slug}", defaults={"slug" = "asdasd"})
+     * @Route("/")
      * @Template()
      */
-    public function indexAction($slug)
+    public function indexAction()
+    {
+        $em    = $this->getDoctrine()->getManager();
+        $query = $em->getRepository('CMSAdminBundle:Article')->findNewestSql();
+
+        //Pager
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $this->get('request')->query->get('page', 1)/*page number*/,
+            5/*limit per page*/
+        );
+
+        $specialGroup = $em->getRepository('CMSAdminBundle:GroupArticle')->findSpecialSql();
+
+        // parameters to template
+        return array('pagination' => $pagination, 'specialGroup' => $specialGroup->getResult());
+    }
+
+    /**
+     * @Route("/{slug}")
+     * @Template()
+     */
+    public function routAction($slug)
     {
         $em    = $this->getDoctrine()->getManager();
         $query = $em->getRepository('CMSAdminBundle:Article')->findNewestSql();
@@ -35,13 +58,13 @@ class DefaultController extends Controller
      * @Route("/menu")
      * @Template()
      */
-    public function menuTopAction()
+    public function menuAction($position)
     {
         $menus = $this->getDoctrine()
             ->getRepository('CMSAdminBundle:GroupArticle')
             ->findAll();
 
-        return array('menus' => $menus);
+        return array('menus' => $menus, 'position' => $position);
     }
 
     /**

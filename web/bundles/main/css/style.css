@@ -43,6 +43,7 @@ a:hover{
 /*
 * Banner animation
 */
+.wrapper{position: relative}
 .blog-banner-main{padding: 10px 0 15px 0; border-bottom: 2px solid #fdb813;}
 .blog-banner-slide-bar{padding-left: 20px; padding-right: 0; height: 336px; overflow: hidden}
 .blog-banner-main .flipper{float: left; margin-left: 10px; margin-top: 10px}
@@ -66,8 +67,15 @@ a:hover{
 .blog-sidebar{
     padding-left: 20px;
     padding-right: 0;
+    width: 320px;
 }
-
+.trigger{
+    width: 300px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: none;
+}
 .blog-banner-slide-bar .newest{
     padding: 0; margin: 0; margin-top: 20px;
     display: none;
@@ -263,6 +271,7 @@ a:hover{
     text-transform: uppercase;
     font: bold 18px "MyriadPro-Regular";
 }
+.blog-post-title a{color: #000000}
 .blog-post-meta {
     margin-bottom: 20px;
     color: #000000;
@@ -303,3 +312,14 @@ a:hover{
 }
 .nav-bot{background: #464646; border-bottom: 2px solid #fdb813}
 .nav-bot .blog-nav-item{font-weight: normal; background: url("../img/slash-black.png") no-repeat scroll right center}
+.nav-main-bot{text-align: left; margin: 12px 150px}
+.nav-main-bot ul{float: left}
+.nav-main-bot ul li{list-style: none}
+.nav-main-bot ul li a{color: #636363; font: 14px "MyriadPro-Regular"}
+.nav-main-bot ul li a:hover{color: #000000}
+.footer .info{
+    padding: 10px 20px;
+    border-top: 1px solid #ebebeb;
+    color: #595251;
+    font: 12px "MyriadPro-Regular"
+}
