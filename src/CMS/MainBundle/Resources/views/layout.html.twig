@@ -34,7 +34,7 @@
 <body>
 <div class="header">
     <div class="container">
-        <div class="logo"><a href="#" title="Home"><img src="{{ asset('bundles/main/img/logo.png') }}"></a></div>
+        <div class="logo"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" title="Home"><img src="{{ asset('bundles/main/img/logo.png') }}"></a></div>
         <div class="banner"><img src="{{ asset('bundles/main/img/banner.png') }}"></div>
     </div>
 </div>
@@ -53,7 +53,7 @@
     <div class="nav-bot">
         <div class="container">
             <nav class="blog-nav">
-                <a href="#" title="Home page"><img src="{{ asset('bundles/main/img/logo-footer.png') }}" alt="thonginsukien.info"></a>
+                <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" title="Home page"><img src="{{ asset('bundles/main/img/logo-footer.png') }}" alt="thonginsukien.info"></a>
                 <a class="blog-nav-item active" href="#">Home</a>
                 <a class="blog-nav-item" href="#">New features</a>
                 <a class="blog-nav-item" href="#">Press</a>

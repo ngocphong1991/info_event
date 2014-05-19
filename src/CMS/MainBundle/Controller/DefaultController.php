@@ -33,25 +33,28 @@ class DefaultController extends Controller
 
     /**
      * @Route("/{slug}")
-     * @Template()
      */
     public function routAction($slug)
     {
-        $em    = $this->getDoctrine()->getManager();
-        $query = $em->getRepository('CMSAdminBundle:Article')->findNewestSql();
+        if($slug == 'admin') return $this->redirect($this->generateUrl('article'));
 
-        //Pager
-        $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $query,
-            $this->get('request')->query->get('page', 1)/*page number*/,
-            5/*limit per page*/
+        $em    = $this->getDoctrine()->getManager();
+
+        //setup group page
+        $group = $em->getRepository('CMSAdminBundle:GroupArticle')->findOneBy(
+            array('url' => $slug, 'isActive' => 1)
+        );
+        if(count($group)) return $this->render('CMSMainBundle:Default:group.html.twig',
+            array('group' => $group)
         );
 
-        $specialGroup = $em->getRepository('CMSAdminBundle:GroupArticle')->findSpecialSql();
-
-        // parameters to template
-        return array('pagination' => $pagination, 'specialGroup' => $specialGroup->getResult());
+        // setup article page
+        $article = $em->getRepository('CMSAdminBundle:Article')->findOneBy(
+            array('url' => $slug, 'isActive' => 1)
+        );
+        if(count($article)) return $this->render('CMSMainBundle:Default:article.html.twig',
+            array('article' => $article)
+        );
     }
 
     /**
@@ -71,7 +74,7 @@ class DefaultController extends Controller
      * @Route("/right")
      * @Template()
      */
-    public function rightSlideBarAction()
+    public function rightSlideBarAction($cpc)
     {
         $specials = $this->getDoctrine()
             ->getRepository('CMSAdminBundle:SpecialGroupArticle')
@@ -81,6 +84,10 @@ class DefaultController extends Controller
             ->getRepository('CMSAdminBundle:Article')
             ->findViewBestSql();
 
-        return array('specials' => $specials->getResult(), 'viewBests' => $viewBest->getResult());
+        return array(
+                'cpc' => isset($cpc) && $cpc ? $cpc : false,
+                'specials' => $specials->getResult(),
+                'viewBests' => $viewBest->getResult()
+        );
     }
 }

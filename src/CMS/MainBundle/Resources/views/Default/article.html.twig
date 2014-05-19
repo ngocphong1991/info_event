@@ -1,0 +1,35 @@
+{% extends "CMSMainBundle::layout.html.twig" %}
+{% block title %}{{ article.title }}{% endblock %}
+{% block content %}
+    <div class="row">
+
+        <div class="col-sm-8 blog-main">
+            {% if article %}
+                <div class="blog-post article">
+                    <h2 class="blog-post-title"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a></h2>
+                    <p class="blog-post-meta">{% if article.datecreate %}{{ article.datecreate|date('H:i d/m/Y') }}{% endif %}</p>
+
+                    <div class="blog-post-description">
+                        {{ article.description|raw('html') }}
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert">
+                    <span>Dữ liệu đang được cập nhật</span>
+                </div><!-- /.blog-post -->
+            {% endif %}
+            <!--
+            <ul class="pagination pagination-custom">
+                <li class="disabled"><span>Đầu</span></li>
+                <li class="active"><span>1 <span class="sr-only">(current)</span></span></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">Cuối</a></li>
+            </ul>
+-->
+        </div><!-- /.blog-main -->
+        {{ render(controller("CMSMainBundle:Default:rightSlideBar", {'cpc': true}))}}
+    </div><!-- /.row -->
+{% endblock %}

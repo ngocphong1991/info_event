@@ -76,6 +76,8 @@ a:hover{
     right: 0;
     display: none;
 }
+.ad{margin-top: 15px!important;}
+.blog-main img{max-width: 100%}
 .blog-banner-slide-bar .newest{
     padding: 0; margin: 0; margin-top: 20px;
     display: none;
@@ -280,6 +282,7 @@ a:hover{
 .blog-post-image{text-align: center}
 .blog-post-image img{max-width: 100%}
 .blog-post-description{text-align: left; padding: 10px 0; font: 14px "MyriadPro-Regular"}
+.blog-post.article{border: none}
 .blog-post-view-more{text-align: right; padding: 0 10px}
 .blog-post-view-more a{color: #ee2926; font: italic 14px "MyriadPro-Regular"}
 
