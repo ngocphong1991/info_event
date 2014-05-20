@@ -258,6 +258,7 @@ a:hover{
 .sidebar-module .sidebar-best li{list-style: none; padding: 10px 15px; background: url("../img/dot.png") repeat-x bottom}
 .sidebar-module .sidebar-best a{color: #484747}
 .sidebar-module .sidebar-best a:hover{color: #000000}
+.view-best{width: 330px}
 /*
 * Blog posts
 */

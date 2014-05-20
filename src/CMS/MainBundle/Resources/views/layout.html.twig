@@ -16,6 +16,7 @@
 
     <!-- Custom styles for this template -->
     <link href="{{ asset('bundles/main/css/style.css') }}" rel="stylesheet">
+    {% block stylesheets %}{% endblock %}
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="{{ asset('bundles/main/js/ie8-responsive-file-warning.js') }}"></script><![endif]-->
@@ -81,6 +82,7 @@
 <script src="{{ asset('bundles/main/js/jquery.min.js') }}"></script>
 <script src="{{ asset('bundles/main/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('bundles/main/js/docs.min.js') }}"></script>
+{% block javascripts %}{% endblock %}
 <script src="{{ asset('bundles/main/js/common.js') }}"></script>
 <script>
     var $i = 0;
@@ -91,34 +93,24 @@
         /* --- Setup right slide bar scroll ---*/
         // define value
         var $scrollDom = $('.blog-sidebar .view-best');
-        var $triggerDom = $('.trigger');
-        var $viewTop = $scrollDom.offset().top-20;
-        var $margin = ($(window).width() - $('.wrapper').width())/2 -15;
-        $scrollDom.clone().appendTo(".trigger");
-
-        // fix margin value when window resize
-        $(window).resize(function(){
-            $margin = ($(window).width() - $('.wrapper').width())/2 -15;
-            $triggerDom.css('right',$margin);
-        });
+        $scrollDom.css('position','relative');
+        var $viewTop = $scrollDom.offset().top;
 
         // scroll event process
         $(window).scroll(function(){
             if($(this).scrollTop()>=$viewTop){
-                $scrollDom.css('display','none');
-                $triggerDom.css({right: $margin, display: 'block', top: ($(this).scrollTop()+20)+'px'});
+                $scrollDom.css({position: 'fixed', top: '20px'});
             }else{
-                $scrollDom.css('display','block');
-                $triggerDom.css('display','none');
+                $scrollDom.css({position: 'relative', top: '0'});
             }
         });
         /* --- END Setup right slide bar scroll ---*/
 
         // setup flip banner event
-        $(".newest:eq(0)").addClass('active');
-        setTimeout("counter($lenght)",3000);
+        //$(".newest:eq(0)").addClass('active');
+        //setTimeout("counter($lenght)",3000);
     });
-
+/*
     function counter(lenght)
     {
         $lenght = lenght;
@@ -146,7 +138,7 @@
             flat = 0;
         }
         setTimeout("counter($lenght)",3000);
-    }
+    }*/
 </script>
 </body>
 </html>

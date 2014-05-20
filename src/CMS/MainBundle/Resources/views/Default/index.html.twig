@@ -1,22 +1,23 @@
 {% extends "CMSMainBundle::layout.html.twig" %}
+{% block stylesheets %}<link href="{{ asset('bundles/main/css/MetroJs.css') }}" rel="stylesheet">{% endblock %}
 {% block title %}Trang chủ{% endblock %}
 {% block content %}
     <div class="blog-banner">
         <div class="row">
             <div class="col-sm-8 blog-banner-main">
                 {% for special in specialGroup %}
-                <div class="flipper">
-                    <div class="flipper-1">
-                        <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ special.url }}" title="{{ special.name }}">
-                            <img alt="{{ special.name }}" src="{{ asset('uploads/group/145x145/') }}s_{{ special.image }}" >
-                        </a>
+                    <div class="live-tile" id="tile1" data-mode="flip">
+                        <div class="flip-front">
+                            <a title="{{ special.name }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ special.url }}">
+                                <img class="full" alt="{{ special.name }}" src="{{ asset('uploads/group/145x145/') }}s_{{ special.image }}" >
+                            </a>
+                        </div>
+                        <div class="flip-back">
+                            <a title="{{ special.name }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ special.url }}">
+                                <img class="full" alt="{{ special.name }}" src="{{ asset('uploads/group/145x145/') }}s_{{ special.imageActive }}" >
+                            </a>
+                        </div>
                     </div>
-                    <div class="flipper-2">
-                        <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ special.url }}" title="{{ special.name }}">
-                            <img alt="{{ special.name }}" src="{{ asset('uploads/group/145x145/') }}s_{{ special.imageActive }}" />
-                        </a>
-                    </div>
-                </div>
                 {% endfor %}
             </div>
             <div class="col-sm-4 blog-banner-slide-bar">
@@ -69,4 +70,47 @@
         </div><!-- /.blog-main -->
         {{ render(controller("CMSMainBundle:Default:rightSlideBar",{'cpc':false}))}}
     </div><!-- /.row -->
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('bundles/main/js/MetroJs.min.js') }}"></script>
+    <script type="text/javascript">
+        window.log=function(){if(this.console){console.log(Array.prototype.slice.call(arguments));}};
+        jQuery.fn.log=function (msg){console.log("%s: %o", msg,this);return this;};
+
+        var $liveTitle = $(".blog-banner-main .live-tile");
+        var $length = $liveTitle.length;
+        var showTime = 3000;
+        var roundTime = 4000;
+        var totalTime = $length*roundTime;
+        var $tiles;
+        var timeOutId;
+
+        $(document).ready(function(){
+            flip();
+
+        });
+        function flip(){
+            if($tiles){
+                $tiles.liveTile("destroy", true);
+            }
+            $tiles = $liveTitle.liveTile({
+                playOnHover:true,
+                repeatCount: 0,
+                delay: showTime,
+                initDelay: 0,
+                startNow: false,
+                animationComplete: function(tileData){
+                    $(this).liveTile("play");
+                    tileData.animationComplete = function(){};
+                }
+            }).each(function(idx, ele){
+                var delay = idx * roundTime;
+                $(ele).liveTile("play", delay);
+            });
+
+
+            timeOutId = setTimeout("flip()", totalTime);
+        }
+
+    </script>
 {% endblock %}
