@@ -105,15 +105,18 @@
         var $viewBot = $('.footer').offset().top;
 
         // scroll event process
-        $(window).scroll(function(){
-            if($(this).scrollTop()>=$viewTop){
-                if(($(this).scrollTop() + $scrollDom.height()) >= $viewBot){
+        if(($viewTop + $scrollDom.height()) <  ($viewBot -100) ){
+            $(window).scroll(function(){
+                if($(this).scrollTop()>=$viewTop){
+                    if(($(this).scrollTop() + $scrollDom.height()) >= $viewBot){
+                        $scrollDom.css({position: 'relative', top: '0'});
+                    }else $scrollDom.css({position: 'fixed', top: '20px'});
+                }else{
                     $scrollDom.css({position: 'relative', top: '0'});
-                }else $scrollDom.css({position: 'fixed', top: '20px'});
-            }else{
-                $scrollDom.css({position: 'relative', top: '0'});
-            }
-        });
+                }
+            });
+        }
+
     });
 </script>
 <div id="fb-root"></div>
