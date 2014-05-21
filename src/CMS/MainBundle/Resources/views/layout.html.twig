@@ -84,7 +84,9 @@
     </div>
 </div>
 
-<div class="trigger"></div>
+<div class="scroll-top">
+    <img src="{{ asset('bundles/main/img/scroll-top.png') }}" alt="Scroll to top">
+</div>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
@@ -107,6 +109,13 @@
         // scroll event process
         if(($viewTop + $scrollDom.height()) <  ($viewBot -100) ){
             $(window).scroll(function(){
+
+                if($(this).scrollTop() >= $(window).height()){
+                    $('.scroll-top').fadeIn('slow');
+                }else{
+                    $('.scroll-top').fadeOut('slow');
+                }
+
                 if($(this).scrollTop()>=$viewTop){
                     if(($(this).scrollTop() + $scrollDom.height()) >= $viewBot){
                         $scrollDom.css({position: 'relative', top: '0'});
@@ -116,6 +125,15 @@
                 }
             });
         }
+
+        $('.scroll-top').click(function(){
+            $('html, body').animate({scrollTop:0},"slow")
+        });
+
+        $('#button-search').click(function(){
+            $('.search-form').fadeIn();
+            $('#keyword').focus();
+        })
 
     });
 </script>

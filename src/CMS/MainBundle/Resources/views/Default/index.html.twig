@@ -8,12 +8,12 @@
                 {% for special in specialGroup %}
                     <div class="live-tile" data-mode="flip">
                         <div class="flip-front">
-                            <a title="{{ special.name }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ special.url }}">
+                            <a title="{{ special.name }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ special.url }}">
                                 <img class="full" alt="{{ special.name }}" src="{{ asset('uploads/group/145x145/') }}s_{{ special.image }}" >
                             </a>
                         </div>
                         <div class="flip-back">
-                            <a title="{{ special.name }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ special.url }}">
+                            <a title="{{ special.name }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ special.url }}">
                                 <img class="full" alt="{{ special.name }}" src="{{ asset('uploads/group/145x145/') }}s_{{ special.imageActive }}" >
                             </a>
                         </div>
@@ -21,19 +21,21 @@
                 {% endfor %}
             </div>
             <div class="col-sm-4 blog-banner-slide-bar">
+                <div class="list-new">
                 {% for special in specialGroup %}
-                    <ul class="newest" id="group-{{ special.id }}">
+                    <ul class="newest active" id="group-{{ special.id }}">
                     {% for article in special.articles %}
                         {%  set count = special.articles|length %}
                         {% if loop.index > count - 2 %}
                         <li>
-                            <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ article.url }}" title="{{ article.title }}"><img src="{{ asset('uploads/article/300x300/') }}m_{{ article.image }}" alt="{{ article.title }}"></a>
-                            <a class="opacity" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a>
+                            <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ special.url }}/{{ article.url }}" title="{{ article.title }}"><img src="{{ asset('uploads/article/300x300/') }}m_{{ article.image }}" alt="{{ article.title }}"></a>
+                            <a class="opacity" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ special.url }}/{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a>
                         </li>
                         {% endif %}
                     {% endfor %}
                     </ul>
                 {% endfor %}
+                </div>
             </div>
         </div>
     </div>
@@ -44,29 +46,21 @@
 
             {% for entity in pagination %}
             <div class="blog-post">
-                <h2 class="blog-post-title"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ entity.url }}" title="{{ entity.title }}">{{ entity.title }}</a></h2>
+                <h2 class="blog-post-title"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="{{ entity.title }}">{{ entity.title }}</a></h2>
                 <p class="blog-post-meta">{% if entity.datecreate %}{{ entity.datecreate|date('H:i d/m/Y') }}{% endif %}</p>
                 <div class="blog-post-image">
-                    <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ entity.url }}" title="{{ entity.title }}">
+                    <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="{{ entity.title }}">
                         <img src="{{ asset('uploads/article/') }}{{ entity.image }}" alt="{{ entity.title }}">
                     </a>
                 </div>
                 <div class="blog-post-description">
                     {{ entity.sortDescription }} ....
                 </div>
-                <p class="blog-post-view-more"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ entity.url }}" title="Xem tiếp">Xem tiếp</a></p>
+                <p class="blog-post-view-more"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="Xem tiếp">Xem tiếp</a></p>
             </div><!-- /.blog-post -->
             {% endfor %}
-            <!--{{ knp_pagination_render(pagination) }}-->
-            <ul class="pagination pagination-custom">
-                <li class="disabled"><span>Đầu</span></li>
-                <li class="active"><span>1 <span class="sr-only">(current)</span></span></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">Cuối</a></li>
-            </ul>
+            {{ knp_pagination_render(pagination) }}
+
 
         </div><!-- /.blog-main -->
         {{ render(controller("CMSMainBundle:Default:rightSlideBar",{'cpc':false, 'listSpecial': false}))}}
@@ -86,6 +80,7 @@
         var timeOutSliderId;
         var $newFeed;
         var idGroup;
+        var $top;
 
         $(document).ready(function(){
             flip();
@@ -94,13 +89,16 @@
         function activeSlider($newFeed){
             $($newFeed).fadeOut().removeClass('active').next().fadeIn().addClass('active');
         }
-
+        var $heightSlide = 320*$('.list-new .newest').length;
+        $('.list-new').css('height', $heightSlide+'px');
         function sliderNewest(){
             $(".blog-banner-slide-bar .newest").each(function(index, element){
                 var delay = index * roundTime;
                 setTimeout(function(){
                     $newFeed = ".newest:eq("+index+")";
-                    $($newFeed).addClass('active').fadeIn().prev().fadeOut().removeClass('active');
+                    $top = 320*index;
+                    $('.list-new').animate({top: -$top+'px'},"fast");
+                    //$($newFeed).addClass('active').fadeIn().prev().fadeOut().removeClass('active');
                     idGroup =  '#'+$('.newest.active').attr('id');
                     $('.blog-nav .blog-nav-item').removeClass('active')
                     $(idGroup).addClass('active');

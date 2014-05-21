@@ -2,17 +2,27 @@
 <nav class="blog-nav">
     {% for entity in menus %}
         {% if loop.index <= 10 %}
-        <a class="blog-nav-item" id="group-{{ entity.id }}" title="{{ entity.name }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ entity.url }}">{{ entity.name }}</a>
+        <a class="blog-nav-item" id="group-{{ entity.id }}" title="{{ entity.name }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.url }}">{{ entity.name }}</a>
         {% endif %}
     {%  endfor %}
 </nav>
+<div class="search">
+    <a id="button-search" href="javascript:void(0)" title="search"><img src="{{ asset('bundles/main/img/search.png') }}" alt="Search"></a>
+</div>
+<div class="search-form">
+    <form action="{{ path('cms_main_search') }}" method="get">
+        <label for="tu-khoa">Từ khóa</label>
+        <input name="tu-khoa" placeholder="Nhập từ khóa" type="text" id="keyword">
+        <button>Tìm kiếm</button>
+    </form>
+</div>
 {% endif %}
 
 {% if position == 'bot' %}
 <div class="row nav-main-bot">
     <ul>
     {% for entity in menus %}
-        <li><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ entity.url }}" title="{{ entity.name }}">{{ entity.name }}</a></li>
+        <li><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.url }}" title="{{ entity.name }}">{{ entity.name }}</a></li>
         {% if loop.index % 4 == 0 %}</ul><ul>{% endif %}
     {%  endfor %}
     </ul>

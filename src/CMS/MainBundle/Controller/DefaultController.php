@@ -24,6 +24,7 @@ class DefaultController extends Controller
             $this->get('request')->query->get('page', 1)/*page number*/,
             5/*limit per page*/
         );
+        $pagination->setTemplate('CMSMainBundle:Default:pager.html.twig');
 
         $specialGroup = $em->getRepository('CMSAdminBundle:GroupArticle')->findSpecialSql();
 
@@ -31,56 +32,95 @@ class DefaultController extends Controller
         return array('pagination' => $pagination, 'specialGroup' => $specialGroup->getResult());
     }
 
+
     /**
-     * @Route("/{slug}")
+     * @Route("/chuyen-muc/{slug}")
+     * @Template()
      */
-    public function routAction($slug)
+    public function groupAction($slug)
     {
         if($slug == 'admin') return $this->redirect($this->generateUrl('article'));
 
-        $em    = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
-        /*--- setup group page ---*/
         $group = $em->getRepository('CMSAdminBundle:GroupArticle')->findOneBy(
             array('url' => $slug, 'isActive' => 1)
         );
-        if(count($group)){
-            $articles = $em->getRepository('CMSAdminBundle:Article')->findByGroupSql(
-                $group->getId()
-            );
-            return $this->render('CMSMainBundle:Default:group.html.twig',
-                array('articles' => $articles->getResult(), 'groupName' => $group->getName())
-            );
-        }
-        /*--- End setup group page ---*/
 
-
-        /*---- setup article page ---*/
-        $article = $em->getRepository('CMSAdminBundle:Article')->findOneBy(
-            array('url' => $slug, 'isActive' => 1)
+        $query = $em->getRepository('CMSAdminBundle:Article')->findByGroupSql(
+            $group->getId()
         );
-        if(count($article)){
-            $related = array();
-            $idGroup = $article->getGroupArticle()->getId();
 
-            if($idGroup)
-                $related = $em->getRepository('CMSAdminBundle:Article')->findRelatedSql($idGroup, $article->getId());
+        //Pager
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $this->get('request')->query->get('page', 1)/*page number*/,
+            5/*limit per page*/
+        );
+        $pagination->setTemplate('CMSMainBundle:Default:pager.html.twig');
 
-            $specials = $article->getSpecialGroupArticle();
-            $listSpecial = array();
-            if(count($specials)){
-                foreach($specials as $special){
-                    $listSpecial[] = $special->getId();
-                }
+        return array('pagination' => $pagination, 'groupName' => $group->getName());
+
+    }
+
+    /**
+     * @Route("/chuyen-muc/{slugGroup}/{slugArticle}")
+     * @Template()
+     */
+    public function articleAction($slugGroup, $slugArticle)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $article = $em->getRepository('CMSAdminBundle:Article')->findOneBy(
+            array('url' => $slugArticle, 'isActive' => 1)
+        );
+
+        $related = array();
+        $idGroup = $article->getGroupArticle()->getId();
+
+        if($idGroup)
+            $related = $em->getRepository('CMSAdminBundle:Article')->findRelatedSql($idGroup, $article->getId());
+
+        $specials = $article->getSpecialGroupArticle();
+        $listSpecial = array();
+        if(count($specials)){
+            foreach($specials as $special){
+                $listSpecial[] = $special->getId();
             }
-
-            $article->setViews($article->getViews()+1);
-            $em->flush();
-            return $this->render('CMSMainBundle:Default:article.html.twig',
-                array('article' => $article, 'listSpecial' => $listSpecial, 'related' => $related->getResult())
-            );
         }
-        /*---- End setup article page ---*/
+
+        $article->setViews($article->getViews()+1);
+        $em->flush();
+        return $this->render('CMSMainBundle:Default:article.html.twig',
+            array('article' => $article, 'listSpecial' => $listSpecial, 'related' => $related->getResult())
+        );
+    }
+
+    /**
+     * @Route("/tim-kiem", name="cms_main_search")
+     * @Template()
+     */
+    public function searchAction()
+    {
+        $keyword = $this->get('request')->query->get('tu-khoa', '');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->getRepository('CMSAdminBundle:Article')->findByKeywordSql(
+            $keyword
+        );
+        $result = count($query->getResult());
+        //Pager
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $this->get('request')->query->get('page', 1)/*page number*/,
+            5/*limit per page*/
+        );
+        $pagination->setTemplate('CMSMainBundle:Default:pager.html.twig');
+
+        return array('pagination' => $pagination, 'result' => $result);
+
     }
 
     /**

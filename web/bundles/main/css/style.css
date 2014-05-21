@@ -150,12 +150,44 @@ a:hover{
 .nav-top {
     background-color: #7d7d7d;
 }
+.nav-top .container{
+    position: relative;
+}
 
 /* Nav links */
+.blog-nav{
+    max-width: 880px;
+    height: 40px;
+    overflow: hidden;
+    float: left;
+}
+.search{
+    margin-left: 5px;
+    float: left;
+    padding: 6px;
+
+}
+.search-form{
+    background: none repeat scroll 0 0 #7D7D7D;
+    padding: 10px;
+    position: absolute;
+    right: 0;
+    top: -48px;
+    display: none;
+}
+.search-form label{
+    color: #ffffff;
+    min-width: 80px;
+}
+.search-form input{
+    padding: 5px;
+    height: 28px;
+    margin-right: 10px;
+}
 .blog-nav-item {
     position: relative;
     display: inline-block;
-    padding: 10px 15px 10px 10px;
+    padding: 10px 12px 10px 8px;
     font: bold 15px "MyriadPro-Regular";
     color: #fff;
     background: url("../img/slash.png")no-repeat right;
@@ -344,4 +376,15 @@ a:hover{
     border-top: 1px solid #ebebeb;
     color: #595251;
     font: 12px "MyriadPro-Regular"
+}
+.scroll-top{
+    position: fixed;
+    right: 40px;
+    bottom: 100px;
+    cursor: pointer;
+    display: none;
+}
+.list-new{
+    position: absolute;
+    top: 0;
 }

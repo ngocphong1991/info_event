@@ -1,0 +1,32 @@
+{% if pageCount > 1 %}
+    <ul class="pagination pagination-custom">
+        {% if first is defined and current != first %}
+            <li class="first">
+                <a href="{{ path(route, query|merge({(pageParameterName): first})) }}">Đầu</a>
+            </li>
+        {% else %}
+            <li class="disabled"><span>Đầu</span></li>
+        {% endif %}
+
+
+        {% for page in pagesInRange %}
+            {% if page != current %}
+                <li>
+                    <a href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+                </li>
+            {% else %}
+                <li class="active">
+                    <span>{{ page }} <span class="sr-only">(current)</span></span>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if last is defined and current != last %}
+            <li class="last">
+                <a href="{{ path(route, query|merge({(pageParameterName): last})) }}">Cuối</a>
+            </li>
+        {% else %}
+            <li class="disabled"><span>Cuối</span></li>
+        {% endif %}
+    </ul>
+{% endif %}

@@ -21,7 +21,7 @@
                     <h4>Bài viết liên quan</h4>
                     <ul>
                         {% for article in related %}
-                        <li><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a></li>
+                        <li><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ article.groupArticle.url }}/{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -31,17 +31,6 @@
                     <span>Dữ liệu đang được cập nhật</span>
                 </div><!-- /.blog-post -->
             {% endif %}
-            <!--
-            <ul class="pagination pagination-custom">
-                <li class="disabled"><span>Đầu</span></li>
-                <li class="active"><span>1 <span class="sr-only">(current)</span></span></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">Cuối</a></li>
-            </ul>
--->
         </div><!-- /.blog-main -->
         {{ render(controller("CMSMainBundle:Default:rightSlideBar", {'cpc': true, 'listSpecial': listSpecial}))}}
     </div><!-- /.row -->
