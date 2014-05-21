@@ -33,7 +33,11 @@ class ArticleType extends AbstractType
                         )
                 )
             )
-            ->add('url')
+            ->add('url', null, array(
+                'label_attr' => array(
+                    'class' => 'control-label'
+                ),
+            ))
             ->add('groupArticle', null, array(
                         'empty_value' => 'Choose your Article Group',
                         'empty_data'  => null,

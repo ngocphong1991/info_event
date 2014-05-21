@@ -256,6 +256,7 @@ a:hover{
 }
 .sidebar-module .sidebar-best{padding: 0; margin: 0}
 .sidebar-module .sidebar-best li{list-style: none; padding: 10px 15px; background: url("../img/dot.png") repeat-x bottom}
+.sidebar-module .sidebar-best li:last-child{background: none}
 .sidebar-module .sidebar-best a{color: #484747}
 .sidebar-module .sidebar-best a:hover{color: #000000}
 .view-best{width: 330px}
@@ -281,7 +282,7 @@ a:hover{
     font: 14px "MyriadPro-Regular";
 }
 .blog-post-image{text-align: center}
-.blog-post-image img{max-width: 100%}
+.blog-post-image img{max-width: 90%}
 .blog-post-description{text-align: left; padding: 10px 0; font: 14px "MyriadPro-Regular"}
 .blog-post.article{border: none}
 .blog-post-view-more{text-align: right; padding: 0 10px}
@@ -305,6 +306,20 @@ a:hover{
 .pagination-custom > li > a:hover{
     color: #817e7e;
 }
+.related-post{ margin-left: 32px; padding-top: 15px; border-top: 1px solid #FDB813; margin-bottom: 50px}
+.related-post ul{margin: 0; padding: 0;max-width: 400px;}
+.related-post h4{font: bold 14px "MyriadPro-Regular"; text-transform: uppercase}
+.related-post li{
+    background: url("../img/dot.png") repeat-x scroll center bottom;
+    list-style: none outside none;
+    padding: 5px 0px 10px;
+}
+.related-post li:last-child{background: none}
+.related-post li a{
+    color: #484747;
+    font: 14px "MyriadPro-Regular";
+}
+.related-post li a:hover{color: #000000}
 /*
 * Footer
 */

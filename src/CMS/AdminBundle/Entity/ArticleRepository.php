@@ -17,16 +17,27 @@ class ArticleRepository extends EntityRepository
     {
         return $this->getEntityManager()
             ->createQuery(
-                'SELECT a FROM CMSAdminBundle:Article a ORDER BY a.views DESC'
+                'SELECT a FROM CMSAdminBundle:Article a WHERE a.isActive = 1 ORDER BY a.views DESC'
             )->setMaxResults(10);
+    }
+
+    public function findRelatedSql($idGroup, $idArticle)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT a FROM CMSAdminBundle:Article a WHERE a.id != :idArticle and a.idGroupArticle = :idGroup AND a.isActive = 1 ORDER BY a.dateCreate DESC'
+            )
+            ->setParameter('idGroup', $idGroup)
+            ->setParameter('idArticle', $idArticle)
+            ->setMaxResults(10);
     }
 
     public function findNewestSql()
     {
         return $this->getEntityManager()
             ->createQuery(
-                'SELECT a FROM CMSAdminBundle:Article a WHERE CURRENT_TIME() >= a.dateStart AND a.isActive = 1 ORDER BY a.dateCreate DESC'
-            );
+                'SELECT a FROM CMSAdminBundle:Article a WHERE :dateNow >= a.dateStart AND a.isActive = 1 ORDER BY a.dateCreate DESC'
+            )->setParameter('dateNow', date('Y-m-d H:i:s'));
     }
 
     public function findByKeywordSql($keyword = '')

@@ -6,13 +6,26 @@
         <div class="col-sm-8 blog-main">
             {% if article %}
                 <div class="blog-post article">
-                    <h2 class="blog-post-title"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a></h2>
+                    <h2 class="blog-post-title">{{ article.title }}</h2>
                     <p class="blog-post-meta">{% if article.datecreate %}{{ article.datecreate|date('H:i d/m/Y') }}{% endif %}</p>
 
                     <div class="blog-post-description">
                         {{ article.description|raw('html') }}
                     </div>
+                    <div id="comments">
+                        <fb:comments href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ article.url }}" width="600" numposts="5" colorscheme="light"></fb:comments>
+                    </div>
                 </div>
+                {% if related|length %}
+                <div class="related-post">
+                    <h4>Bài viết liên quan</h4>
+                    <ul>
+                        {% for article in related %}
+                        <li><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
             {% else %}
                 <div class="alert">
                     <span>Dữ liệu đang được cập nhật</span>
@@ -30,6 +43,7 @@
             </ul>
 -->
         </div><!-- /.blog-main -->
-        {{ render(controller("CMSMainBundle:Default:rightSlideBar", {'cpc': true}))}}
+        {{ render(controller("CMSMainBundle:Default:rightSlideBar", {'cpc': true, 'listSpecial': listSpecial}))}}
     </div><!-- /.row -->
+
 {% endblock %}

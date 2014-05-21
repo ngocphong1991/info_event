@@ -7,37 +7,39 @@
     </div>
     {% endif %}
     {% for entity in specials %}
-        {% if loop.index == 1 %}
-            <div class="sidebar-module">
-                <h4>{{ entity.name }}</h4>
-                {% for article in entity.articles %}
-                <div class="sidebar-half">
-                    <div class="sidebar-img">
-                        <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ article.url }}" title="{{ article.title }}">
-                            <img src="{{ asset('uploads/article/145x145/') }}s_{{ article.image }}" alt="{{ article.title }}">
-                        </a>
+        {% if listSpecial|length == 0 or entity.id  not in listSpecial %}
+            {% if loop.index == 1 %}
+                <div class="sidebar-module">
+                    <h4>{{ entity.name }}</h4>
+                    {% for article in entity.articles %}
+                    <div class="sidebar-half">
+                        <div class="sidebar-img">
+                            <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ article.url }}" title="{{ article.title }}">
+                                <img src="{{ asset('uploads/article/145x145/') }}s_{{ article.image }}" alt="{{ article.title }}">
+                            </a>
+                        </div>
+                        <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a>
                     </div>
-                    <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <div class="sidebar-module">
-                <h4>{{ entity.name }}</h4>
-                {% for article in entity.articles %}
-                <div class="sidebar-full">
-                    <div class="sidebar-img">
-                        <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ article.url }}" title="{{ article.title }}">
-                            <img src="{{ asset('uploads/article/300x300/') }}m_{{ article.image }}" alt="{{ article.title }}">
-                        </a>
+            {% else %}
+                <div class="sidebar-module">
+                    <h4>{{ entity.name }}</h4>
+                    {% for article in entity.articles %}
+                    <div class="sidebar-full">
+                        <div class="sidebar-img">
+                            <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ article.url }}" title="{{ article.title }}">
+                                <img src="{{ asset('uploads/article/300x300/') }}m_{{ article.image }}" alt="{{ article.title }}">
+                            </a>
+                        </div>
+                        <div class="sidebar-description">
+                            <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ article.url }}" title="">{{ article.title }}</a>
+                            <p class="sidebar-date-time">{{ article.datecreate|date('d/m/Y') }}</p>
+                        </div>
                     </div>
-                    <div class="sidebar-description">
-                        <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ article.url }}" title="">{{ article.title }}</a>
-                        <p class="sidebar-date-time">{{ article.datecreate|date('d/m/Y') }}</p>
-                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
+            {% endif %}
         {% endif %}
     {% endfor %}
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,6 +33,16 @@
 </head>
 
 <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.0&appId=792431360769278";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
 <div class="header">
     <div class="container">
         <div class="logo"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" title="Home"><img src="{{ asset('bundles/main/img/logo.png') }}"></a></div>
@@ -85,9 +95,6 @@
 {% block javascripts %}{% endblock %}
 <script src="{{ asset('bundles/main/js/common.js') }}"></script>
 <script>
-    var $i = 0;
-    var flat = 0;
-    var $lenght = $(".blog-banner-main .flipper").length;
 
     $(document).ready(function(){
         /* --- Setup right slide bar scroll ---*/
@@ -95,50 +102,20 @@
         var $scrollDom = $('.blog-sidebar .view-best');
         $scrollDom.css('position','relative');
         var $viewTop = $scrollDom.offset().top;
+        var $viewBot = $('.footer').offset().top;
 
         // scroll event process
         $(window).scroll(function(){
             if($(this).scrollTop()>=$viewTop){
-                $scrollDom.css({position: 'fixed', top: '20px'});
+                if(($(this).scrollTop() + $scrollDom.height()) >= $viewBot){
+                    $scrollDom.css({position: 'relative', top: '0'});
+                }else $scrollDom.css({position: 'fixed', top: '20px'});
             }else{
                 $scrollDom.css({position: 'relative', top: '0'});
             }
         });
-        /* --- END Setup right slide bar scroll ---*/
-
-        // setup flip banner event
-        //$(".newest:eq(0)").addClass('active');
-        //setTimeout("counter($lenght)",3000);
     });
-/*
-    function counter(lenght)
-    {
-        $lenght = lenght;
-        if($i < $lenght){
-            var element = ".blog-banner-main .flipper:eq("+$i+")";
-            $(element).poFlip({
-                effect : 'random'
-            });
-            flat++;
-        }else{
-            $i = 0;
-            flat = 0;
-
-            var element = ".blog-banner-main .flipper:eq("+$i+")";
-            $(element).poFlip({
-                effect : 'random'
-            });
-            flat++;
-        }
-
-        if(flat==2){
-            var $newFeed = ".newest:eq("+$i+")";
-            $($newFeed).fadeOut().removeClass('active').next().fadeIn().addClass('active');
-            $i++;
-            flat = 0;
-        }
-        setTimeout("counter($lenght)",3000);
-    }*/
 </script>
+<div id="fb-root"></div>
 </body>
 </html>

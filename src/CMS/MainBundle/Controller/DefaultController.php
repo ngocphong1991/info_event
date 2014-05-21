@@ -40,21 +40,42 @@ class DefaultController extends Controller
 
         $em    = $this->getDoctrine()->getManager();
 
-        //setup group page
+        /*--- setup group page ---*/
         $group = $em->getRepository('CMSAdminBundle:GroupArticle')->findOneBy(
             array('url' => $slug, 'isActive' => 1)
         );
         if(count($group)) return $this->render('CMSMainBundle:Default:group.html.twig',
             array('group' => $group)
         );
+        /*--- End setup group page ---*/
 
-        // setup article page
+
+        /*---- setup article page ---*/
         $article = $em->getRepository('CMSAdminBundle:Article')->findOneBy(
             array('url' => $slug, 'isActive' => 1)
         );
-        if(count($article)) return $this->render('CMSMainBundle:Default:article.html.twig',
-            array('article' => $article)
-        );
+        if(count($article)){
+            $related = array();
+            $idGroup = $article->getGroupArticle()->getId();
+
+            if($idGroup)
+                $related = $em->getRepository('CMSAdminBundle:Article')->findRelatedSql($idGroup, $article->getId());
+
+            $specials = $article->getSpecialGroupArticle();
+            $listSpecial = array();
+            if(count($specials)){
+                foreach($specials as $special){
+                    $listSpecial[] = $special->getId();
+                }
+            }
+
+            $article->setViews($article->getViews()+1);
+            $em->flush();
+            return $this->render('CMSMainBundle:Default:article.html.twig',
+                array('article' => $article, 'listSpecial' => $listSpecial, 'related' => $related->getResult())
+            );
+        }
+        /*---- End setup article page ---*/
     }
 
     /**
@@ -74,7 +95,7 @@ class DefaultController extends Controller
      * @Route("/right")
      * @Template()
      */
-    public function rightSlideBarAction($cpc)
+    public function rightSlideBarAction($cpc, $listSpecial)
     {
         $specials = $this->getDoctrine()
             ->getRepository('CMSAdminBundle:SpecialGroupArticle')
@@ -85,6 +106,7 @@ class DefaultController extends Controller
             ->findViewBestSql();
 
         return array(
+                'listSpecial' => $listSpecial ? $listSpecial : array(),
                 'cpc' => isset($cpc) && $cpc ? $cpc : false,
                 'specials' => $specials->getResult(),
                 'viewBests' => $viewBest->getResult()

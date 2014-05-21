@@ -11,6 +11,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 use CMS\AdminBundle\Api\ImageResizeApi;
+use CMS\AdminBundle\Api\ConvertToSlugApi;
 
 /**
  * Article
@@ -49,6 +50,10 @@ class Article
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=false)
+     * @Assert\NotNull(
+     *  message = "The description content is not null."
+     * )
+     *
      */
     private $description;
 
@@ -62,7 +67,7 @@ class Article
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=255, nullable=false, unique=true)
+     * @ORM\Column(name="url", type="string", length=255, nullable=true, unique=true)
      */
     private $url;
 
@@ -245,21 +250,21 @@ class Article
      */
     public function setUrl($url)
     {
-        // Lower case the string and remove whitespace from the beginning or end
-        $str = trim(strtolower($url));
-
-        // Remove single quotes from the string
-        $str = str_replace("'", '', $str);
-
-        // Every character other than a-z, 0-9 will be replaced with a single dash (-)
-        $str = preg_replace("/[^a-z0-9.]+/", '-', $str);
-
-        // Remove any beginning or trailing dashes
-        $str = trim($str, '-');
-
-        $this->url = $str;
+        $slug = new ConvertToSlugApi($url);
+        $this->url = $slug->convert().'.html';
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setUrlValue()
+    {
+        if (!$this->getUrl())
+        {
+            $this->setUrl($this->title);
+        }
     }
 
     /**

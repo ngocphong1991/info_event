@@ -30,8 +30,13 @@
 
         "lists": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
+            console.log(size);
             return "<li>" +
               "<div class='btn-group'>" +
+                "<a class='btn" + size + "' data-wysihtml5-command='insertUnorderedList' title='" + locale.lists.left + "'><i class='icon-align-left'></i></a>" +
+                "<a class='btn" + size + "' data-wysihtml5-command='insertUnorderedList' title='" + locale.lists.center + "'><i class='icon-align-center'></i></a>" +
+                "<a class='btn" + size + "' data-wysihtml5-command='insertUnorderedList' title='" + locale.lists.right + "'><i class='icon-align-right'></i></a>" +
+                "<a class='btn" + size + "' data-wysihtml5-command='insertUnorderedList' title='" + locale.lists.justify + "'><i class='icon-align-justify'></i></a>" +
                 "<a class='btn" + size + "' data-wysihtml5-command='insertUnorderedList' title='" + locale.lists.unordered + "'><i class='icon-list'></i></a>" +
                 "<a class='btn" + size + "' data-wysihtml5-command='insertOrderedList' title='" + locale.lists.ordered + "'><i class='icon-th-list'></i></a>" +
                 "<a class='btn" + size + "' data-wysihtml5-command='Outdent' title='" + locale.lists.outdent + "'><i class='icon-indent-right'></i></a>" +
@@ -443,6 +448,10 @@
                 underline: "Underline"
             },
             lists: {
+                left: "Align Left",
+                center: "Align Center",
+                right: "Align Right",
+                justify: "Align Justify",
                 unordered: "Unordered list",
                 ordered: "Ordered list",
                 outdent: "Outdent",
