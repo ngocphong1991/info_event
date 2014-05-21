@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-sm-8 blog-banner-main">
                 {% for special in specialGroup %}
-                    <div class="live-tile" id="tile1" data-mode="flip">
+                    <div class="live-tile" data-mode="flip">
                         <div class="flip-front">
                             <a title="{{ special.name }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ special.url }}">
                                 <img class="full" alt="{{ special.name }}" src="{{ asset('uploads/group/145x145/') }}s_{{ special.image }}" >
@@ -22,7 +22,7 @@
             </div>
             <div class="col-sm-4 blog-banner-slide-bar">
                 {% for special in specialGroup %}
-                    <ul class="newest">
+                    <ul class="newest" id="group-{{ special.id }}">
                     {% for article in special.articles %}
                         {%  set count = special.articles|length %}
                         {% if loop.index > count - 2 %}
@@ -57,7 +57,7 @@
                 <p class="blog-post-view-more"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ entity.url }}" title="Xem tiếp">Xem tiếp</a></p>
             </div><!-- /.blog-post -->
             {% endfor %}
-            {{ knp_pagination_render(pagination) }}
+            <!--{{ knp_pagination_render(pagination) }}-->
             <ul class="pagination pagination-custom">
                 <li class="disabled"><span>Đầu</span></li>
                 <li class="active"><span>1 <span class="sr-only">(current)</span></span></li>
@@ -75,8 +75,6 @@
 {% block javascripts %}
     <script src="{{ asset('bundles/main/js/MetroJs.min.js') }}"></script>
     <script type="text/javascript">
-        window.log=function(){if(this.console){console.log(Array.prototype.slice.call(arguments));}};
-        jQuery.fn.log=function (msg){console.log("%s: %o", msg,this);return this;};
 
         var $liveTitle = $(".blog-banner-main .live-tile");
         var $length = $liveTitle.length;
@@ -87,13 +85,13 @@
         var timeOutFlipId;
         var timeOutSliderId;
         var $newFeed;
+        var idGroup;
 
         $(document).ready(function(){
             flip();
             sliderNewest();
         });
         function activeSlider($newFeed){
-            console.log($newFeed);
             $($newFeed).fadeOut().removeClass('active').next().fadeIn().addClass('active');
         }
 
@@ -103,6 +101,9 @@
                 setTimeout(function(){
                     $newFeed = ".newest:eq("+index+")";
                     $($newFeed).addClass('active').fadeIn().prev().fadeOut().removeClass('active');
+                    idGroup =  '#'+$('.newest.active').attr('id');
+                    $('.blog-nav .blog-nav-item').removeClass('active')
+                    $(idGroup).addClass('active');
                 }, delay);
             });
 

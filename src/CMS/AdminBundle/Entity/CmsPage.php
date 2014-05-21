@@ -5,15 +5,22 @@ namespace CMS\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+use CMS\AdminBundle\Api\ConvertToSlugApi;
+
 /**
  * CmsPage
  *
  * @ORM\Table(name="cms_page")
  * @ORM\Entity(repositoryClass="CMS\AdminBundle\Entity\CmsPageRepository")
- * @ORM\HasLifecycleCallbacks()
- *  * @UniqueEntity(
- *     fields={"title", "url"},
- *     message="This information is already in your database."
+ * @UniqueEntity(
+ *  fields={"title"},
+ *   errorPath="title",
+ *   message="This title is already in use, please chose another one."
+ * )
+ * @UniqueEntity(
+ *  fields={"url"},
+ *   errorPath="url",
+ *   message="This url is already in use, please chose another one."
  * )
  */
 class CmsPage
@@ -54,7 +61,7 @@ class CmsPage
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=255, nullable=false, unique=true)
+     * @ORM\Column(name="url", type="string", length=255, nullable=true, unique=true)
      */
     private $url;
 
@@ -185,21 +192,22 @@ class CmsPage
      */
     public function setUrl($url)
     {
-        // Lower case the string and remove whitespace from the beginning or end
-        $str = trim(strtolower($url));
-
-        // Remove single quotes from the string
-        $str = str_replace("'", '', $str);
-
-        // Every character other than a-z, 0-9 will be replaced with a single dash (-)
-        $str = preg_replace("/[^a-z0-9.]+/", '-', $str);
-
-        // Remove any beginning or trailing dashes
-        $str = trim($str, '-');
-
-        $this->url = $str;
+        $slug = new ConvertToSlugApi($url);
+        $this->url = $slug->convert();
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setUrlValue()
+    {
+        if (!$this->getUrl())
+        {
+            $slug = new ConvertToSlugApi($this);
+            $this->url = $slug->convert().'.html';
+        }
     }
 
     /**

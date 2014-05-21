@@ -20,8 +20,14 @@ use CMS\AdminBundle\Api\ConvertToSlugApi;
  * @ORM\Entity(repositoryClass="CMS\AdminBundle\Entity\GroupArticleRepository")
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(
- *     fields={"name", "url"},
- *     message="This information is exists in your database."
+ *  fields={"name"},
+ *   errorPath="name",
+ *   message="This name is already in use, please chose another one."
+ * )
+ * @UniqueEntity(
+ *  fields={"url"},
+ *   errorPath="url",
+ *   message="This url is already in use, please chose another one."
  * )
  */
 class GroupArticle
@@ -167,7 +173,7 @@ class GroupArticle
     public function setUrl($url)
     {
         $slug = new ConvertToSlugApi($url);
-        $this->url = $slug->convert().'.html';
+        $this->url = $slug->convert();
 
         return $this;
     }
@@ -189,7 +195,8 @@ class GroupArticle
     {
         if (!$this->getUrl())
         {
-            $this->setUrl($this->name);
+            $slug = new ConvertToSlugApi($this);
+            $this->url = $slug->convert().'.html';
         }
     }
 

@@ -20,8 +20,14 @@ use CMS\AdminBundle\Api\ConvertToSlugApi;
  * @ORM\Entity(repositoryClass="CMS\AdminBundle\Entity\ArticleRepository")
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(
- *     fields={"title", "url"},
- *     message="This information is already in your database."
+ *  fields={"title"},
+ *   errorPath="title",
+ *   message="This title is already in use, please chose another one."
+ * )
+ * @UniqueEntity(
+ *  fields={"url"},
+ *   errorPath="url",
+ *   message="This url is already in use, please chose another one."
  * )
  */
 class Article
@@ -251,7 +257,7 @@ class Article
     public function setUrl($url)
     {
         $slug = new ConvertToSlugApi($url);
-        $this->url = $slug->convert().'.html';
+        $this->url = $slug->convert();
 
         return $this;
     }
@@ -263,7 +269,8 @@ class Article
     {
         if (!$this->getUrl())
         {
-            $this->setUrl($this->title);
+            $slug = new ConvertToSlugApi($this);
+            $this->url = $slug->convert().'.html';
         }
     }
 

@@ -33,7 +33,11 @@ class CmsPageType extends AbstractType
                     )
                 )
             )
-            ->add('url')
+            ->add('url', null, array(
+                'label_attr' => array(
+                    'class' => 'control-label'
+                ),
+            ))
             ->add('keywords')
             ->add('isActive','choice', array(
                     'choices'   => CmsPage::getIsActiveTypes(),

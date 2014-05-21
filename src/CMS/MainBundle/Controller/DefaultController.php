@@ -44,9 +44,14 @@ class DefaultController extends Controller
         $group = $em->getRepository('CMSAdminBundle:GroupArticle')->findOneBy(
             array('url' => $slug, 'isActive' => 1)
         );
-        if(count($group)) return $this->render('CMSMainBundle:Default:group.html.twig',
-            array('group' => $group)
-        );
+        if(count($group)){
+            $articles = $em->getRepository('CMSAdminBundle:Article')->findByGroupSql(
+                $group->getId()
+            );
+            return $this->render('CMSMainBundle:Default:group.html.twig',
+                array('articles' => $articles->getResult(), 'groupName' => $group->getName())
+            );
+        }
         /*--- End setup group page ---*/
 
 

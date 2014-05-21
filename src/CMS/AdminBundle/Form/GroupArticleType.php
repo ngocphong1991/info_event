@@ -34,7 +34,11 @@ class GroupArticleType extends AbstractType
                     )
                 )
             )
-            ->add('url')
+            ->add('url', null, array(
+                'label_attr' => array(
+                    'class' => 'control-label'
+                ),
+            ))
             ->add('isActive','choice', array(
                         'choices'   => GroupArticle::getIsActiveTypes(),
                         'multiple'  => false,

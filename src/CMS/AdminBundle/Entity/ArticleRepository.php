@@ -32,6 +32,14 @@ class ArticleRepository extends EntityRepository
             ->setMaxResults(10);
     }
 
+    public function findByGroupSql($idGroup)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT a FROM CMSAdminBundle:Article a WHERE  a.idGroupArticle = :idGroup AND a.isActive = 1 ORDER BY a.dateCreate DESC'
+            )->setParameter('idGroup', $idGroup);
+    }
+
     public function findNewestSql()
     {
         return $this->getEntityManager()

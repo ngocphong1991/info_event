@@ -32,7 +32,7 @@ class ConvertToSlugApi
         $this->string = preg_replace("/(Đ)/", 'D', $this->string);
         $this->string = trim(strtolower($this->string));
         $this->string = str_replace("'", '', $this->string);
-        $this->string = preg_replace("/[^a-z0-9]+/", '-', $this->string);
+        $this->string = preg_replace("/[^a-z0-9.]+/", '-', $this->string);
         $this->string = trim($this->string, '-');
 
         return $this->string;

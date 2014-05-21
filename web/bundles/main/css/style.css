@@ -160,15 +160,18 @@ a:hover{
     color: #fff;
     background: url("../img/slash.png")no-repeat right;
 }
+.blog-nav .blog-nav-item:last-child{
+    background: none;
+}
 .blog-nav-item:hover,
 .blog-nav-item:focus {
-    color: #fff;
+    color: #000000;
     text-decoration: none;
 }
 
 /* Active state gets a caret at the bottom */
 .blog-nav .active {
-    color: #fff;
+    color: #000000;
 }
 
 
@@ -211,7 +214,7 @@ a:hover{
 .sidebar-module .sidebar-half .sidebar-img img{
     width: 100%;
 }
-.sidebar-module .sidebar-half:nth-child(3n){
+.sidebar-module .sidebar-half:nth-child(odd){
     margin-left: 10px;
 }
 .sidebar-module .sidebar-half a{
