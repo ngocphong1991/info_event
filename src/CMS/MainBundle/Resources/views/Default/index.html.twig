@@ -22,19 +22,19 @@
             </div>
             <div class="col-sm-4 blog-banner-slide-bar">
                 <div class="list-new">
-                {% for special in specialGroup %}
-                    <ul class="newest active" id="group-{{ special.id }}">
-                    {% for article in special.articles %}
-                        {%  set count = special.articles|length %}
-                        {% if loop.index > count - 2 %}
-                        <li>
-                            <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ special.url }}/{{ article.url }}" title="{{ article.title }}"><img src="{{ asset('uploads/article/300x300/') }}m_{{ article.image }}" alt="{{ article.title }}"></a>
-                            <a class="opacity" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ special.url }}/{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a>
-                        </li>
-                        {% endif %}
+                    {% for special in specialGroup %}
+                        <ul class="newest" id="group-{{ special.id }}">
+                            {% for article in special.articles %}
+                                {%  set count = special.articles|length %}
+                                {% if loop.index > count - 2 %}
+                                    <li>
+                                        <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ special.url }}/{{ article.url }}" title="{{ article.title }}"><img src="{{ asset('uploads/article/300x300/') }}m_{{ article.image }}" alt="{{ article.title }}"></a>
+                                        <a class="opacity" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ special.url }}/{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
                     {% endfor %}
-                    </ul>
-                {% endfor %}
                 </div>
             </div>
         </div>
@@ -45,19 +45,19 @@
         <div class="col-sm-8 blog-main">
 
             {% for entity in pagination %}
-            <div class="blog-post">
-                <h2 class="blog-post-title"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="{{ entity.title }}">{{ entity.title }}</a></h2>
-                <p class="blog-post-meta">{% if entity.datecreate %}{{ entity.datecreate|date('H:i d/m/Y') }}{% endif %}</p>
-                <div class="blog-post-image">
-                    <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="{{ entity.title }}">
-                        <img src="{{ asset('uploads/article/') }}{{ entity.image }}" alt="{{ entity.title }}">
-                    </a>
-                </div>
-                <div class="blog-post-description">
-                    {{ entity.sortDescription }} ....
-                </div>
-                <p class="blog-post-view-more"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="Xem tiếp">Xem tiếp</a></p>
-            </div><!-- /.blog-post -->
+                <div class="blog-post">
+                    <h2 class="blog-post-title"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="{{ entity.title }}">{{ entity.title }}</a></h2>
+                    <p class="blog-post-meta">{% if entity.datecreate %}{{ entity.datecreate|date('H:i d/m/Y') }}{% endif %}</p>
+                    <div class="blog-post-image">
+                        <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="{{ entity.title }}">
+                            <img src="{{ asset('uploads/article/') }}{{ entity.image }}" alt="{{ entity.title }}">
+                        </a>
+                    </div>
+                    <div class="blog-post-description">
+                        {{ entity.sortDescription }} ....
+                    </div>
+                    <p class="blog-post-view-more"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="Xem tiếp">Xem tiếp</a></p>
+                </div><!-- /.blog-post -->
             {% endfor %}
             {{ knp_pagination_render(pagination) }}
 
@@ -98,9 +98,9 @@
                     $newFeed = ".newest:eq("+index+")";
                     $top = 320*index;
                     $('.list-new').animate({top: -$top+'px'},"fast");
-                    //$($newFeed).addClass('active').fadeIn().prev().fadeOut().removeClass('active');
+                    $($newFeed).addClass('active').prev().removeClass('active');
                     idGroup =  '#'+$('.newest.active').attr('id');
-                    $('.blog-nav .blog-nav-item').removeClass('active')
+                    $('.blog-nav .blog-nav-item').removeClass('active');
                     $(idGroup).addClass('active');
                 }, delay);
             });
