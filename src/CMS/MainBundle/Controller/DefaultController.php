@@ -15,7 +15,26 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $em    = $this->getDoctrine()->getManager();
-        $query = $em->getRepository('CMSAdminBundle:Article')->findNewestSql();
+
+        //Setup slider group article
+        $specialGroup = $em->getRepository('CMSAdminBundle:GroupArticle')->findSpecialSql()->getResult();
+        $listSpecial = array();
+        $listArticleSpecial = array();
+        foreach($specialGroup as $special){
+            $articles = $em->getRepository('CMSAdminBundle:Article')->findNewestForSliderSql($special->getId())->getResult();
+            $idSpecial = $special->getId();
+            $listSpecial[$idSpecial]['id'] = $idSpecial;
+            $listSpecial[$idSpecial]['url'] = $special->getUrl();
+            foreach($articles as $art){
+                $listSpecial[$idSpecial]['articles'][] = $art;
+                $listArticleSpecial[] = $art->getId();
+            }
+        }
+        $listArticleSpecial = implode(',',$listArticleSpecial);
+
+        // get article for index page
+        if($listArticleSpecial) $query = $em->getRepository('CMSAdminBundle:Article')->findNewestNotSliderSql($listArticleSpecial);
+        else $query = $em->getRepository('CMSAdminBundle:Article')->findNewestSql();
 
         //Pager
         $paginator  = $this->get('knp_paginator');
@@ -26,12 +45,9 @@ class DefaultController extends Controller
         );
         $pagination->setTemplate('CMSMainBundle:Default:pager.html.twig');
 
-        $specialGroup = $em->getRepository('CMSAdminBundle:GroupArticle')->findSpecialSql();
-
         // parameters to template
-        return array('pagination' => $pagination, 'specialGroup' => $specialGroup->getResult());
+        return array('pagination' => $pagination, 'specialGroup' => $specialGroup, 'sliderGroups' => $listSpecial);
     }
-
 
     /**
      * @Route("/chuyen-muc/{slug}")
@@ -39,8 +55,6 @@ class DefaultController extends Controller
      */
     public function groupAction($slug)
     {
-        if($slug == 'admin') return $this->redirect($this->generateUrl('article'));
-
         $em = $this->getDoctrine()->getManager();
 
         $group = $em->getRepository('CMSAdminBundle:GroupArticle')->findOneBy(
@@ -121,6 +135,21 @@ class DefaultController extends Controller
 
         return array('pagination' => $pagination, 'result' => $result);
 
+    }
+
+    /**
+     * @Route("/{slug}")
+     * @Template()
+     */
+    public function cmsAction($slug){
+        if($slug == 'admin') return $this->redirect($this->generateUrl('article'));
+
+        $em = $this->getDoctrine()->getManager();
+        $cms = $em->getRepository('CMSAdminBundle:CmsPage')->findOneBy(
+            array('url' => $slug, 'isActive' => 1)
+        );
+
+        return array('cms' => $cms);
     }
 
     /**

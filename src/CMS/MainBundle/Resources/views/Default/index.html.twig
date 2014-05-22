@@ -5,16 +5,16 @@
     <div class="blog-banner">
         <div class="row">
             <div class="col-sm-8 blog-banner-main">
-                {% for special in specialGroup %}
+                {% for slider in specialGroup %}
                     <div class="live-tile" data-mode="flip">
                         <div class="flip-front">
-                            <a title="{{ special.name }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ special.url }}">
-                                <img class="full" alt="{{ special.name }}" src="{{ asset('uploads/group/145x145/') }}s_{{ special.image }}" >
+                            <a title="{{ slider.name }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ slider.url }}">
+                                <img class="full" alt="{{ slider.name }}" src="{{ asset('uploads/group/145x145/') }}s_{{ slider.image }}" >
                             </a>
                         </div>
                         <div class="flip-back">
-                            <a title="{{ special.name }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ special.url }}">
-                                <img class="full" alt="{{ special.name }}" src="{{ asset('uploads/group/145x145/') }}s_{{ special.imageActive }}" >
+                            <a title="{{ slider.name }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ slider.url }}">
+                                <img class="full" alt="{{ slider.name }}" src="{{ asset('uploads/group/145x145/') }}s_{{ slider.imageActive }}" >
                             </a>
                         </div>
                     </div>
@@ -22,16 +22,13 @@
             </div>
             <div class="col-sm-4 blog-banner-slide-bar">
                 <div class="list-new">
-                    {% for special in specialGroup %}
-                        <ul class="newest" id="group-{{ special.id }}">
-                            {% for article in special.articles %}
-                                {%  set count = special.articles|length %}
-                                {% if loop.index > count - 2 %}
-                                    <li>
-                                        <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ special.url }}/{{ article.url }}" title="{{ article.title }}"><img src="{{ asset('uploads/article/300x300/') }}m_{{ article.image }}" alt="{{ article.title }}"></a>
-                                        <a class="opacity" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ special.url }}/{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a>
-                                    </li>
-                                {% endif %}
+                    {% for slider in sliderGroups %}
+                        <ul class="newest" id="group-{{ slider.id }}">
+                            {% for article in slider.articles %}
+                                <li>
+                                    <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ slider.url }}/{{ article.url }}" title="{{ article.title }}"><img src="{{ asset('uploads/article/300x300/') }}m_{{ article.image }}" alt="{{ article.title }}"></a>
+                                    <a class="opacity" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ slider.url }}/{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a>
+                                </li>
                             {% endfor %}
                         </ul>
                     {% endfor %}

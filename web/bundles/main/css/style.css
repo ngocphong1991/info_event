@@ -387,3 +387,7 @@ a:hover{
     position: absolute;
     top: 0;
 }
+.cms{
+    border-bottom: none;
+    background: none;
+}

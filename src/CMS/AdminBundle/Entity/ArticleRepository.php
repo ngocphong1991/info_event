@@ -25,10 +25,11 @@ class ArticleRepository extends EntityRepository
     {
         return $this->getEntityManager()
             ->createQuery(
-                'SELECT a FROM CMSAdminBundle:Article a WHERE a.id != :idArticle and a.idGroupArticle = :idGroup AND a.isActive = 1 ORDER BY a.dateCreate DESC'
+                'SELECT a FROM CMSAdminBundle:Article a WHERE a.id != :idArticle and a.idGroupArticle = :idGroup AND :dateNow >= a.dateStart AND a.isActive = 1 ORDER BY a.dateCreate DESC'
             )
             ->setParameter('idGroup', $idGroup)
             ->setParameter('idArticle', $idArticle)
+            ->setParameter('dateNow', date('Y-m-d H:i:s'))
             ->setMaxResults(10);
     }
 
@@ -36,8 +37,9 @@ class ArticleRepository extends EntityRepository
     {
         return $this->getEntityManager()
             ->createQuery(
-                'SELECT a FROM CMSAdminBundle:Article a WHERE  a.idGroupArticle = :idGroup AND a.isActive = 1 ORDER BY a.dateCreate DESC'
-            )->setParameter('idGroup', $idGroup);
+                'SELECT a FROM CMSAdminBundle:Article a WHERE  a.idGroupArticle = :idGroup AND :dateNow >= a.dateStart AND a.isActive = 1 ORDER BY a.dateCreate DESC'
+            )->setParameter('idGroup', $idGroup)
+            ->setParameter('dateNow', date('Y-m-d H:i:s'));
     }
 
     public function findNewestSql()
@@ -46,6 +48,24 @@ class ArticleRepository extends EntityRepository
             ->createQuery(
                 'SELECT a FROM CMSAdminBundle:Article a WHERE :dateNow >= a.dateStart AND a.isActive = 1 ORDER BY a.dateCreate DESC'
             )->setParameter('dateNow', date('Y-m-d H:i:s'));
+    }
+
+    public function findNewestNotSliderSql($listId)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT a FROM CMSAdminBundle:Article a WHERE a.id NOT IN ('.$listId.') AND :dateNow >= a.dateStart AND a.isActive = 1 ORDER BY a.dateCreate DESC'
+            )
+            ->setParameter('dateNow', date('Y-m-d H:i:s'));
+    }
+
+    public function  findNewestForSliderSql($idGroup){
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT a FROM CMSAdminBundle:Article a WHERE  a.idGroupArticle = :idGroup AND :dateNow >= a.dateStart AND a.isActive = 1 ORDER BY a.dateCreate DESC'
+            )->setParameter('idGroup', $idGroup)
+            ->setParameter('dateNow', date('Y-m-d H:i:s'))
+            ->setMaxResults(2);
     }
 
     public function findByKeywordSql($keyword = '')

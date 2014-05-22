@@ -17,7 +17,7 @@ class GroupArticleRepository extends EntityRepository
     {
         return $this->getEntityManager()
             ->createQuery(
-                'SELECT g FROM CMSAdminBundle:GroupArticle g WHERE g.isSpecial = 1 ORDER BY g.id ASC'
+                'SELECT g FROM CMSAdminBundle:GroupArticle g WHERE g.isSpecial = 1 AND g.isActive = 1 ORDER BY g.id ASC'
             );
     }
 

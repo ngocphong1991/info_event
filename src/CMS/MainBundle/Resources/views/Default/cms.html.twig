@@ -1,0 +1,22 @@
+{% extends "CMSMainBundle::layout.html.twig" %}
+{% block title %}{{ cms.title }}{% endblock %}
+{% block content %}
+    <div class="row">
+
+        <div class="col-sm-8 blog-main">
+            {% if cms %}
+                <div class="blog-post cms">
+                    <div class="blog-post-description">
+                        {{ cms.description|raw('html') }}
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert">
+                    <span>Dữ liệu đang được cập nhật</span>
+                </div><!-- /.blog-post -->
+            {% endif %}
+        </div><!-- /.blog-main -->
+        {{ render(controller("CMSMainBundle:Default:rightSlideBar", {'cpc': true, 'listSpecial': false}))}}
+    </div><!-- /.row -->
+
+{% endblock %}

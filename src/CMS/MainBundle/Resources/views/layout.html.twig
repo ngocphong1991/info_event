@@ -99,42 +99,44 @@
 <script>
 
     $(document).ready(function(){
-        /* --- Setup right slide bar scroll ---*/
-        // define value
-        var $scrollDom = $('.blog-sidebar .view-best');
-        $scrollDom.css('position','relative');
-        var $viewTop = $scrollDom.offset().top;
-        var $viewBot = $('.footer').offset().top;
+        //Fix bug on chrome
+        $(window).load(function(){
+            /* --- Setup right slide bar scroll ---*/
+            // define value
+            var $scrollDom = $('.blog-sidebar .view-best');
+            $scrollDom.css('position','relative');
+            var $viewTop = $scrollDom.offset().top;
+            var $viewBot = $('.footer').offset().top;
 
-        // scroll event process
-        if(($viewTop + $scrollDom.height()) <  ($viewBot -100) ){
-            $(window).scroll(function(){
+            // scroll event process
+            if(($viewTop + $scrollDom.height()) <  ($viewBot -100) ){
+                $(window).scroll(function(){
 
-                if($(this).scrollTop() >= $(window).height()){
-                    $('.scroll-top').fadeIn('slow');
-                }else{
-                    $('.scroll-top').fadeOut('slow');
-                }
+                    if($(this).scrollTop() >= $(window).height()){
+                        $('.scroll-top').fadeIn('slow');
+                    }else{
+                        $('.scroll-top').fadeOut('slow');
+                    }
 
-                if($(this).scrollTop()>=$viewTop){
-                    if(($(this).scrollTop() + $scrollDom.height()) >= $viewBot){
+                    if($(this).scrollTop()>=$viewTop){
+                        if(($(this).scrollTop() + $scrollDom.height()) >= $viewBot){
+                            $scrollDom.css({position: 'relative', top: '0'});
+                        }else $scrollDom.css({position: 'fixed', top: '20px'});
+                    }else{
                         $scrollDom.css({position: 'relative', top: '0'});
-                    }else $scrollDom.css({position: 'fixed', top: '20px'});
-                }else{
-                    $scrollDom.css({position: 'relative', top: '0'});
-                }
+                    }
+                });
+            }
+
+            $('.scroll-top').click(function(){
+                $('html, body').animate({scrollTop:0},"slow")
             });
-        }
 
-        $('.scroll-top').click(function(){
-            $('html, body').animate({scrollTop:0},"slow")
+            $('#button-search').click(function(){
+                $('.search-form').fadeIn();
+                $('#keyword').focus();
+            })
         });
-
-        $('#button-search').click(function(){
-            $('.search-form').fadeIn();
-            $('#keyword').focus();
-        })
-
     });
 </script>
 <div id="fb-root"></div>
