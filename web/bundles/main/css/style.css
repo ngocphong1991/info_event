@@ -44,7 +44,7 @@ a:hover{
 * Banner animation
 */
 .wrapper{position: relative}
-.blog-banner-main{padding: 10px 0 15px 0; border-bottom: 2px solid #fdb813;}
+.blog-banner-main{padding: 10px 0 15px 0; border-bottom: 2px solid #fdb813; padding-left: 10px}
 .blog-banner-slide-bar{padding-left: 20px; padding-right: 0; height: 336px; overflow: hidden}
 .blog-banner-main .flipper{float: left; margin-left: 10px; margin-top: 10px}
 .flipper .flipper-1 img{
@@ -311,7 +311,6 @@ a:hover{
 }
 .blog-post-title a{color: #000000}
 .blog-post-meta {
-    margin-bottom: 20px;
     color: #000000;
     font: 14px "MyriadPro-Regular";
 }
@@ -340,7 +339,7 @@ a:hover{
 .pagination-custom > li > a:hover{
     color: #817e7e;
 }
-.related-post{ margin-left: 32px; padding-top: 15px; border-top: 1px solid #FDB813; margin-bottom: 50px}
+.related-post{ margin-left: 32px; padding-top: 15px; margin-bottom: 50px}
 .related-post ul{margin: 0; padding: 0;max-width: 400px;}
 .related-post h4{font: bold 14px "MyriadPro-Regular"; text-transform: uppercase}
 .related-post li{

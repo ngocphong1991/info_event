@@ -1,0 +1,5 @@
+services:
+    cms.twig.admin_extension:
+        class: CMS\AdminBundle\Twig\AdminExtension
+        tags:
+            - { name: twig.extension }
