@@ -72,7 +72,7 @@ class ArticleType extends AbstractType
                     'label_attr' => array(
                         'class' => 'control-label'
                     ),
-                    'required'  => false,
+                    'required'  => true,
                 )
             )
             ->add('specialGroupArticle', null, array(
