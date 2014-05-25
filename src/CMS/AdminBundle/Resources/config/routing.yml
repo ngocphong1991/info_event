@@ -28,11 +28,6 @@ cms_admin_role:
     type:     annotation
     prefix:   /role
 
-cms_admin_tag:
-    resource: "@CMSAdminBundle/Controller/TagController.php"
-    type:     annotation
-    prefix:   /tag
-
 cms_admin_specgrp:
     resource: "@CMSAdminBundle/Controller/SpecialGroupArticleController.php"
     type:     annotation

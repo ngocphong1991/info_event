@@ -121,24 +121,19 @@ class Article
      * @ORM\Column(name="is_active", type="smallint", length=1, nullable=false)
      */
     private $isActive;
-    
+
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="is_special", type="smallint", length=1, nullable=false)
+     * @ORM\Column(name="tags", type="string", length=500, nullable=true)
      */
-    private $isSpecial;
+    private $tags;
     
     /**
     * @ORM\ManyToOne(targetEntity="GroupArticle", inversedBy="articles")
     * @ORM\JoinColumn(name="id_group_article", referencedColumnName="id")
     */
     protected $groupArticle;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="articles")
-     */
-    private $tags;
 
     /**
      * @ORM\ManyToMany(targetEntity="SpecialGroupArticle", inversedBy="articles")
@@ -159,7 +154,6 @@ class Article
 
     public function __construct()
     {
-        $this->tags = new ArrayCollection();
         $this->specialGroupArticle = new ArrayCollection();
         $this->isActive = self::ACTIVE_NO;
         $this->isSpecial = self::ACTIVE_NO;
@@ -200,6 +194,29 @@ class Article
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set tags
+     *
+     * @param string $tags
+     * @return Article
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Get tags
+     *
+     * @return string
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 
     /**
@@ -437,45 +454,7 @@ class Article
             self::ACTIVE_NO => 'No'
         );
     }
-    
-    /**
-     * Set isSpecial
-     *
-     * @param string $isSpecial
-     * @return Article
-     */
-    public function setIsSpecial($isSpecial)
-    {
-        if (!in_array($isSpecial, array(self::SPECIAL_YES, self::SPECIAL_NO))) {
-            throw new \InvalidArgumentException("Invalid Special");
-        }
-        $this->isSpecial = $isSpecial;
 
-        return $this;
-    }
-
-    /**
-     * Get isSpecial
-     *
-     * @return string
-     */
-    public function getIsSpecial()
-    {
-        return $this->isSpecial;
-    }
-
-    /**
-     * Get isSpecialType
-     *
-     * @return array
-     */
-    public static function getIsSpecialTypes()
-    {
-        return array(
-            self::ACTIVE_YES => 'Yes',
-            self::ACTIVE_NO => 'No'
-        );
-    }
     /**
      * Set groupArticle
      *
@@ -671,40 +650,6 @@ class Article
             if(file_exists($thumb))
                 unlink($thumb);
         }
-    }
-
-    /**
-     * Add tags
-     *
-     * @param \CMS\AdminBundle\Entity\Tag $tags
-     * @return Article
-     */
-    public function addTag(\CMS\AdminBundle\Entity\Tag $tags)
-    {
-        $tags->addArticle($this);
-        $this->tags[] = $tags;
-
-        return $this;
-    }
-
-    /**
-     * Remove tags
-     *
-     * @param \CMS\AdminBundle\Entity\Tag $tags
-     */
-    public function removeTag(\CMS\AdminBundle\Entity\Tag $tags)
-    {
-        $this->tags->removeElement($tags);
-    }
-
-    /**
-     * Get tags
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTags()
-    {
-        return $this->tags;
     }
 
     /**

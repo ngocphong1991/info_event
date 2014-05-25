@@ -146,31 +146,6 @@ class MenuBuilder
                 $menu->addChild('Detail')->setCurrent(true);
                 break;
 
-            //tag menu
-            case 'tag':
-                $menu->addChild('Tag')->setCurrent(true);
-                break;
-            case 'tag_new':
-                $menu->addChild('Tag', array('route' => 'tag'));
-                $menu->addChild('New')->setCurrent(true);
-                break;
-            case 'tag_create':
-                $menu->addChild('Tag', array('route' => 'tag'));
-                $menu->addChild('New')->setCurrent(true);
-                break;
-            case 'tag_update':
-                $menu->addChild('Tag', array('route' => 'tag'));
-                $menu->addChild('Edit')->setCurrent(true);
-                break;
-            case 'tag_edit':
-                $menu->addChild('Tag', array('route' => 'tag'));
-                $menu->addChild('Edit')->setCurrent(true);
-                break;
-            case 'tag_show':
-                $menu->addChild('Tag', array('route' => 'tag'));
-                $menu->addChild('Detail')->setCurrent(true);
-                break;
-
             //special group menu
             case 'specgrp':
                 $menu->addChild('Special Group')->setCurrent(true);

@@ -13,12 +13,23 @@
                         {{ article.description|raw('html') }}
                     </div>
                     <div class="blog-post-tool">
-                        <div class="printer"><a href="javascript:window.print()" title="Máy in"><img alt="printer" src="{{ asset('bundles/main/img/printer.png') }}"></a></div>
+                        <div class="tool">
+                            <div class="like-face">
+                                <div class="fb-like" data-href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ article.groupArticle.url }}/{{ article.url }}" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                            </div>
+                            <div class="printer">
+                                <a href="javascript:window.print()" title="Máy in"><img alt="printer" src="{{ asset('bundles/main/img/printer.png') }}"></a>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
                         <div class="tags">
                             Từ khóa:
-                            {%  for tag in article.tags %}
-                            <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/tim-kiem?tu-khoa={{ tag.name }}" title="{{ tag.name }}">{{ tag.name }}</a>
-                            {% endfor %}
+                            {% if article.tags %}
+                                {% set listTag = article.tags|split(',') %}
+                                {%  for tag in listTag %}
+                                <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/tim-kiem?tu-khoa={{ tag }}" title="{{ tag }}">{{ tag }}</a>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                     <div id="comments">

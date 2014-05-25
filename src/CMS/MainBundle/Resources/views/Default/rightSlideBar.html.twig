@@ -21,6 +21,7 @@
                         <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ article.groupArticle.url }}/{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a>
                     </div>
                     {% endfor %}
+                    <div class="clear"></div>
                 </div>
             {% else %}
                 <div class="sidebar-module">
@@ -38,6 +39,7 @@
                         </div>
                     </div>
                     {% endfor %}
+                    <div class="clear"></div>
                 </div>
             {% endif %}
         {% endif %}
@@ -50,5 +52,6 @@
             <li><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ view.groupArticle.url }}/{{ view.url }}" title="{{ view.title }}">{{ view.title|cut(40) }}</a></li>
             {% endfor %}
         </ul>
+        <div class="clear"></div>
     </div>
 </div><!-- /.blog-sidebar -->

@@ -38,7 +38,7 @@
                </div>
                <!--END SIDEBAR TOGGLE-->
                <!-- BEGIN LOGO -->
-               <a class="brand" href="index.html">
+               <a class="brand" href="{{ path('article') }}">
                    <img src="{{ asset('bundles/admin/img/logo.png') }}" alt="HR" />
                </a>
                <!-- END LOGO -->
@@ -101,18 +101,11 @@
                       <li {% if app.request.get('_route') == 'specgrp_new' %}class="active"{% endif %}><a href="{{ path('specgrp_new') }}">New Special Group</a></li>
                   </ul>
               </li>
-              <li class="sub-menu">
-                  <a href="javascript:;">
+              <li {% if app.request.get('_route') == 'article' %}class="active sub-menu"{% endif %}  class="sub-menu">
+                  <a href="{{ path('article') }}">
                       <i class="icon-book"></i>
                       <span>Article</span>
-                      <span class="arrow"></span>
                   </a>
-                  <ul class="sub">
-                      <li {% if app.request.get('_route') == 'article' %}class="active"{% endif %}><a href="{{ path('article') }}">Articles</a></li>
-                      <li {% if app.request.get('_route') == 'article_new' %}class="active"{% endif %}><a href="{{ path('article_new') }}">New Article</a></li>
-                      <li {% if app.request.get('_route') == 'tag' %}class="active"{% endif %}><a href="{{ path('tag') }}">Tags</a></li>
-                      <li {% if app.request.get('_route') == 'tag_new' %}class="active"{% endif %}><a href="{{ path('tag_new') }}">New Tag</a></li>
-                  </ul>
               </li>
               <li class="sub-menu">
                   <a href="javascript:;">

@@ -16,12 +16,27 @@ class ArticleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('isActive','choice', array(
+                    'choices'   => Article::getIsActiveTypes(),
+                    'multiple'  => false,
+                    'expanded'  => true
+                )
+            )
             ->add('title')
             ->add('sortDescription', null, array(
                     'attr' => array(
                         'class' => 'span12',
                         'row' => 5,
                         'style' => 'min-height: 150px;'
+                    )
+                )
+            )
+            ->add('file', null, array('label' => 'Avatar',
+                    'attr' => array(
+                        'class' => 'default',
+                    ),
+                    'label_attr' => array(
+                        'class' => 'control-label hidden-phone'
                     )
                 )
             )
@@ -33,22 +48,31 @@ class ArticleType extends AbstractType
                         )
                 )
             )
+            ->add('tags',null, array(
+                'attr' => array(
+                    'class' => 'tags',
+                ),
+                'label_attr' => array(
+                    'class' => 'control-label'
+                )
+            ))
             ->add('url', null, array(
                 'label_attr' => array(
                     'class' => 'control-label'
                 ),
             ))
             ->add('groupArticle', null, array(
-                        'empty_value' => 'Choose your Article Group',
-                        'empty_data'  => null,
-                        'attr' => array(
-                            'class' => 'span4 chzn-select',
-                            'data-placeholder'=> 'Choose a Article Group',
-                            'tabindex' => '1',
-                        ),
-                        'label_attr' => array(
-                            'class' => 'control-label'
-                        ),
+                    'empty_value' => 'Choose your Article Group',
+                    'empty_data'  => null,
+                    'attr' => array(
+                        'class' => 'span4 chzn-select',
+                        'data-placeholder'=> 'Choose a Article Group',
+                        'tabindex' => '1',
+                    ),
+                    'label_attr' => array(
+                        'class' => 'control-label'
+                    ),
+                    'required'  => false,
                 )
             )
             ->add('specialGroupArticle', null, array(
@@ -62,41 +86,8 @@ class ArticleType extends AbstractType
                     'label_attr' => array(
                         'class' => 'control-label'
                     ),
+                    'required'  => false,
                 )
-            )
-            ->add('tags', null, array(
-                    'empty_value' => 'Add tags for Article',
-                    'empty_data'  => null,
-                    'attr' => array(
-                        'class' => 'span4 chzn-select',
-                        'data-placeholder'=> 'Add tags for Article',
-                        'tabindex' => '1',
-                    ),
-                    'label_attr' => array(
-                        'class' => 'control-label'
-                    ),
-                )
-            )
-            ->add('file', null, array('label' => 'Avatar',
-                        'attr' => array(
-                            'class' => 'default',
-                        ),
-                        'label_attr' => array(
-                            'class' => 'control-label hidden-phone'
-                        )
-                    )
-            )
-            ->add('isActive','choice', array(
-                        'choices'   => Article::getIsActiveTypes(),
-                        'multiple'  => false,
-                        'expanded'  => true
-                    )
-            )
-            ->add('isSpecial','choice', array(
-                        'choices'   => Article::getIsSpecialTypes(),
-                        'multiple'  => false,
-                        'expanded'  => true
-                    )
             )
             ->add('dateStart','datePicker', array())
         ;

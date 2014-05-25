@@ -74,7 +74,7 @@ class DefaultController extends Controller
         );
         $pagination->setTemplate('CMSMainBundle:Default:pager.html.twig');
 
-        return array('pagination' => $pagination, 'groupName' => $group->getName());
+        return array('pagination' => $pagination, 'groupName' => $group->getName(), 'idGroup' => $group->getId() );
 
     }
 
@@ -120,7 +120,7 @@ class DefaultController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $query = $em->getRepository('CMSAdminBundle:Article')->findByKeywordSql(
+        $query = $em->getRepository('CMSAdminBundle:Article')->findByKeywordFrontEndSql(
             $keyword
         );
 

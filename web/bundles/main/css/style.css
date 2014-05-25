@@ -44,8 +44,8 @@ a:hover{
 * Banner animation
 */
 .wrapper{position: relative}
-.blog-banner-main{padding: 10px 0 15px 0; border-bottom: 2px solid #fdb813; padding-left: 17px}
-.blog-banner-slide-bar{padding-left: 20px; margin-top: 14px; padding-right: 0; height: 315px; overflow: hidden}
+.blog-banner-main{padding: 12px 0 12px 0; border-bottom: 2px solid #fdb813; padding-left: 17px}
+.blog-banner-slide-bar{padding-left: 20px; margin-top: 15px; padding-right: 0; height: 315px; overflow: hidden}
 .blog-banner-main .flipper{float: left; margin-left: 10px; margin-top: 10px}
 .flipper .flipper-1 img{
     position:absolute;
@@ -53,6 +53,15 @@ a:hover{
     width:145px;
     height:145px;
 }
+.header .logo img{
+    width: 100%;
+}
+.header .banner{
+    width: 650px;
+    height: 90px;
+    overflow: hidden;
+}
+.header .banner img{width: 100%}
 .flipper .flipper-2 img{
     display:none;
     position:absolute;
@@ -117,7 +126,13 @@ a:hover{
 }
 .header .container{padding: 10px 0 10px 0}
 .header .container div{float: left}
-.header .logo{line-height: 90px; margin: 0 24px}
+.header .logo{
+    padding-top: 20px;
+    margin: 0 24px;
+    width: 260px;
+    height: 90px;
+    overflow: hidden;
+}
 /*
 * Desktop version
 */
@@ -164,9 +179,10 @@ a:hover{
 .search{
     margin-left: 5px;
     float: right;
-    padding: 6px;
+    padding: 6px 0;
 
 }
+.search img{margin-right: -5px}
 .search-form{
     background: none repeat scroll 0 0 #7D7D7D;
     padding: 10px;
@@ -225,7 +241,7 @@ a:hover{
 /* Sidebar modules for boxing content */
 .sidebar-module {
     padding: 0 15px;
-    margin: 0 -15px 15px;
+    margin: 0 -15px 10px;
     clear: both;
 }
 .sidebar-module h4{
@@ -315,17 +331,20 @@ a:hover{
     color: #000000;
     font: 14px "MyriadPro-Regular";
 }
-.blog-post-tool{font: 14px "MyriadPro-Regular"}
+.blog-post-tool{font: 14px "MyriadPro-Regular"; position: relative}
+.blog-post-tool .like-face, .blog-post-tool .printer{float: left}
+.blog-post-tool .printer{margin-left: 10px; position: relative}
+.blog-post-tool .printer a{position: absolute; top: -3px;}
 .blog-post-tool .tags{margin: 20px 0}
 .blog-post-tool .tags a{color: #000000; padding: 0 5px 2px; margin: 0 5px; border-radius: 5px; background: #d7d7d7}
 .blog-post-image{text-align: center}
 .blog-post-image img{max-width: 90%}
-.blog-post-description{text-align: left; padding: 10px 0; font: 14px "MyriadPro-Regular"}
+.blog-post-description{text-align: left; padding: 10px 0 25px; font: 14px "MyriadPro-Regular"; position: relative}
 .blog-post.article{border: none}
-.blog-post-view-more{text-align: right; padding: 0 10px}
+.blog-post-view-more{text-align: right; padding: 0 10px; position: absolute; bottom: 5px; right: 10px}
 .blog-post-view-more a{color: #ee2926; font: italic 14px "MyriadPro-Regular"}
 
-.pagination-custom{margin: 10px 10px 20px 30px; float: left;}
+.pagination-custom{margin: 10px 10px 20px 30px; float: right;}
 .pagination-custom > li:first-child > a, .pagination-custom > li:first-child > span, .pagination-custom > li:last-child > a, .pagination-custom > li:last-child > span{border-radius: 0}
 .pagination-custom > li > a, .pagination-custom > li > span{
     color: #000000;
@@ -343,7 +362,7 @@ a:hover{
 .pagination-custom > li > a:hover{
     color: #817e7e;
 }
-.related-post{ margin-left: 32px; padding-top: 15px; margin-bottom: 50px}
+.related-post{ margin-left: 32px; margin-bottom: 10px}
 .related-post ul{margin: 0; padding: 0;max-width: 400px;}
 .related-post h4{font: bold 14px "MyriadPro-Regular"; text-transform: uppercase}
 .related-post li{
@@ -400,3 +419,4 @@ a:hover{
     border-bottom: none;
     background: none;
 }
+.clear {clear: both; display: block; height: 0; overflow: hidden; visibility: hidden; width: 0;}

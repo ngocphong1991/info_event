@@ -18,7 +18,7 @@ class ArticleRepository extends EntityRepository
         return $this->getEntityManager()
             ->createQuery(
                 'SELECT a FROM CMSAdminBundle:Article a WHERE a.isActive = 1 ORDER BY a.views DESC'
-            )->setMaxResults(10);
+            )->setMaxResults(9);
     }
 
     public function findRelatedSql($idGroup, $idArticle)
@@ -30,7 +30,7 @@ class ArticleRepository extends EntityRepository
             ->setParameter('idGroup', $idGroup)
             ->setParameter('idArticle', $idArticle)
             ->setParameter('dateNow', date('Y-m-d H:i:s'))
-            ->setMaxResults(10);
+            ->setMaxResults(9);
     }
 
     public function findByGroupSql($idGroup)
@@ -74,6 +74,15 @@ class ArticleRepository extends EntityRepository
             ->createQuery(
                 "SELECT a FROM CMSAdminBundle:Article a  WHERE a.title LIKE :keyword ORDER BY a.dateCreate DESC"
             )->setParameter('keyword', '%'.$keyword.'%');
+    }
+
+    public function findByKeywordFrontEndSql($keyword = '')
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                "SELECT a FROM CMSAdminBundle:Article a  WHERE (a.title LIKE :keyword OR a.tags LIKE :keyword) AND :dateNow >= a.dateStart AND a.isActive = 1 ORDER BY a.dateCreate DESC"
+            )->setParameter('keyword', '%'.$keyword.'%')
+            ->setParameter('dateNow', date('Y-m-d H:i:s'));
     }
 }
 ?>

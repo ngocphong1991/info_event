@@ -30,3 +30,9 @@
         {{ render(controller("CMSMainBundle:Default:rightSlideBar", {'cpc': true, 'listSpecial': false}))}}
     </div><!-- /.row -->
 {% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+        var IdGroup = '#group-{{ idGroup }}';
+        $(IdGroup).addClass('active');
+    </script>
+{% endblock %}

@@ -9,6 +9,7 @@ use CMS\AdminBundle\Api\ConvertToSlugApi;
 
 /**
  * CmsPage
+ * @ORM\HasLifecycleCallbacks
  *
  * @ORM\Table(name="cms_page")
  * @ORM\Entity(repositoryClass="CMS\AdminBundle\Entity\CmsPageRepository")
@@ -205,7 +206,7 @@ class CmsPage
     {
         if (!$this->getUrl())
         {
-            $slug = new ConvertToSlugApi($this);
+            $slug = new ConvertToSlugApi($this->title);
             $this->url = $slug->convert().'.html';
         }
     }

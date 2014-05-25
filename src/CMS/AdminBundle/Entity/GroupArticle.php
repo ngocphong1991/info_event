@@ -195,7 +195,7 @@ class GroupArticle
     {
         if (!$this->getUrl())
         {
-            $slug = new ConvertToSlugApi($this);
+            $slug = new ConvertToSlugApi($this->name);
             $this->url = $slug->convert().'.html';
         }
     }

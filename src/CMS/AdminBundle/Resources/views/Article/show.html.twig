@@ -86,20 +86,6 @@
                         <span>{% if entity.isActive == 1 %}Yes{% else %}No{% endif %}</span>
                     </div>
                 </div>
-                <div class="control-group ">
-                    <label class="control-label">Is special</label>
-                    <div class="controls">
-                        <span>{% if entity.isSpecial == 1 %}Yes{% else %}No{% endif %}</span>
-                    </div>
-                </div>
-                {% if entity.tags|length %}
-                    <div class="control-group ">
-                        <label class="control-label">Tags</label>
-                        <div class="controls">
-                            <span>{% for tag in entity.tags %}<a href="{{ path('tag_show', { 'id': tag.id }) }}" title="{{tag.name}}">{{tag.name}}</a>, {% endfor %}</span>
-                        </div>
-                    </div>
-                {% endif %}
                 <div class="form-actions">
                     <a class="btn btn-danger" href="{{ path('article_edit', { 'id': entity.id }) }}">
                         Edit
