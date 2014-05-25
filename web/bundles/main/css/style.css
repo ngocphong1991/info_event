@@ -44,8 +44,8 @@ a:hover{
 * Banner animation
 */
 .wrapper{position: relative}
-.blog-banner-main{padding: 10px 0 15px 0; border-bottom: 2px solid #fdb813; padding-left: 10px}
-.blog-banner-slide-bar{padding-left: 20px; padding-right: 0; height: 336px; overflow: hidden}
+.blog-banner-main{padding: 10px 0 15px 0; border-bottom: 2px solid #fdb813; padding-left: 17px}
+.blog-banner-slide-bar{padding-left: 20px; margin-top: 14px; padding-right: 0; height: 315px; overflow: hidden}
 .blog-banner-main .flipper{float: left; margin-left: 10px; margin-top: 10px}
 .flipper .flipper-1 img{
     position:absolute;
@@ -79,7 +79,7 @@ a:hover{
 .ad{margin-top: 15px!important;}
 .blog-main img{max-width: 100%}
 .blog-banner-slide-bar .newest{
-    padding: 0; margin: 0; margin-top: 20px;
+    padding: 0; margin: 0; margin-bottom: 15px;
     min-height: 300px;
 }
 .blog-banner-slide-bar .newest.active{
@@ -87,7 +87,7 @@ a:hover{
 }
 .blog-banner-slide-bar .newest li{
     list-style: none;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     position: relative;
     width: 300px;
     height: 145px;
@@ -151,6 +151,7 @@ a:hover{
 }
 .nav-top .container{
     position: relative;
+    padding-right: 0;
 }
 
 /* Nav links */
@@ -162,7 +163,7 @@ a:hover{
 }
 .search{
     margin-left: 5px;
-    float: left;
+    float: right;
     padding: 6px;
 
 }
@@ -314,6 +315,9 @@ a:hover{
     color: #000000;
     font: 14px "MyriadPro-Regular";
 }
+.blog-post-tool{font: 14px "MyriadPro-Regular"}
+.blog-post-tool .tags{margin: 20px 0}
+.blog-post-tool .tags a{color: #000000; padding: 0 5px 2px; margin: 0 5px; border-radius: 5px; background: #d7d7d7}
 .blog-post-image{text-align: center}
 .blog-post-image img{max-width: 90%}
 .blog-post-description{text-align: left; padding: 10px 0; font: 14px "MyriadPro-Regular"}
@@ -321,7 +325,7 @@ a:hover{
 .blog-post-view-more{text-align: right; padding: 0 10px}
 .blog-post-view-more a{color: #ee2926; font: italic 14px "MyriadPro-Regular"}
 
-.pagination-custom{margin-top: 10px; margin-bottom: 15px; float: right; margin-right: 10px}
+.pagination-custom{margin: 10px 10px 20px 30px; float: left;}
 .pagination-custom > li:first-child > a, .pagination-custom > li:first-child > span, .pagination-custom > li:last-child > a, .pagination-custom > li:last-child > span{border-radius: 0}
 .pagination-custom > li > a, .pagination-custom > li > span{
     color: #000000;
@@ -363,18 +367,24 @@ a:hover{
     border-top: 1px solid #e5e5e5;
 }
 .nav-bot{background: #464646; border-bottom: 2px solid #fdb813}
+.nav-bot .container{padding: 0}
 .nav-bot .blog-nav-item{font-weight: normal; background: url("../img/slash-black.png") no-repeat scroll right center}
-.nav-main-bot{text-align: left; margin: 12px 150px}
-.nav-main-bot ul{float: left}
+.nav-main-bot{text-align: left; margin: 20px 117px}
+.nav-main-bot ul{float: left; margin: 0}
 .nav-main-bot ul li{list-style: none}
 .nav-main-bot ul li a{color: #636363; font: 14px "MyriadPro-Regular"}
 .nav-main-bot ul li a:hover{color: #000000}
 .footer .info{
-    padding: 10px 20px;
+    padding: 10px 0;
     border-top: 1px solid #ebebeb;
     color: #595251;
     font: 12px "MyriadPro-Regular"
 }
+.footer .home-footer{
+    background: url("../img/logo-footer.png") no-repeat -14px 0;
+    padding: 10px 80px;
+}
+.footer .info p{margin: 0}
 .scroll-top{
     position: fixed;
     right: 40px;

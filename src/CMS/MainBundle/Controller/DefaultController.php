@@ -123,6 +123,7 @@ class DefaultController extends Controller
         $query = $em->getRepository('CMSAdminBundle:Article')->findByKeywordSql(
             $keyword
         );
+
         $result = count($query->getResult());
         //Pager
         $paginator  = $this->get('knp_paginator');

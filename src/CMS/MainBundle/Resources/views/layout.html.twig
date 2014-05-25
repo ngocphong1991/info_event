@@ -62,27 +62,7 @@
 </div>
 
 <div class="footer">
-    <div class="nav-bot">
-        <div class="container">
-            <nav class="blog-nav">
-                <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" title="Home page"><img src="{{ asset('bundles/main/img/logo-footer.png') }}" alt="thonginsukien.info"></a>
-                <a class="blog-nav-item active" href="#">Home</a>
-                <a class="blog-nav-item" href="#">New features</a>
-                <a class="blog-nav-item" href="#">Press</a>
-                <a class="blog-nav-item" href="#">New hires</a>
-                <a class="blog-nav-item" href="#">About</a>
-            </nav>
-        </div>
-    </div>
-    <div class="footer-content container">
-        {{ render(controller("CMSMainBundle:Default:menu", {'position':'bot'}))}}
-        <div class="row info">
-            <p>Bản quyền © 2014 thongtinsukien.info<br>
-            Ghi rõ nguồn thongtinsukien.info khi phát hành lại thông tin từ website này.<br>
-            Website đang trong quá trình thử nghiệm, chờ cấp phép của Bộ Thông Tin và Truyền Thông
-            </p>
-        </div>
-    </div>
+    {{ render(controller("CMSMainBundle:Default:menu", {'position':'bot'}))}}
 </div>
 
 <div class="scroll-top">
@@ -127,15 +107,29 @@
                         $scrollDom.css({position: 'relative', top: '0'});
                     }
                 });
+            }else{
+                $(window).scroll(function(){
+
+                    if($(this).scrollTop() >= $(window).height()){
+                        $('.scroll-top').fadeIn('slow');
+                    }else{
+                        $('.scroll-top').fadeOut('slow');
+                    }
+                });
             }
 
             $('.scroll-top').click(function(){
                 $('html, body').animate({scrollTop:0},"slow")
             });
-
+            var $search = $('.search-form');
             $('#button-search').click(function(){
-                $('.search-form').fadeIn();
-                $('#keyword').focus();
+                var $display = $search.css('display');
+                if(!$display || $display == 'none'){
+                    $search.fadeIn();
+                    $('#keyword').focus();
+                }else{
+                    $search.fadeOut();
+                }
             })
         });
     });

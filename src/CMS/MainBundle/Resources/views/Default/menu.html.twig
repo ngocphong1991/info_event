@@ -19,12 +19,32 @@
 {% endif %}
 
 {% if position == 'bot' %}
-<div class="row nav-main-bot">
-    <ul>
-    {% for entity in menus %}
-        <li><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.url }}" title="{{ entity.name }}">{{ entity.name }}</a></li>
-        {% if loop.index % 4 == 0 %}</ul><ul>{% endif %}
-    {%  endfor %}
-    </ul>
-</div>
+    <div class="nav-bot">
+        <div class="container">
+            <nav class="blog-nav">
+                <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" class="home-footer" title="Home page">&nbsp;</a>
+                <a class="blog-nav-item active" href="#">Home</a>
+                <a class="blog-nav-item" href="#">New features</a>
+                <a class="blog-nav-item" href="#">Press</a>
+                <a class="blog-nav-item" href="#">New hires</a>
+                <a class="blog-nav-item" href="#">About</a>
+            </nav>
+        </div>
+    </div>
+    <div class="footer-content container">
+        <div class="row nav-main-bot">
+            <ul>
+                {% for entity in menus %}
+                <li><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.url }}" title="{{ entity.name }}">{{ entity.name }}</a></li>
+                {% if loop.index % 4 == 0 %}</ul><ul>{% endif %}
+                {%  endfor %}
+            </ul>
+        </div>
+        <div class="row info">
+            <p>Bản quyền © 2014 thongtinsukien.info<br>
+                Ghi rõ nguồn thongtinsukien.info khi phát hành lại thông tin từ website này.<br>
+                Website đang trong quá trình thử nghiệm, chờ cấp phép của Bộ Thông Tin và Truyền Thông
+            </p>
+        </div>
+    </div>
 {% endif %}

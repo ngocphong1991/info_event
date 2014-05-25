@@ -5,7 +5,7 @@
 
         <div class="col-sm-8 blog-main">
             {% if pagination|length %}
-                <h4 style="font: 16px 'MyriadPro-Regular'; padding-left: 32px; padding-bottom: 10px; border-bottom: 1px solid #FDB813 ">Có {{ result }} kết quả cho từ khóa <em>"{{ app.request.get('tu-khoa') }}"</em></h4><br>
+                <h4 style="font: 16px 'MyriadPro-Regular'; padding-left: 32px; padding-bottom: 10px; border-bottom: 1px solid #FDB813 ">Có {{ result }} kết quả cho từ khóa <em>"{{ app.request.get('tu-khoa') }}"</em></h4>
                 {% for entity in pagination %}
                     <div class="blog-post">
                         <h2 class="blog-post-title"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="{{ entity.title }}">{{ entity.title }}</a></h2>

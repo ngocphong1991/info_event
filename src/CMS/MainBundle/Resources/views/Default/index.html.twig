@@ -86,14 +86,14 @@
         function activeSlider($newFeed){
             $($newFeed).fadeOut().removeClass('active').next().fadeIn().addClass('active');
         }
-        var $heightSlide = 320*$('.list-new .newest').length;
+        var $heightSlide = 315*$('.list-new .newest').length;
         $('.list-new').css('height', $heightSlide+'px');
         function sliderNewest(){
             $(".blog-banner-slide-bar .newest").each(function(index, element){
                 var delay = index * roundTime;
                 setTimeout(function(){
                     $newFeed = ".newest:eq("+index+")";
-                    $top = 320*index;
+                    $top = 315*index;
                     $('.list-new').animate({top: -$top+'px'},"fast");
                     $($newFeed).addClass('active').prev().removeClass('active');
                     idGroup =  '#'+$('.newest.active').attr('id');
