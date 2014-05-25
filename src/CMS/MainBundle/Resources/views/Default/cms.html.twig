@@ -20,3 +20,10 @@
     </div><!-- /.row -->
 
 {% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        var IdPage = '#page-{{ cms.id }}';
+        $(IdPage).addClass('active');
+    </script>
+{% endblock %}

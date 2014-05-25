@@ -163,7 +163,11 @@ class DefaultController extends Controller
             ->getRepository('CMSAdminBundle:GroupArticle')
             ->findAll();
 
-        return array('menus' => $menus, 'position' => $position);
+        $cms = $this->getDoctrine()
+            ->getRepository('CMSAdminBundle:CmsPage')
+            ->findAll();
+
+        return array('menus' => $menus, 'cms' => $cms, 'position' => $position);
     }
 
     /**

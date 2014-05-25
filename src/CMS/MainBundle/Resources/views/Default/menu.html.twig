@@ -23,11 +23,9 @@
         <div class="container">
             <nav class="blog-nav">
                 <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" class="home-footer" title="Home page">&nbsp;</a>
-                <a class="blog-nav-item active" href="#">Home</a>
-                <a class="blog-nav-item" href="#">New features</a>
-                <a class="blog-nav-item" href="#">Press</a>
-                <a class="blog-nav-item" href="#">New hires</a>
-                <a class="blog-nav-item" href="#">About</a>
+                {% for page in cms  %}
+                    <a class="blog-nav-item" id="page-{{ page.id }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ page.url }}">{{ page.title }}</a>
+                {% endfor %}
             </nav>
         </div>
     </div>
