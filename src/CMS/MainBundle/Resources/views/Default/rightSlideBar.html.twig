@@ -49,7 +49,7 @@
         <h4>TIN XEM NHIỀU NHẤT</h4>
         <ul class="sidebar-best">
             {% for view in viewBests %}
-            <li><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ view.groupArticle.url }}/{{ view.url }}" title="{{ view.title }}">{{ view.title|cut(40) }}</a></li>
+            <li><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ view.groupArticle.url }}/{{ view.url }}" title="{{ view.title }}">{{ view.title|cut(38) }}</a></li>
             {% endfor %}
         </ul>
         <div class="clear"></div>
