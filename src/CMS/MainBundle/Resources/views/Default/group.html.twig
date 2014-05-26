@@ -15,9 +15,9 @@
                         </a>
                     </div>
                     <div class="blog-post-description">
-                        {{ entity.sortDescription }} ....
+                        {{ entity.sortDescription|cut(600) }}
+                        <p class="blog-post-view-more"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="Xem tiếp">Xem tiếp</a></p>
                     </div>
-                    <p class="blog-post-view-more"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="Xem tiếp">Xem tiếp</a></p>
                 </div><!-- /.blog-post -->
                 {{ knp_pagination_render(pagination) }}
             {% endfor %}

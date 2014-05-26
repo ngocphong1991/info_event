@@ -167,6 +167,7 @@ a:hover{
 .nav-top .container{
     position: relative;
     padding-right: 0;
+    padding-left: 0;
 }
 
 /* Nav links */
@@ -207,6 +208,7 @@ a:hover{
     font: bold 15px "MyriadPro-Regular";
     color: #fff;
     background: url("../img/slash.png")no-repeat right;
+    background-size: 2px 16px;
 }
 .blog-nav .blog-nav-item:last-child{
     background: none;
@@ -319,7 +321,6 @@ a:hover{
     border-bottom: 1px solid #EBEBEB;
     padding-left: 32px;
     background: url("../img/flat.png") no-repeat left top;
-    margin-bottom: 10px;
 }
 .blog-post-title {
     margin-bottom: 5px;
@@ -344,7 +345,7 @@ a:hover{
 .blog-post-view-more{text-align: right; padding: 0 10px; position: absolute; bottom: 5px; right: 10px}
 .blog-post-view-more a{color: #ee2926; font: italic 14px "MyriadPro-Regular"}
 
-.pagination-custom{margin: 10px 10px 20px 30px; float: right;}
+.pagination-custom{margin: 0 0 10px 30px; float: right;}
 .pagination-custom > li:first-child > a, .pagination-custom > li:first-child > span, .pagination-custom > li:last-child > a, .pagination-custom > li:last-child > span{border-radius: 0}
 .pagination-custom > li > a, .pagination-custom > li > span{
     color: #000000;
@@ -361,6 +362,9 @@ a:hover{
 
 .pagination-custom > li > a:hover{
     color: #817e7e;
+}
+.pagination-custom li.last a{
+    margin: 0;
 }
 .related-post{ margin-left: 32px; margin-bottom: 10px}
 .related-post ul{margin: 0; padding: 0;max-width: 400px;}
