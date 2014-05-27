@@ -1,26 +1,10 @@
 /*
 * Globals
 */
-@font-face {
-    font-family: 'MyriadPro-Regular';
-    src: url('../fonts/MyriadPro-Regular.eot');
-    src: url('../fonts/MyriadPro-Regular.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/MyriadPro-Regular.woff') format('woff'),
-    url('../fonts/MyriadPro-Regular.ttf') format('truetype'),
-    url('../fonts/MyriadPro-Regular.svg#MyriadPro-Regular') format('svg');
-}
 
-@font-face {
-    font-family: 'MyriadPro-Bold-Cond';
-    src: url('../fonts/MyriadPro-BoldCond.eot');
-    src: url('../fonts/MyriadPro-BoldCond.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/MyriadPro-BoldCond.woff') format('woff'),
-    url('../fonts/MyriadPro-BoldCond.ttf') format('truetype'),
-    url('../fonts/MyriadPro-BoldCond.svg#MyriadPro-BoldCond') format('svg');
-}
 
 body {
-    font-family: "MyriadPro-Regular", Georgia, "Times New Roman", Times, serif;
+    font-family: Arial,Helvetica,sans-serif;
     color: #000000;
 }
 
@@ -31,7 +15,7 @@ h4, .h4,
 h5, .h5,
 h6, .h6 {
     margin-top: 0;
-    font-family: "MyriadPro-Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: Arial,Helvetica,sans-serif;
     font-weight: normal;
     color: #000000;
 }
@@ -44,8 +28,8 @@ a:hover{
 * Banner animation
 */
 .wrapper{position: relative}
-.blog-banner-main{padding: 12px 0 12px 0; border-bottom: 2px solid #fdb813; padding-left: 17px}
-.blog-banner-slide-bar{padding-left: 20px; margin-top: 15px; padding-right: 0; height: 315px; overflow: hidden}
+.blog-banner-main{padding: 12px 0 12px 0; padding-left: 18px}
+.blog-banner-slide-bar{padding-left: 20px; margin-top: 15px; padding-right: 0; height: 310px; overflow: hidden}
 .blog-banner-main .flipper{float: left; margin-left: 10px; margin-top: 10px}
 .flipper .flipper-1 img{
     position:absolute;
@@ -116,13 +100,14 @@ a:hover{
     height: 45px;
     opacity: 0.8;
     color: #ffffff;
-    font: bold 14px "MyriadPro-Regular";
+    font: bold 14px Arial,Helvetica,sans-serif;
     line-height: 30px;
 }
 .blog-main{
     padding-left: 0;
     padding-right: 0;
-    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #FDB813;
 }
 .header .container{padding: 10px 0 10px 0}
 .header .container div{float: left}
@@ -163,6 +148,7 @@ a:hover{
 
 .nav-top {
     background-color: #7d7d7d;
+    position: relative;
 }
 .nav-top .container{
     position: relative;
@@ -205,7 +191,7 @@ a:hover{
     position: relative;
     display: inline-block;
     padding: 10px 12px 10px 8px;
-    font: bold 15px "MyriadPro-Regular";
+    font: bold 15px Arial,Helvetica,sans-serif;
     color: #fff;
     background: url("../img/slash.png")no-repeat right;
     background-size: 2px 16px;
@@ -250,7 +236,7 @@ a:hover{
     background: url("../img/righ-core.png") no-repeat right #7D7D7D;
     padding: 10px;
     color: #ffffff;
-    font: bold 18px "MyriadPro-Regular";
+    font: bold 18px Arial,Helvetica,sans-serif;
 }
 .sidebar-module .sidebar-half{
     float: left;
@@ -269,7 +255,7 @@ a:hover{
 }
 .sidebar-module .sidebar-half a{
     color: #595251;
-    font: 13px "MyriadPro-Regular";
+    font: 13px Arial,Helvetica,sans-serif;
 }
 .sidebar-module .sidebar-half a:hover{
     color: #000000;
@@ -297,7 +283,7 @@ a:hover{
 }
 .sidebar-module .sidebar-full .sidebar-description a{
     color: #595251;
-    font: 14px "MyriadPro-Regular";
+    font: 14px Arial,Helvetica,sans-serif;
 }
 .sidebar-module .sidebar-full .sidebar-description a:hover{
     color: #000000;
@@ -305,10 +291,10 @@ a:hover{
 .sidebar-module .sidebar-full .sidebar-description .sidebar-date-time{
     text-align: right;
     color: #595251;
-    font: italic 12px "MyriadPro-Regular";
+    font: italic 12px Arial,Helvetica,sans-serif;
 }
 .sidebar-module .sidebar-best{padding: 0; margin: 0}
-.sidebar-module .sidebar-best li{list-style: none; padding: 10px 15px; background: url("../img/dot.png") repeat-x bottom}
+.sidebar-module .sidebar-best li{list-style: none; padding: 15px; background: url("../img/dot.png") repeat-x bottom}
 .sidebar-module .sidebar-best li:last-child{background: none}
 .sidebar-module .sidebar-best a{color: #484747}
 .sidebar-module .sidebar-best a:hover{color: #000000}
@@ -321,29 +307,30 @@ a:hover{
     border-bottom: 1px solid #EBEBEB;
     padding-left: 32px;
     background: url("../img/flat.png") no-repeat left top;
+    margin-bottom: 20px;
 }
 .blog-post-title {
     margin-bottom: 5px;
     text-transform: uppercase;
-    font: bold 18px "MyriadPro-Regular";
+    font: bold 18px Arial,Helvetica,sans-serif;
 }
 .blog-post-title a{color: #000000}
 .blog-post-meta {
     color: #000000;
-    font: 14px "MyriadPro-Regular";
+    font: 14px Arial,Helvetica,sans-serif;
 }
-.blog-post-tool{font: 14px "MyriadPro-Regular"; position: relative}
+.blog-post-tool{font: 14px Arial,Helvetica,sans-serif; position: relative}
 .blog-post-tool .like-face, .blog-post-tool .printer{float: left}
 .blog-post-tool .printer{margin-left: 10px; position: relative}
 .blog-post-tool .printer a{position: absolute; top: -3px;}
-.blog-post-tool .tags{margin: 20px 0}
+.blog-post-tool .tags{margin: 15px 0}
 .blog-post-tool .tags a{color: #000000; padding: 0 5px 2px; margin: 0 5px; border-radius: 5px; background: #d7d7d7}
 .blog-post-image{text-align: center}
 .blog-post-image img{max-width: 90%}
-.blog-post-description{text-align: left; padding: 10px 0 25px; font: 14px "MyriadPro-Regular"; position: relative}
-.blog-post.article{border: none}
+.blog-post-description{text-align: left; padding: 10px 0 15px; font: 14px Arial,Helvetica,sans-serif; position: relative}
+.blog-post.article{border: none; margin: 0}
 .blog-post-view-more{text-align: right; padding: 0 10px; position: absolute; bottom: 5px; right: 10px}
-.blog-post-view-more a{color: #ee2926; font: italic 14px "MyriadPro-Regular"}
+.blog-post-view-more a{color: #ee2926; font: italic 14px Arial,Helvetica,sans-serif}
 
 .pagination-custom{margin: 0 0 10px 30px; float: right;}
 .pagination-custom > li:first-child > a, .pagination-custom > li:first-child > span, .pagination-custom > li:last-child > a, .pagination-custom > li:last-child > span{border-radius: 0}
@@ -368,7 +355,7 @@ a:hover{
 }
 .related-post{ margin-left: 32px; margin-bottom: 10px}
 .related-post ul{margin: 0; padding: 0;max-width: 400px;}
-.related-post h4{font: bold 14px "MyriadPro-Regular"; text-transform: uppercase}
+.related-post h4{font: bold 14px Arial,Helvetica,sans-serif; text-transform: uppercase}
 .related-post li{
     background: url("../img/dot.png") repeat-x scroll center bottom;
     list-style: none outside none;
@@ -377,7 +364,7 @@ a:hover{
 .related-post li:last-child{background: none}
 .related-post li a{
     color: #484747;
-    font: 14px "MyriadPro-Regular";
+    font: 14px Arial,Helvetica,sans-serif;
 }
 .related-post li a:hover{color: #000000}
 /*
@@ -394,14 +381,14 @@ a:hover{
 .nav-bot .blog-nav-item{font-weight: normal; background: url("../img/slash-black.png") no-repeat scroll right center}
 .nav-main-bot{text-align: left; margin: 20px 117px}
 .nav-main-bot ul{float: left; margin: 0}
-.nav-main-bot ul li{list-style: none}
-.nav-main-bot ul li a{color: #636363; font: 14px "MyriadPro-Regular"}
+.nav-main-bot ul li{list-style: none; margin-bottom: 5px}
+.nav-main-bot ul li a{color: #636363; font: 14px Arial,Helvetica,sans-serif}
 .nav-main-bot ul li a:hover{color: #000000}
 .footer .info{
     padding: 10px 0;
     border-top: 1px solid #ebebeb;
     color: #595251;
-    font: 12px "MyriadPro-Regular"
+    font: 12px Arial,Helvetica,sans-serif
 }
 .footer .home-footer{
     background: url("../img/logo-footer.png") no-repeat -14px 0;
@@ -424,3 +411,14 @@ a:hover{
     background: none;
 }
 .clear {clear: both; display: block; height: 0; overflow: hidden; visibility: hidden; width: 0;}
+
+.view-best h4{margin: 0}
+
+.left-nav-bg{background: url("../img/left-core.png") no-repeat; padding: 10px 28px; position: absolute; left: 0; top: 0}
+.right-nav-bg{background: url("../img/righ-core.png") no-repeat; padding: 10px 29px; position: absolute; right: 0; top: 0}
+/*
+* fix css
+*/
+@media (max-width: 1090px){
+    .left-nav-bg, .right-nav-bg{display: none}
+}
