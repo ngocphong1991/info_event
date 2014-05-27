@@ -416,6 +416,7 @@ a:hover{
 
 .left-nav-bg{background: url("../img/left-core.png") no-repeat; padding: 10px 28px; position: absolute; left: 0; top: 0}
 .right-nav-bg{background: url("../img/righ-core.png") no-repeat; padding: 10px 29px; position: absolute; right: 0; top: 0}
+.blog-main.article{border: none}
 /*
 * fix css
 */
