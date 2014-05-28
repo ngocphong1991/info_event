@@ -111,6 +111,20 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/print/{slugGroup}/{slugArticle}")
+     * @Template()
+     */
+    public function printAction($slugGroup, $slugArticle)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $article = $em->getRepository('CMSAdminBundle:Article')->findOneBy(
+            array('url' => $slugArticle, 'isActive' => 1)
+        );
+
+        return array('article' => $article);
+    }
+
+    /**
      * @Route("/tim-kiem", name="cms_main_search")
      * @Template()
      */

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="http://st.f3.vnecdn.net/responsive/c/v19/general.css" media="all" />
+    <link rel="stylesheet" href="http://st.f3.vnecdn.net/responsive/c/v19/print.css" media="all">
+    <style>
+        .block_col_480
+        {
+            width: 100% !important;
+        }
+    </style>
+    <script src="http://st.f2.vnecdn.net/responsive/j/v21/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript">
+        /*var _gaq = _gaq || [];
+         _gaq.push(['_setAccount', 'UA-29374284-16']);
+         _gaq.push(['_trackPageview']);
+
+         (function() {
+         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+         })();*/
+    </script>
+    <script type="text/javascript">
+        /*(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+         ga('create', 'UA-29374284-17', 'vnexpress.net');
+         ga('send', 'pageview');*/
+    </script>
+</head>
+
+<body>
+<div id="print_page">
+
+    <div class="header_page">
+        <div class="header_left_logo left">
+            <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" title="thongtinsukien.info"><img src="{{ asset('bundles/main/img/logo.png') }}" alt="thongtinsukien.info"></a>
+        </div><!-- end header_left_logo -->
+        <div class="header_right_print right">
+            <a href="javascript:;" onclick="return window.print();" title=""><img href="http://st.f1.vnecdn.net/responsive/i/v5/graphics/icon_print.gif"><span>In trang</span> (Ctr + P)</a>
+        </div>
+
+    </div>
+    <div id="detail_page" class="width_common line_col">
+
+        <div class="box_width_common" id="box_details_news">
+            <div class="w670 left">
+                <div class="main_content_detail width_common">
+                    <div class="block_timer_share">
+                        <div class="block_timer left txt_666">{% if article.datecreate %}{{ article.datecreate|date('H:i d/m/Y') }}{% endif %} </div>
+                    </div>
+                    <div class="title_news">
+                        <h1>{{ article.title|stripslashes }}</h1>
+                    </div>
+                    <div class="width_common space_bottom_20">
+                        <div class="block_col_480">
+                            <div class="fck_detail width_common">
+                                {{ article.description|stripslashes|raw('html') }}
+                            </div>
+                        </div>
+                        <div class="clear">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end main_content_details -->
+</div> <!-- end print page -->
+</body>
+</html>

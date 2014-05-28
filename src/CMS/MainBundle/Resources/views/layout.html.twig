@@ -139,6 +139,12 @@
             })
         });
     });
+
+    function printContent() {
+        var url = window.location.href;
+        url = url.replace(/\/(chuyen-muc)\//, '/print/');
+        window.open(url, '_blank', 'left=300,top=0,width=550,height=600,toolbar=0,scrollbars=1,status=0');
+    }
 </script>
 <div id="fb-root"></div>
 </body>
