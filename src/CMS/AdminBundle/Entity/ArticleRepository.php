@@ -18,7 +18,7 @@ class ArticleRepository extends EntityRepository
         return $this->getEntityManager()
             ->createQuery(
                 'SELECT a FROM CMSAdminBundle:Article a WHERE a.isActive = 1 ORDER BY a.views DESC'
-            )->setMaxResults(9);
+            )->setMaxResults(8);
     }
 
     public function findRelatedSql($idGroup, $idArticle)
@@ -30,7 +30,7 @@ class ArticleRepository extends EntityRepository
             ->setParameter('idGroup', $idGroup)
             ->setParameter('idArticle', $idArticle)
             ->setParameter('dateNow', date('Y-m-d H:i:s'))
-            ->setMaxResults(9);
+            ->setMaxResults(5);
     }
 
     public function findByGroupSql($idGroup)
