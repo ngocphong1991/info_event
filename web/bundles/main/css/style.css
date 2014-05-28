@@ -194,7 +194,7 @@ a:hover{
     position: relative;
     display: inline-block;
     padding: 10px 12px 10px 8px;
-    font: bold 15px Arial,Helvetica,sans-serif;
+    font: bold 14px Arial,Helvetica,sans-serif;
     color: #fff;
     background: url("../img/slash.png")no-repeat right;
     background-size: 2px 16px;
@@ -299,12 +299,15 @@ a:hover{
 }
 .sidebar-module .sidebar-best{padding: 0; margin: 0}
 .sidebar-module .sidebar-best li{
-    height: 50px;
-    line-height: 48px;
+    height: 45px;
+    line-height: 43px;
     list-style: none outside none;
     overflow: hidden;
-    padding: 0 15px 15px;
+    padding: 0 10px 10px;
     background: url("../img/dot.png") repeat-x bottom
+}
+.sidebar-module .sidebar-best li:last-child{
+    background: none;
 }
 .sidebar-module .sidebar-best a{color: #484747}
 .sidebar-module .sidebar-best a:hover{color: #000000}
@@ -371,12 +374,15 @@ a:hover{
 .related-post h4{font: bold 16px Arial,Helvetica,sans-serif; margin-bottom: 0; text-transform: uppercase}
 .related-post li:first-child{padding-top: 0}
 .related-post li{
-    height: 50px;
-    line-height: 48px;
+    height: 45px;
+    line-height: 43px;
     list-style: none outside none;
     overflow: hidden;
-    padding: 0 15px 15px 0;
+    padding: 0 10px 10px 0;
     background: url("../img/dot.png") repeat-x bottom;
+}
+.related-post li:last-child{
+    background: none;
 }
 .related-post li a{
     color: #484747;
@@ -407,7 +413,7 @@ a:hover{
     font: 12px Arial,Helvetica,sans-serif
 }
 .footer .home-footer{
-    background: url("../img/logo-footer.png") no-repeat -14px 0;
+    background: url("../img/logo-footer.png") no-repeat -14px -2px;
     padding: 10px 80px;
 }
 .footer .info p{margin: 0}
