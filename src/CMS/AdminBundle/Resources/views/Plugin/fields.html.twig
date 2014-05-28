@@ -170,3 +170,49 @@
         </div>
     {% endspaceless %}
 {% endblock datePicker_widget %}
+
+{% block acl_widget %}
+    {% spaceless %}
+        {% set type = type|default('text') %}
+        <div class="controls">
+            <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="" {% endif %}><br>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                    <th>#</th>
+                    {% for resource in value %}
+                        <th>{{ resource.name }}</th>
+                    {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>VIEW</td>
+                        {% for resource in value %}
+                        <td><input type="checkbox" name="{{ resource.code }}['view']" value="1"></td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>ADD</td>
+                        {% for resource in value %}
+                            <td><input type="checkbox" name="{{ resource.code }}['add']" value="2"></td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>EDIT</td>
+                        {% for resource in value %}
+                            <td><input type="checkbox" name="{{ resource.code }}['edit']" value="4"></td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>DELETE</td>
+                        {% for resource in value %}
+                            <td><input type="checkbox" name="{{ resource.code }}['resource']" value="8"></td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+            {{ form_errors(form) }}
+        </div>
+    {% endspaceless %}
+{% endblock acl_widget %}

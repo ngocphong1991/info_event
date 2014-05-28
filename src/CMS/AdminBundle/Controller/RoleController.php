@@ -60,12 +60,15 @@ class RoleController extends Controller
      */
     public function createAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $resources = $em->getRepository('CMSAdminBundle:Resource')->findAllSql()->getResult();
+
         $entity = new Role();
-        $form = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity, $resources);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
@@ -90,9 +93,9 @@ class RoleController extends Controller
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createCreateForm(Role $entity)
+    private function createCreateForm(Role $entity, $resources)
     {
-        $form = $this->createForm(new RoleType(), $entity, array(
+        $form = $this->createForm(new RoleType($resources), $entity, array(
             'action' => $this->generateUrl('role_create'),
             'method' => 'POST',
         ));
@@ -109,8 +112,13 @@ class RoleController extends Controller
      */
     public function newAction()
     {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $resources = $em->getRepository('CMSAdminBundle:Resource')->findAllSql()->getResult();
+
         $entity = new Role();
-        $form   = $this->createCreateForm($entity);
+        $form   = $this->createCreateForm($entity, $resources);
 
         return array(
             'entity' => $entity,

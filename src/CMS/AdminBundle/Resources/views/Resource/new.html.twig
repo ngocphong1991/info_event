@@ -1,18 +1,17 @@
 {% extends "CMSAdminBundle::layout.html.twig" %}
 
+{% block title %}Resource - New{% endblock %}
+
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/assets/bootstrap-summernote/summernote.css') }}" />
     <link rel="stylesheet" href="{{ asset('bundles/admin/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css') }}" />
 {% endblock %}
-
-{% block title %}CMS Page - Edit{% endblock %}
 
 {% block content %}
     <div class="span12">
         <!-- BEGIN VALIDATION STATES-->
         <div class="widget orange">
             <div class="widget-title">
-                <h4><i class="icon-reorder"></i> Job Form</h4>
+                <h4><i class="icon-reorder"></i> Resource Form</h4>
             <span class="tools">
                <a class="icon-chevron-down" href="javascript:;"></a>
                <a class="icon-remove" href="javascript:;"></a>
@@ -29,15 +28,9 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript" src="{{ asset('bundles/admin/assets/bootstrap-summernote/summernote.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/admin/assets/bootstrap-toggle-buttons/static/js/jquery.toggle.buttons.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function(){
-            //Setup text area editor
-            $('textarea[id="cms_adminbundle_cmspage_description"]').summernote({
-                height: 300,   //set editable area's height
-                focus: true    //set focus editable area after Initialize summernote
-            });
 
             // setup button checkbox togged
             $('.metro-checkbox').toggleButtons({

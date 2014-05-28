@@ -37,3 +37,9 @@ cms_admin_cmspage:
     resource: "@CMSAdminBundle/Controller/CmsPageController.php"
     type:     annotation
     prefix:   /cmspage
+
+cms_admin_resource:
+    resource: "@CMSAdminBundle/Controller/ResourceController.php"
+    type:     annotation
+    prefix:   /resource
+

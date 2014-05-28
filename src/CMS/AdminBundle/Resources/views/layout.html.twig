@@ -128,6 +128,7 @@
                       <li {% if app.request.get('_route') == 'user_new' %}class="active"{% endif %}><a href="{{ path('user_new') }}">New User</a></li>
                       <li {% if app.request.get('_route') == 'role' %}class="active"{% endif %}><a href="{{ path('role') }}">Roles</a></li>
                       <li {% if app.request.get('_route') == 'role_new' %}class="active"{% endif %}><a href="{{ path('role_new') }}">New Role</a></li>
+                      <li {% if app.request.get('_route') == 'resource' %}class="active"{% endif %}><a href="{{ path('resource') }}">Resources</a></li>
                   </ul>
               </li>
               <li>

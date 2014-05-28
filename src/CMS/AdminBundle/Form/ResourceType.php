@@ -6,13 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class RoleType extends AbstractType
+class ResourceType extends AbstractType
 {
-    public  $resource;
-
-    public function __construct($resource){
-        $this->resource = $resource;
-    }
 
         /**
      * @param FormBuilderInterface $builder
@@ -21,21 +16,25 @@ class RoleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('isActive','checkbox', array(
+                    'required'  => false,
+                    'label_attr' => array(
+                        'class' => 'control-label'
+                    )
+                )
+            )
             ->add('name')
-            ->add('role')
-            ->add('resource','acl', array(
-                'data' => $this->resource
-            ))
+            ->add('code')
         ;
     }
-
+    
     /**
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'CMS\AdminBundle\Entity\Role'
+            'data_class' => 'CMS\AdminBundle\Entity\Resource'
         ));
     }
 
@@ -44,6 +43,6 @@ class RoleType extends AbstractType
      */
     public function getName()
     {
-        return 'role';
+        return 'cms_adminbundle_resource';
     }
 }

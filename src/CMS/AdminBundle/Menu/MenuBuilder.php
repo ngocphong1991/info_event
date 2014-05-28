@@ -121,9 +121,9 @@ class MenuBuilder
                 $menu->addChild('Detail')->setCurrent(true);
             break;
 
-            //tag menu
+            //cms page menu
             case 'cmspage':
-                $menu->addChild('Tag')->setCurrent(true);
+                $menu->addChild('CMS Page')->setCurrent(true);
                 break;
             case 'cmspage_new':
                 $menu->addChild('CMS Page', array('route' => 'cmspage'));
@@ -143,6 +143,31 @@ class MenuBuilder
                 break;
             case 'cmspage_show':
                 $menu->addChild('CMS Page', array('route' => 'cmspage'));
+                $menu->addChild('Detail')->setCurrent(true);
+                break;
+
+            //resource menu
+            case 'resource':
+                $menu->addChild('Resource')->setCurrent(true);
+                break;
+            case 'resource_new':
+                $menu->addChild('Resource', array('route' => 'resource'));
+                $menu->addChild('New')->setCurrent(true);
+                break;
+            case 'resource_create':
+                $menu->addChild('Resource', array('route' => 'resource'));
+                $menu->addChild('New')->setCurrent(true);
+                break;
+            case 'resource_update':
+                $menu->addChild('Resource', array('route' => 'resource'));
+                $menu->addChild('Edit')->setCurrent(true);
+                break;
+            case 'resource_edit':
+                $menu->addChild('Resource', array('route' => 'resource'));
+                $menu->addChild('Edit')->setCurrent(true);
+                break;
+            case 'resource_show':
+                $menu->addChild('Resource', array('route' => 'resource'));
                 $menu->addChild('Detail')->setCurrent(true);
                 break;
 

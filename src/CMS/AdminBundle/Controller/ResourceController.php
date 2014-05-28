@@ -7,38 +7,37 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use CMS\AdminBundle\Entity\Tag;
-use CMS\AdminBundle\Form\TagType;
+use CMS\AdminBundle\Entity\Resource;
+use CMS\AdminBundle\Form\ResourceType;
 
-
-class TagController extends Controller
+class ResourceController extends Controller
 {
 
     /**
-     * Lists all Tag entities.
+     * Lists all Resource entities.
      *
-     * @Route("/", name="tag")
+     * @Route("/", name="resource")
      * @Method("GET")
      * @Template()
      */
     public function indexAction()
     {
         $keyword = $this->get('request')->query->get('keyword', '');
-        $em = $this->getDoctrine()->getManager();
+        $em    = $this->getDoctrine()->getManager();
 
-        if(!$keyword) $query = $em->getRepository('CMSAdminBundle:Tag')->findAllSql();
+        if(!$keyword) $query = $em->getRepository('CMSAdminBundle:Resource')->findAllSql();
         else{//Searching
-            $query = $em->getRepository('CMSAdminBundle:Tag')->findByKeywordSql($keyword);
+            $query = $em->getRepository('CMSAdminBundle:Resource')->findByKeywordSql($keyword);
             $count = count($query->getResult());
 
             if($count)  $this->get('session')->getFlashBag()->add(
-                    'successfull',
-                    "Have $count result with keyword \"<em><b> $keyword </b></em>\""
-                );
+                'successfull',
+                "Have $count result with keyword \"<em><b> $keyword </b></em>\""
+            );
             else    $this->get('session')->getFlashBag()->add(
-                    'error',
-                    "No reult with keyword \"<em><b> $keyword </b></em>\""
-                );
+                'error',
+                "No reult with keyword \"<em><b> $keyword </b></em>\""
+            );
         }
 
         //Pager
@@ -53,15 +52,15 @@ class TagController extends Controller
         return array('pagination' => $pagination);
     }
     /**
-     * Creates a new Tag entity.
+     * Creates a new Resource entity.
      *
-     * @Route("/", name="tag_create")
+     * @Route("/create", name="resource_create")
      * @Method("POST")
-     * @Template("CMSAdminBundle:Tag:new.html.twig")
+     * @Template("CMSAdminBundle:Resource:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new Tag();
+        $entity = new Resource();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -72,10 +71,10 @@ class TagController extends Controller
 
             $this->get('session')->getFlashBag()->add(
                 'successfull',
-                'Insert new tag were successfull!'
+                'Insert Resource were successfull!'
             );
 
-            return $this->redirect($this->generateUrl('tag_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('resource_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -85,16 +84,16 @@ class TagController extends Controller
     }
 
     /**
-    * Creates a form to create a Tag entity.
+    * Creates a form to create a Resource entity.
     *
-    * @param Tag $entity The entity
+    * @param Resource $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createCreateForm(Tag $entity)
+    private function createCreateForm(Resource $entity)
     {
-        $form = $this->createForm(new TagType(), $entity, array(
-            'action' => $this->generateUrl('tag_create'),
+        $form = $this->createForm(new ResourceType(), $entity, array(
+            'action' => $this->generateUrl('resource_create'),
             'method' => 'POST',
         ));
 
@@ -102,15 +101,15 @@ class TagController extends Controller
     }
 
     /**
-     * Displays a form to create a new Tag entity.
+     * Displays a form to create a new Resource entity.
      *
-     * @Route("/new", name="tag_new")
+     * @Route("/new", name="resource_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new Tag();
+        $entity = new Resource();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -120,9 +119,9 @@ class TagController extends Controller
     }
 
     /**
-     * Finds and displays a Tag entity.
+     * Finds and displays a Resource entity.
      *
-     * @Route("/show/{id}", name="tag_show")
+     * @Route("/show/{id}", name="resource_show")
      * @Method("GET")
      * @Template()
      */
@@ -130,10 +129,10 @@ class TagController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('CMSAdminBundle:Tag')->find($id);
+        $entity = $em->getRepository('CMSAdminBundle:Resource')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Tag entity.');
+            throw $this->createNotFoundException('Unable to find Resource entity.');
         }
 
         return array(
@@ -142,9 +141,9 @@ class TagController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Tag entity.
+     * Displays a form to edit an existing Resource entity.
      *
-     * @Route("/edit/{id}", name="tag_edit")
+     * @Route("/edit/{id}", name="resource_edit")
      * @Method("GET")
      * @Template()
      */
@@ -152,10 +151,10 @@ class TagController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('CMSAdminBundle:Tag')->find($id);
+        $entity = $em->getRepository('CMSAdminBundle:Resource')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Tag entity.');
+            throw $this->createNotFoundException('Unable to find Resource entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -167,36 +166,36 @@ class TagController extends Controller
     }
 
     /**
-    * Creates a form to edit a Tag entity.
+    * Creates a form to edit a Resource entity.
     *
-    * @param Tag $entity The entity
+    * @param Resource $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Tag $entity)
+    private function createEditForm(Resource $entity)
     {
-        $form = $this->createForm(new TagType(), $entity, array(
-            'action' => $this->generateUrl('tag_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new ResourceType(), $entity, array(
+            'action' => $this->generateUrl('resource_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
         return $form;
     }
     /**
-     * Edits an existing Tag entity.
+     * Edits an existing Resource entity.
      *
-     * @Route("/update/{id}", name="tag_update")
+     * @Route("/update/{id}", name="resource_update")
      * @Method("PUT")
-     * @Template("CMSAdminBundle:Tag:edit.html.twig")
+     * @Template("CMSAdminBundle:Resource:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('CMSAdminBundle:Tag')->find($id);
+        $entity = $em->getRepository('CMSAdminBundle:Resource')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Tag entity.');
+            throw $this->createNotFoundException('Unable to find Resource entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -207,10 +206,10 @@ class TagController extends Controller
 
             $this->get('session')->getFlashBag()->add(
                 'successfull',
-                'Update this tag were successfull!'
+                'Update Resource were successfull!'
             );
 
-            return $this->redirect($this->generateUrl('tag_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('resource_edit', array('id' => $id)));
         }
 
         return array(
@@ -219,18 +218,18 @@ class TagController extends Controller
         );
     }
     /**
-     * Deletes a Tag entity.
+     * Deletes a Resource entity.
      *
-     * @Route("/del/{id}", name="tag_delete")
+     * @Route("/del/{id}", name="resource_delete")
      * @Method("GET")
      */
     public function deleteAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('CMSAdminBundle:Tag')->find($id);
+        $entity = $em->getRepository('CMSAdminBundle:Resource')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Tag entity.');
+            throw $this->createNotFoundException('Unable to find Resource entity.');
         }
 
         $em->remove($entity);
@@ -238,9 +237,9 @@ class TagController extends Controller
 
         $this->get('session')->getFlashBag()->add(
             'successfull',
-            'Delete tag were successfull!'
+            'Delete Resource were successfull!'
         );
 
-        return $this->redirect($this->generateUrl('tag'));
+        return $this->redirect($this->generateUrl('resource'));
     }
 }

@@ -30,6 +30,11 @@ class Role implements RoleInterface
     private $role;
 
     /**
+     * @ORM\Column(name="resource", type="string", length=255, unique=true)
+     */
+    private $resource;
+
+    /**
      * @ORM\ManyToMany(targetEntity="User", mappedBy="roles")
      */
     private $users;
@@ -85,6 +90,29 @@ class Role implements RoleInterface
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set resource
+     *
+     * @param string $resource
+     * @return Role
+     */
+    public function setResource($resource)
+    {
+        $this->resource = $resource;
+
+        return $this;
+    }
+
+    /**
+     * Get resource
+     *
+     * @return string
+     */
+    public function getResource()
+    {
+        return $this->resource;
     }
 
     /**
