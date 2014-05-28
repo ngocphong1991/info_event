@@ -9,6 +9,7 @@
 <![endif]-->
 <link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/assets/chosen-bootstrap/chosen/chosen.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/assets/bootstrap-summernote/summernote.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/admin/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css') }}" />
 {% endblock %}
 
 {% block title %}Article - New{% endblock %}
@@ -45,6 +46,7 @@
 <script type="text/javascript" src="{{ asset('bundles/admin/assets/jquery-tags-input/jquery.tagsinput.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/admin/assets/bootstrap-summernote/summernote.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/admin/assets/bootstrap/js/bootstrap-fileupload.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/admin/assets/bootstrap-toggle-buttons/static/js/jquery.toggle.buttons.js') }}"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         //Setup select box
@@ -75,10 +77,19 @@
             //			$('input.tags').tagsInput({interactive:false});
         });
 
+        // setup button checkbox togged
+        $('.metro-checkbox').toggleButtons({
+            height: 30,
+            font: {
+                'line-height': '30px',
+                'font-size': '18px',
+                'font-style': 'regular'
+            }
+        });
+
         //Setup text area editor
         $('textarea[id="article_description"]').html('&nbsp;').summernote({
-            height: 300,   //set editable area's height
-            focus: true    //set focus editable area after Initialize summernote
+            height: 300   //set editable area's height
         });
 
         //Setup date time picker

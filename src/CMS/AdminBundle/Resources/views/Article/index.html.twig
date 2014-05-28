@@ -50,8 +50,8 @@
                             <input class="checkboxes" type="checkbox">
                         </td>
                         <td class="hidden-phone">{{entity.id}}</td>
-                        <td>{{entity.title}}</td>
-                        <td>{% if entity.groupArticle %}{{entity.groupArticle.name}}{% endif %}</td>
+                        <td>{{entity.title|stripslashes}}</td>
+                        <td>{% if entity.groupArticle %}{{entity.groupArticle.name|stripslashes}}{% endif %}</td>
                         <td class="hidden-phone">{% if entity.datecreate %}{{ entity.datecreate|date('H:i:s d-m-Y') }}{% endif %}</td>
                         <td class="hidden-phone">{{entity.views}}</td>
                         <td>

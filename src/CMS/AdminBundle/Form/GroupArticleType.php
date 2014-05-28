@@ -15,6 +15,20 @@ class GroupArticleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('isActive','checkbox', array(
+                    'required'  => false,
+                    'label_attr' => array(
+                        'class' => 'control-label'
+                    )
+                )
+            )
+            ->add('isSpecial','checkbox', array(
+                    'required'  => false,
+                    'label_attr' => array(
+                        'class' => 'control-label'
+                    )
+                )
+            )
             ->add('name')
             ->add('file', null, array('label' => 'Avatar Group',
                     'attr' => array(
@@ -38,16 +52,6 @@ class GroupArticleType extends AbstractType
                 'label_attr' => array(
                     'class' => 'control-label'
                 ),
-            ))
-            ->add('isActive','choice', array(
-                        'choices'   => GroupArticle::getIsActiveTypes(),
-                        'multiple'  => false,
-                        'expanded'  => true
-                    ))
-            ->add('isSpecial','choice', array(
-                'choices'   => GroupArticle::getIsActiveTypes(),
-                'multiple'  => false,
-                'expanded'  => true
             ))
         ;
     }

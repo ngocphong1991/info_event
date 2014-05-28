@@ -18,8 +18,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class SpecialGroupArticle
 {
-    const ACTIVE_YES = 1;
-    const ACTIVE_NO = 0;
+    const ACTIVE_YES = true;
+    const ACTIVE_NO = false;
 
     /**
      * @var integer
@@ -122,6 +122,11 @@ class SpecialGroupArticle
      */
     public function getIsActive()
     {
+        if($this->isActive && $this->isActive == 1){
+            $this->isActive = self::ACTIVE_YES;
+        }else
+            $this->isActive = self::ACTIVE_NO;
+
         return $this->isActive;
     }
 

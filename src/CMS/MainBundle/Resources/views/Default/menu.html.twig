@@ -2,7 +2,7 @@
 <nav class="blog-nav">
     {% for entity in menus %}
         {% if loop.index <= 10 %}
-        <a class="blog-nav-item" id="group-{{ entity.id }}" title="{{ entity.name }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.url }}">{{ entity.name }}</a>
+        <a class="blog-nav-item" id="group-{{ entity.id }}" title="{{ entity.name|stripslashes }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.url }}">{{ entity.name|stripslashes }}</a>
         {% endif %}
     {%  endfor %}
 </nav>
@@ -11,9 +11,7 @@
 </div>
 <div class="search-form">
     <form action="{{ path('cms_main_search') }}" method="get">
-        <label for="tu-khoa">Từ khóa</label>
-        <input name="tu-khoa" placeholder="Nhập từ khóa" type="text" id="keyword">
-        <button>Tìm kiếm</button>
+        <input name="tu-khoa" minlength="6" placeholder="Nhập từ khóa" type="text" id="keyword">
     </form>
 </div>
 {% endif %}
@@ -24,7 +22,7 @@
             <nav class="blog-nav">
                 <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" class="home-footer" title="Home page">&nbsp;</a>
                 {% for page in cms  %}
-                    <a class="blog-nav-item" id="page-{{ page.id }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ page.url }}">{{ page.title }}</a>
+                    <a class="blog-nav-item" id="page-{{ page.id }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ page.url }}" title="{{ page.title|stripslashes }}">{{ page.title|stripslashes }}</a>
                 {% endfor %}
             </nav>
         </div>
@@ -33,7 +31,7 @@
         <div class="row nav-main-bot">
             <ul>
                 {% for entity in menus %}
-                <li><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.url }}" title="{{ entity.name }}">{{ entity.name }}</a></li>
+                <li><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.url }}" title="{{ entity.name|stripslashes }}">{{ entity.name|stripslashes }}</a></li>
                 {% if loop.index % 4 == 0 %}</ul><ul>{% endif %}
                 {%  endfor %}
             </ul>

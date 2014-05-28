@@ -32,10 +32,8 @@ use CMS\AdminBundle\Api\ConvertToSlugApi;
  */
 class Article
 {
-    const ACTIVE_YES = 1;
-    const ACTIVE_NO = 0;
-    const SPECIAL_YES = 1;
-    const SPECIAL_NO = 0;
+    const ACTIVE_YES = true;
+    const ACTIVE_NO = false;
     /**
      * @var integer
      *
@@ -118,7 +116,7 @@ class Article
     /**
      * @var integer
      *
-     * @ORM\Column(name="is_active", type="smallint", length=1, nullable=false)
+     * @ORM\Column(name="is_active", type="smallint", length=1, nullable=true)
      */
     private $isActive;
 
@@ -156,7 +154,6 @@ class Article
     {
         $this->specialGroupArticle = new ArrayCollection();
         $this->isActive = self::ACTIVE_NO;
-        $this->isSpecial = self::ACTIVE_NO;
     }
 
     public  function  __toString(){
@@ -439,6 +436,11 @@ class Article
      */
     public function getIsActive()
     {
+        if($this->isActive && $this->isActive == 1){
+            $this->isActive = self::ACTIVE_YES;
+        }else
+            $this->isActive = self::ACTIVE_NO;
+
         return $this->isActive;
     }
 

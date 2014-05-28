@@ -8,12 +8,12 @@
                 {% for slider in specialGroup %}
                     <div class="live-tile" data-mode="flip">
                         <div class="flip-front">
-                            <a title="{{ slider.name }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ slider.url }}">
+                            <a title="{{ slider.name|stripslashes }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ slider.url }}">
                                 <img class="full" alt="{{ slider.name }}" src="{{ asset('uploads/group/145x145/') }}s_{{ slider.image }}" >
                             </a>
                         </div>
                         <div class="flip-back">
-                            <a title="{{ slider.name }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ slider.url }}">
+                            <a title="{{ slider.name|stripslashes }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ slider.url }}">
                                 <img class="full" alt="{{ slider.name }}" src="{{ asset('uploads/group/145x145/') }}s_{{ slider.imageActive }}" >
                             </a>
                         </div>
@@ -26,8 +26,8 @@
                         <ul class="newest" id="group-{{ slider.id }}">
                             {% for article in slider.articles %}
                                 <li>
-                                    <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ slider.url }}/{{ article.url }}" title="{{ article.title }}"><img src="{{ asset('uploads/article/300x300/') }}m_{{ article.image }}" alt="{{ article.title }}"></a>
-                                    <a class="opacity" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ slider.url }}/{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a>
+                                    <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ slider.url }}/{{ article.url }}" title="{{ article.title|stripslashes }}"><img src="{{ asset('uploads/article/300x300/') }}m_{{ article.image }}" alt="{{ article.title }}"></a>
+                                    <a class="opacity" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ slider.url }}/{{ article.url }}" title="{{ article.title|stripslashes }}">{{ article.title|stripslashes }}</a>
                                 </li>
                             {% endfor %}
                         </ul>
@@ -39,20 +39,19 @@
 
     <div class="row">
 
-        <div class="col-sm-8 blog-main">
-
+        <div class="col-sm-8 blog-main index">
+            {% set length = pagination|length %}
             {% for entity in pagination %}
-                <div class="blog-post">
-                    <h2 class="blog-post-title"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="{{ entity.title }}">{{ entity.title }}</a></h2>
+                <div class="blog-post{% if loop.index == length %} last{% elseif loop.index == 1 %} first{% endif %}">
+                    <h2 class="blog-post-title"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="{{ entity.title|stripslashes }}">{{ entity.title|stripslashes }}</a></h2>
                     <p class="blog-post-meta">{% if entity.datecreate %}{{ entity.datecreate|date('H:i d/m/Y') }}{% endif %}</p>
                     <div class="blog-post-image">
-                        <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="{{ entity.title }}">
-                            <img src="{{ asset('uploads/article/') }}{{ entity.image }}" alt="{{ entity.title }}">
+                        <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="{{ entity.title|stripslashes }}">
+                            <img src="{{ asset('uploads/article/') }}{{ entity.image }}" alt="{{ entity.title|stripslashes }}">
                         </a>
                     </div>
                     <div class="blog-post-description">
                         {{ entity.sortDescription|cut(600) }}
-                        <p class="blog-post-view-more"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="Xem tiếp">Xem tiếp</a></p>
                     </div>
                 </div><!-- /.blog-post -->
             {% endfor %}
@@ -60,7 +59,7 @@
 
 
         </div><!-- /.blog-main -->
-        {{ render(controller("CMSMainBundle:Default:rightSlideBar",{'cpc':false, 'listSpecial': false}))}}
+        {{ render(controller("CMSMainBundle:Default:rightSlideBar",{'cpc':false, 'listSpecial': false, 'likeBox': true}))}}
     </div><!-- /.row -->
 {% endblock %}
 {% block javascripts %}

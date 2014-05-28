@@ -1,16 +1,16 @@
 {% extends "CMSMainBundle::layout.html.twig" %}
-{% block title %}{{ article.title }}{% endblock %}
+{% block title %}{{ article.title|stripslashes }}{% endblock %}
 {% block content %}
     <div class="row">
 
         <div class="col-sm-8 blog-main article">
             {% if article %}
                 <div class="blog-post article">
-                    <h2 class="blog-post-title">{{ article.title }}</h2>
+                    <h2 class="blog-post-title">{{ article.title|stripslashes }}</h2>
                     <p class="blog-post-meta">{% if article.datecreate %}{{ article.datecreate|date('H:i d/m/Y') }}{% endif %}</p>
 
                     <div class="blog-post-description">
-                        {{ article.description|raw('html') }}
+                        {{ article.description|stripslashes|raw('html') }}
                     </div>
                     <div class="blog-post-tool">
                         <div class="tool">
@@ -27,7 +27,7 @@
                             {% if article.tags %}
                                 {% set listTag = article.tags|split(',') %}
                                 {%  for tag in listTag %}
-                                <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/tim-kiem?tu-khoa={{ tag }}" title="{{ tag }}">{{ tag }}</a>
+                                <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/tim-kiem?tu-khoa={{ tag }}" title="{{ tag|stripslashes }}">{{ tag|stripslashes }}</a>
                                 {% endfor %}
                             {% endif %}
                         </div>
@@ -41,7 +41,7 @@
                     <h4>Bài viết liên quan</h4>
                     <ul>
                         {% for article in related %}
-                        <li><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ article.groupArticle.url }}/{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a></li>
+                        <li><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ article.groupArticle.url }}/{{ article.url }}" title="{{ article.title|stripslashes }}">{{ article.title|stripslashes }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -52,7 +52,7 @@
                 </div><!-- /.blog-post -->
             {% endif %}
         </div><!-- /.blog-main -->
-        {{ render(controller("CMSMainBundle:Default:rightSlideBar", {'cpc': true, 'listSpecial': listSpecial}))}}
+        {{ render(controller("CMSMainBundle:Default:rightSlideBar", {'cpc': true, 'listSpecial': listSpecial, 'likeBox': false}))}}
     </div><!-- /.row -->
 
 {% endblock %}

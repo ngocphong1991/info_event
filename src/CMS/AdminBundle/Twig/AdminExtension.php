@@ -8,7 +8,12 @@ class AdminExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFilter('cut', array($this, 'cutSting')),
+            new \Twig_SimpleFilter('stripslashes', array($this, 'stripSlashesString')),
         );
+    }
+
+    function  stripSlashesString($str){
+        return stripslashes($str);
     }
 
     function cutSting($str, $length = 3, $minword = 3)

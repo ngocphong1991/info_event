@@ -19,7 +19,9 @@
 {% block checkbox_widget %}
 {% spaceless %}
     <div class="controls">
-        <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+        <div class="metro-checkbox">
+            <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+        </div>
     </div>
 {% endspaceless %}
 {% endblock checkbox_widget %}

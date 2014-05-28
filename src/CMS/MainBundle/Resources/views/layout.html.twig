@@ -88,7 +88,11 @@
             // define value
             var $scrollDom = $('.blog-sidebar .view-best');
             $scrollDom.css('position','relative');
+            {% if app.request.get('_route') == 'cms_main_default_index' %}
+            var $viewTop = $scrollDom.offset().top + 250 + $scrollDom.height();
+            {% else %}
             var $viewTop = $scrollDom.offset().top;
+            {% endif %}
             var $viewBot = $('.footer').offset().top;
 
             // scroll event process
@@ -127,10 +131,10 @@
             $('#button-search').click(function(){
                 var $display = $search.css('display');
                 if(!$display || $display == 'none'){
-                    $search.fadeIn();
+                    $search.slideDown(200);
                     $('#keyword').focus();
                 }else{
-                    $search.fadeOut();
+                    $search.slideUp(200);
                 }
             })
         });

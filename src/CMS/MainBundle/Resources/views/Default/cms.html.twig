@@ -1,13 +1,13 @@
 {% extends "CMSMainBundle::layout.html.twig" %}
-{% block title %}{{ cms.title }}{% endblock %}
+{% block title %}{{ cms.title|stripslashes }}{% endblock %}
 {% block content %}
     <div class="row">
 
-        <div class="col-sm-8 blog-main">
+        <div class="col-sm-8 blog-main article">
             {% if cms %}
                 <div class="blog-post cms">
                     <div class="blog-post-description">
-                        {{ cms.description|raw('html') }}
+                        {{ cms.description|stripslashes|raw('html') }}
                     </div>
                 </div>
             {% else %}
@@ -16,7 +16,7 @@
                 </div><!-- /.blog-post -->
             {% endif %}
         </div><!-- /.blog-main -->
-        {{ render(controller("CMSMainBundle:Default:rightSlideBar", {'cpc': true, 'listSpecial': false}))}}
+        {{ render(controller("CMSMainBundle:Default:rightSlideBar", {'cpc': true, 'listSpecial': false, 'likeBox': false}))}}
     </div><!-- /.row -->
 
 {% endblock %}

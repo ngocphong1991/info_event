@@ -15,6 +15,13 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('isActive','checkbox', array(
+                    'required'  => false,
+                    'label_attr' => array(
+                        'class' => 'control-label'
+                    )
+                )
+            )
             ->add('username')
             ->add('password', 'repeated', array(
                         'type' => 'password',
@@ -24,7 +31,6 @@ class UserType extends AbstractType
                 )
             )
             ->add('email', 'email')
-            ->add('isActive')
             ->add('roles', null, array(
                         'empty_value' => 'Choose your role',
                         'empty_data'  => null,

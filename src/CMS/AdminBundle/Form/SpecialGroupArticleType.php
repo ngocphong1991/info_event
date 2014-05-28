@@ -16,14 +16,16 @@ class SpecialGroupArticleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('isActive','checkbox', array(
+                    'required'  => false,
+                    'label_attr' => array(
+                        'class' => 'control-label'
+                    )
+                )
+            )
             ->add('name')
             ->add('position')
-            ->add('isActive','choice', array(
-                'choices'   => SpecialGroupArticle::getIsActiveTypes(),
-                'multiple'  => false,
-                'expanded'  => true
-            )
-        );
+        ;
     }
     
     /**

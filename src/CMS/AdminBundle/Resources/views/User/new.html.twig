@@ -4,6 +4,7 @@
 <link href="{{ asset('bundles/admin/assets/bootstrap/css/bootstrap-fileupload.css') }}" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/assets/chosen-bootstrap/chosen/chosen.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/assets/uniform/css/uniform.default.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/admin/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css') }}" />
 {% endblock %}
 
 {% block title %}User - New{% endblock %}
@@ -30,17 +31,28 @@
 {% endblock %}
 
 {% block javascripts %}
-<script type="text/javascript" src="{{ asset('bundles/admin/assets/chosen-bootstrap/chosen/chosen.jquery.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/admin/assets/uniform/jquery.uniform.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/admin/assets/bootstrap/js/bootstrap-fileupload.js') }}"></script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        //Javascripts for radio input
-        $(" input[type=radio], input[type=checkbox]").uniform();
-        
-        //Setup select box
-        $(".chzn-select").chosen(); 
-        $(".chzn-select-deselect").chosen({allow_single_deselect:true});
-    });
-</script>
+    <script type="text/javascript" src="{{ asset('bundles/admin/assets/chosen-bootstrap/chosen/chosen.jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/admin/assets/uniform/jquery.uniform.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/admin/assets/bootstrap/js/bootstrap-fileupload.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/admin/assets/bootstrap-toggle-buttons/static/js/jquery.toggle.buttons.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            //Javascripts for radio input
+            $(" input[type=radio]").uniform();
+
+            //Setup select box
+            $(".chzn-select").chosen();
+            $(".chzn-select-deselect").chosen({allow_single_deselect:true});
+
+            // setup button checkbox togged
+            $('.metro-checkbox').toggleButtons({
+                height: 30,
+                font: {
+                    'line-height': '30px',
+                    'font-size': '18px',
+                    'font-style': 'regular'
+                }
+            });
+        });
+    </script>
 {% endblock %}

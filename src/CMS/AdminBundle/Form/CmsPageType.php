@@ -16,6 +16,13 @@ class CmsPageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('isActive','checkbox', array(
+                    'required'  => false,
+                    'label_attr' => array(
+                        'class' => 'control-label'
+                    )
+                )
+            )
             ->add('title')
             ->add('sortDesciption', null, array(
                 'attr' => array(
@@ -39,12 +46,6 @@ class CmsPageType extends AbstractType
                 ),
             ))
             ->add('keywords')
-            ->add('isActive','choice', array(
-                    'choices'   => CmsPage::getIsActiveTypes(),
-                    'multiple'  => false,
-                    'expanded'  => true
-                )
-            )
         ;
     }
     

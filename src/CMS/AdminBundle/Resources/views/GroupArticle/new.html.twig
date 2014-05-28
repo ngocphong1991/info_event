@@ -1,8 +1,9 @@
 {% extends "CMSAdminBundle::layout.html.twig" %}
 
 {% block stylesheets %}
-<link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/assets/uniform/css/uniform.default.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/assets/uniform/css/uniform.default.css') }}" />
     <link href="{{ asset('bundles/admin/assets/bootstrap/css/bootstrap-fileupload.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('bundles/admin/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css') }}" />
 {% endblock %}
 
 {% block title %}Article Group - New{% endblock %}
@@ -29,12 +30,21 @@
 {% endblock %}
 
 {% block javascripts %}
-<script type="text/javascript" src="{{ asset('bundles/admin/assets/uniform/jquery.uniform.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/admin/assets/bootstrap/js/bootstrap-fileupload.js') }}"></script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        //Javascripts for radio input
-        $(" input[type=radio], input[type=checkbox]").uniform();
-    });
-</script>
+    <script type="text/javascript" src="{{ asset('bundles/admin/assets/uniform/jquery.uniform.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/admin/assets/bootstrap/js/bootstrap-fileupload.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/admin/assets/bootstrap-toggle-buttons/static/js/jquery.toggle.buttons.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            // setup button checkbox togged
+            $('.metro-checkbox').toggleButtons({
+                height: 30,
+                font: {
+                    'line-height': '30px',
+                    'font-size': '18px',
+                    'font-style': 'regular'
+                }
+            });
+        });
+    </script>
 {% endblock %}

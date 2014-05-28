@@ -174,7 +174,7 @@ class DefaultController extends Controller
      * @Route("/right")
      * @Template()
      */
-    public function rightSlideBarAction($cpc, $listSpecial)
+    public function rightSlideBarAction($cpc, $listSpecial, $likeBox)
     {
         $specials = $this->getDoctrine()
             ->getRepository('CMSAdminBundle:SpecialGroupArticle')
@@ -187,6 +187,7 @@ class DefaultController extends Controller
         return array(
                 'listSpecial' => $listSpecial ? $listSpecial : array(),
                 'cpc' => isset($cpc) && $cpc ? $cpc : false,
+                'likeBox' => $likeBox && $likeBox ? $likeBox : false,
                 'specials' => $specials->getResult(),
                 'viewBests' => $viewBest->getResult()
         );

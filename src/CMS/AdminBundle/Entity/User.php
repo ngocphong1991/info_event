@@ -20,6 +20,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User implements AdvancedUserInterface, \Serializable
 {
+    const ACTIVE_YES = true;
+    const ACTIVE_NO = false;
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -239,6 +242,11 @@ class User implements AdvancedUserInterface, \Serializable
      */
     public function getIsActive()
     {
+        if($this->isActive && $this->isActive == 1){
+            $this->isActive = self::ACTIVE_YES;
+        }else
+            $this->isActive = self::ACTIVE_NO;
+
         return $this->isActive;
     }
 

@@ -1,33 +1,33 @@
 {% extends "CMSMainBundle::layout.html.twig" %}
-{% block title %}{{ groupName }}{% endblock %}
+{% block title %}{{ groupName|stripslashes }}{% endblock %}
 {% block content %}
     <div class="row">
 
-        <div class="col-sm-8 blog-main">
-        {% if pagination|length %}
+        <div class="col-sm-8 blog-main article">
+        {% set length = pagination|length %}
+        {% if length %}
             {% for entity in pagination %}
-                <div class="blog-post">
-                    <h2 class="blog-post-title"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="{{ entity.title }}">{{ entity.title }}</a></h2>
+                <div class="blog-post{% if loop.index == length %} last{% elseif loop.index == 1 %} first{% endif %}">
+                    <h2 class="blog-post-title"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="{{ entity.title|stripslashes }}">{{ entity.title|stripslashes }}</a></h2>
                     <p class="blog-post-meta">{% if entity.datecreate %}{{ entity.datecreate|date('H:i d/m/Y') }}{% endif %}</p>
                     <div class="blog-post-image">
-                        <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="{{ entity.title }}">
-                            <img src="{{ asset('uploads/article/') }}{{ entity.image }}" alt="{{ entity.title }}">
+                        <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="{{ entity.title|stripslashes }}">
+                            <img src="{{ asset('uploads/article/') }}{{ entity.image }}" alt="{{ entity.title|stripslashes }}">
                         </a>
                     </div>
                     <div class="blog-post-description">
-                        {{ entity.sortDescription|cut(600) }}
-                        <p class="blog-post-view-more"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="Xem tiếp">Xem tiếp</a></p>
+                        {{ entity.sortDescription|stripslashes|cut(600) }}
                     </div>
                 </div><!-- /.blog-post -->
                 {{ knp_pagination_render(pagination) }}
             {% endfor %}
         {% else %}
-            <div class="alert">
+            <div class="alert alert-warning">
                 <span>Dữ liệu đang được cập nhật</span>
             </div><!-- /.blog-post -->
         {% endif %}
         </div><!-- /.blog-main -->
-        {{ render(controller("CMSMainBundle:Default:rightSlideBar", {'cpc': true, 'listSpecial': false}))}}
+        {{ render(controller("CMSMainBundle:Default:rightSlideBar", {'cpc': true, 'listSpecial': false, 'likeBox': false}))}}
     </div><!-- /.row -->
 {% endblock %}
 {% block javascripts %}

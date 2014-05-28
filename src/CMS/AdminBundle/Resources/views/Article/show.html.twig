@@ -23,7 +23,7 @@
                 <div class="control-group ">
                     <label class="control-label">Title</label>
                     <div class="controls">
-                        <span>{{ entity.title }}</span>
+                        <span>{{ entity.title|stripslashes }}</span>
                     </div>
                 </div>
                 {% if entity.dateStart %}
@@ -55,7 +55,7 @@
                 <div class="control-group ">
                     <label class="control-label">Description</label>
                     <div class="controls">
-                        <span>{{ entity.description|raw('html') }}</span>
+                        <span>{{ entity.description|stripslashes|raw('html') }}</span>
                     </div>
                 </div>
                 {% if entity.groupArticle %}
