@@ -19,8 +19,3 @@ services:
         class: "CMS\AdminBundle\Form\DatePickerType"
         tags:
           - { name: form.type, alias: datePicker }
-
-    form.type.acl:
-            class: "CMS\AdminBundle\Form\AclType"
-            tags:
-              - { name: form.type, alias: acl }

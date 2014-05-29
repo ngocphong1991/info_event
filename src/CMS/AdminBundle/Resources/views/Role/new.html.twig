@@ -5,6 +5,60 @@
 {% block content %}
 <div class="span12">
     <!-- BEGIN VALIDATION STATES-->
+    <div class="widget green">
+        <div class="widget-title">
+            <h4><i class="icon-reorder"></i> Access Control List</h4>
+            <span class="tools">
+               <a class="icon-chevron-down" href="javascript:;"></a>
+               <a class="icon-remove" href="javascript:;"></a>
+            </span>
+        </div>
+        <div class="widget-body form">
+            <!-- BEGIN FORM-->
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    {% for resource in resources %}
+                        <th>{{ resource.label }}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>VIEW</td>
+                    {% for resource in resources %}
+                        <td class="checkbox-column"><input class="checkboxes" id="{{ resource.code }}" type="checkbox" name="{{ resource.code }}['view']" value="1"></td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>ADD</td>
+                    {% for resource in resources %}
+                        <td class="checkbox-column"><input class="checkboxes" id="{{ resource.code }}" type="checkbox" name="{{ resource.code }}['add']" value="2"></td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>EDIT</td>
+                    {% for resource in resources %}
+                        <td class="checkbox-column"><input class="checkboxes" id="{{ resource.code }}" type="checkbox" name="{{ resource.code }}['edit']" value="4"></td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>DELETE</td>
+                    {% for resource in resources %}
+                        <td class="checkbox-column"><input class="checkboxes" id="{{ resource.code }}" type="checkbox" name="{{ resource.code }}['resource']" value="8"></td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td> <b>All ACCESS</b ></td>
+                    {% for resource in resources %}
+                        <td><input type="checkbox" class="checkboxes group-checkable" id="{{ resource.code }}" name="{{ resource.code }}['all']" value="0"></td>
+                    {% endfor %}
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
     <div class="widget orange">
         <div class="widget-title">
             <h4><i class="icon-reorder"></i> Role Form</h4>
@@ -21,4 +75,55 @@
     </div>
     <!-- END VALIDATION STATES-->
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $('.group-checkable').click(function() {
+            var $acl;
+            var c = this.checked;
+            var $id = $(this).attr('id');
+            var $dom = '.checkbox-column #'+$id;
+            if(c){
+                $($dom).prop('checked', true);
+            }else{
+                $($dom).prop('checked', false);
+            }
+
+            $acl = permissionPoint();
+
+            $('#role_resource').attr('value', $acl);
+        });
+
+        $('.checkboxes').click(function() {
+            var $acl;
+            $acl = permissionPoint();
+            $('#role_resource').attr('value', $acl);
+        });
+
+        function permissionPoint(){
+            var $listResources = [];
+            var objectJson = '{ ';
+            var point = 0;
+
+            {% for resource in resources %}
+            $listResources.push("{{ resource.code }}");
+            {% endfor %}
+
+            $($listResources).each(function($index, $dom){
+                var element  = ".checkbox-column #"+$dom;
+                $(element).each(function($key, $value){
+                    if($($value).prop('checked'))
+                        point = point*1 + $value.value*1;
+                });
+                if($index == 0) objectJson += '"'+$dom+'": '+point;
+                else objectJson += ', "'+$dom+'": '+point;
+
+                point = 0;
+            });
+            objectJson += ' }';
+
+            return objectJson;
+        }
+    </script>
 {% endblock %}

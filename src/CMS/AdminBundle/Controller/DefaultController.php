@@ -5,6 +5,7 @@ namespace CMS\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Yaml\Yaml;
 
 class DefaultController extends Controller
 {
@@ -34,5 +35,19 @@ class DefaultController extends Controller
     public function indexAction()
     {
         return array();
+    }
+
+    /**
+     * @Route("/menu")
+     * @Template()
+     */
+    public function menuAction()
+    {
+        $file   = __DIR__."/../Resources/config/resources.yml";
+        $resources = Yaml::parse(file_get_contents($file));
+        $listRole = $resources['resources'];
+        $acl = $resources['acl'];
+
+        return array('acl' => $acl);
     }
 }

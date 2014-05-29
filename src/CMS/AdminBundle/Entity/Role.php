@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Table(name="roles")
  * @ORM\Entity(repositoryClass="CMS\AdminBundle\Entity\RoleRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Role implements RoleInterface
 {
@@ -25,7 +26,7 @@ class Role implements RoleInterface
     private $name;
 
     /**
-     * @ORM\Column(name="role", type="string", length=20, unique=true)
+     * @ORM\Column(name="role", type="string", length=20)
      */
     private $role;
 
@@ -113,6 +114,17 @@ class Role implements RoleInterface
     public function getResource()
     {
         return $this->resource;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setRoleValue()
+    {
+        if (!$this->getRole())
+        {
+            $this->role = 'ROLE_ADMIN';
+        }
     }
 
     /**

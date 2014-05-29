@@ -8,13 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class RoleType extends AbstractType
 {
-    public  $resource;
-
-    public function __construct($resource){
-        $this->resource = $resource;
-    }
-
-        /**
+     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -22,9 +16,7 @@ class RoleType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('role')
-            ->add('resource','acl', array(
-                'data' => $this->resource
+            ->add('resource','hidden', array(
             ))
         ;
     }

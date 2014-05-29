@@ -2,6 +2,7 @@
 
 namespace CMS\AdminBundle\Controller;
 
+use JsonSchema\Constraints\Object;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -9,9 +10,22 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use CMS\AdminBundle\Entity\Role;
 use CMS\AdminBundle\Form\RoleType;
+use Symfony\Component\Yaml\Yaml;
+use CMS\AdminBundle\Api\GetRoleApi;
 
 class RoleController extends Controller
 {
+    public $resources;
+    public $acl;
+
+    public function __construct(){
+
+        $file   = __DIR__."/../Resources/config/resources.yml";
+        $resources = Yaml::parse(file_get_contents($file));
+        $this->resources = $resources['resources'];
+        $this->acl = $resources['acl'];
+    }
+
     /**
      * Lists all Role entities.
      *
@@ -21,6 +35,15 @@ class RoleController extends Controller
      */
     public function indexAction()
     {
+        $isAccept = GetRoleApi::checkACL($this->getUser()->getRoles(), $this->acl['view'], 'role');
+        if(!$isAccept){
+            $this->get('session')->getFlashBag()->add(
+                'error',
+                'You can not execute this function, please contact administrator!'
+            );
+            return $this->redirect($this->getRequest()->headers->get('referer'));
+        }
+
         $keyword = $this->get('request')->query->get('keyword', '');
         $em = $this->getDoctrine()->getManager();
 
@@ -60,12 +83,19 @@ class RoleController extends Controller
      */
     public function createAction(Request $request)
     {
+        $isAccept = GetRoleApi::checkACL($this->getUser()->getRoles(), $this->acl['add'], 'role');
+        if(!$isAccept){
+            $this->get('session')->getFlashBag()->add(
+                'error',
+                'You can not execute this function, please contact administrator!'
+            );
+            return $this->redirect($this->getRequest()->headers->get('referer'));
+        }
+
         $em = $this->getDoctrine()->getManager();
 
-        $resources = $em->getRepository('CMSAdminBundle:Resource')->findAllSql()->getResult();
-
         $entity = new Role();
-        $form = $this->createCreateForm($entity, $resources);
+        $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -83,26 +113,27 @@ class RoleController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'resources' => $this->resources,
         );
     }
 
     /**
-    * Creates a form to create a Role entity.
-    *
-    * @param Role $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createCreateForm(Role $entity, $resources)
+     * Creates a form to create a Role entity.
+     *
+     * @param Role $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createCreateForm(Role $entity)
     {
-        $form = $this->createForm(new RoleType($resources), $entity, array(
+        $form = $this->createForm(new RoleType(), $entity, array(
             'action' => $this->generateUrl('role_create'),
             'method' => 'POST',
         ));
 
         return $form;
     }
-    
+
     /**
      * Displays a form to create a new Role entity.
      *
@@ -112,17 +143,24 @@ class RoleController extends Controller
      */
     public function newAction()
     {
+        $isAccept = GetRoleApi::checkACL($this->getUser()->getRoles(), $this->acl['add'], 'role');
+        if(!$isAccept){
+            $this->get('session')->getFlashBag()->add(
+                'error',
+                'You can not execute this function, please contact administrator!'
+            );
+            return $this->redirect($this->getRequest()->headers->get('referer'));
+        }
 
         $em = $this->getDoctrine()->getManager();
 
-        $resources = $em->getRepository('CMSAdminBundle:Resource')->findAllSql()->getResult();
-
         $entity = new Role();
-        $form   = $this->createCreateForm($entity, $resources);
+        $form   = $this->createCreateForm($entity);
 
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'resources' => $this->resources
         );
     }
 
@@ -135,6 +173,15 @@ class RoleController extends Controller
      */
     public function showAction($id)
     {
+        $isAccept = GetRoleApi::checkACL($this->getUser()->getRoles(), $this->acl['view'], 'role');
+        if(!$isAccept){
+            $this->get('session')->getFlashBag()->add(
+                'error',
+                'You can not execute this function, please contact administrator!'
+            );
+            return $this->redirect($this->getRequest()->headers->get('referer'));
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CMSAdminBundle:Role')->find($id);
@@ -157,6 +204,15 @@ class RoleController extends Controller
      */
     public function editAction($id)
     {
+        $isAccept = GetRoleApi::checkACL($this->getUser()->getRoles(), $this->acl['edit'], 'role');
+        if(!$isAccept){
+            $this->get('session')->getFlashBag()->add(
+                'error',
+                'You can not execute this function, please contact administrator!'
+            );
+            return $this->redirect($this->getRequest()->headers->get('referer'));
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CMSAdminBundle:Role')->find($id);
@@ -165,21 +221,31 @@ class RoleController extends Controller
             throw $this->createNotFoundException('Unable to find Role entity.');
         }
 
+        $permission = (array) json_decode($entity->getResource());
+
+        foreach($this->resources as $key => $resource){
+            if(array_key_exists($resource['code'], $permission)){
+                $this->resources[$key]['acl'] = $permission[$resource['code']];
+            }
+        }
+
         $editForm = $this->createEditForm($entity);
 
         return array(
-            'entity'      => $entity,
-            'form'   => $editForm->createView(),
+            'entity'    => $entity,
+            'form'      => $editForm->createView(),
+            'resources' => $this->resources,
+            'acl'       => $this->acl
         );
     }
 
     /**
-    * Creates a form to edit a Role entity.
-    *
-    * @param Role $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a Role entity.
+     *
+     * @param Role $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(Role $entity)
     {
         $form = $this->createForm(new RoleType(), $entity, array(
@@ -198,6 +264,15 @@ class RoleController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        $isAccept = GetRoleApi::checkACL($this->getUser()->getRoles(), $this->acl['edit'], 'role');
+        if(!$isAccept){
+            $this->get('session')->getFlashBag()->add(
+                'error',
+                'You can not execute this function, please contact administrator!'
+            );
+            return $this->redirect($this->getRequest()->headers->get('referer'));
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CMSAdminBundle:Role')->find($id);
@@ -221,8 +296,9 @@ class RoleController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'form'   => $editForm->createView(),
+            'entity'    => $entity,
+            'form'      => $editForm->createView(),
+            'resources' => $this->resources
         );
     }
     /**
@@ -233,6 +309,15 @@ class RoleController extends Controller
      */
     public function deleteAction($id)
     {
+        $isAccept = GetRoleApi::checkACL($this->getUser()->getRoles(), $this->acl['del'], 'role');
+        if(!$isAccept){
+            $this->get('session')->getFlashBag()->add(
+                'error',
+                'You can not execute this function, please contact administrator!'
+            );
+            return $this->redirect($this->getRequest()->headers->get('referer'));
+        }
+
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('CMSAdminBundle:Role')->find($id);
 

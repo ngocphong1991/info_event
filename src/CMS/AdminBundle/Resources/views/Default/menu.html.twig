@@ -1,0 +1,51 @@
+<ul class="sidebar-menu">
+    <li class="sub-menu">
+        <a href="javascript:;">
+            <i class="icon-tasks"></i>
+            <span>Group Article</span>
+            <span class="arrow"></span>
+        </a>
+        <ul class="sub">
+            <li {% if app.request.get('_route') == 'grouparticle' %}class="active"{% endif %}><a href="{{ path('grouparticle') }}">Group Articles</a></li>
+            <li {% if app.request.get('_route') == 'grouparticle_new' %}class="active"{% endif %}><a href="{{ path('grouparticle_new') }}">New Group</a></li>
+            <li {% if app.request.get('_route') == 'specgrp' %}class="active"{% endif %}><a href="{{ path('specgrp') }}">Special Group</a></li>
+            <li {% if app.request.get('_route') == 'specgrp_new' %}class="active"{% endif %}><a href="{{ path('specgrp_new') }}">New Special Group</a></li>
+        </ul>
+    </li>
+    <li {% if app.request.get('_route') == 'article' %}class="active sub-menu"{% endif %}  class="sub-menu">
+        <a href="{{ path('article') }}">
+            <i class="icon-book"></i>
+            <span>Article</span>
+        </a>
+    </li>
+    <li class="sub-menu">
+        <a href="javascript:;">
+            <i class="icon-file-alt"></i>
+            <span>CMS Pages</span>
+            <span class="arrow"></span>
+        </a>
+        <ul class="sub">
+            <li {% if app.request.get('_route') == 'cmspage' %}class="active"{% endif %}><a href="{{ path('cmspage') }}">List CMS Pages</a></li>
+            <li {% if app.request.get('_route') == 'cmspage_new' %}class="active"{% endif %}><a href="{{ path('cmspage_new') }}">New CMS Pages</a></li>
+        </ul>
+    </li>
+    <li class="sub-menu">
+        <a href="javascript:;">
+            <i class="icon-user"></i>
+            <span>Users &amp; Roles</span>
+            <span class="arrow"></span>
+        </a>
+        <ul class="sub">
+            {% if app.user.roles|checkAdvanceACL(acl.view, 'user') %}<li {% if app.request.get('_route') == 'user' %}class="active"{% endif %}><a href="{{ path('user') }}">Users</a></li>{% endif %}
+            {% if app.user.roles|checkAdvanceACL(acl.view, 'user') %}<li {% if app.request.get('_route') == 'user_new' %}class="active"{% endif %}><a href="{{ path('user_new') }}">New User</a></li>{% endif %}
+            {% if app.user.roles|checkAdvanceACL(acl.view, 'role') %}<li {% if app.request.get('_route') == 'role' %}class="active"{% endif %}><a href="{{ path('role') }}">Roles</a></li>{% endif %}
+            {% if app.user.roles|checkAdvanceACL(acl.add, 'role') %}<li {% if app.request.get('_route') == 'role_new' %}class="active"{% endif %}><a href="{{ path('role_new') }}">New Role</a></li>{% endif %}
+        </ul>
+    </li>
+    <li>
+        <a href="#">
+            <i class="icon-wrench"></i>
+            <span>Setting</span>
+        </a>
+    </li>
+</ul>

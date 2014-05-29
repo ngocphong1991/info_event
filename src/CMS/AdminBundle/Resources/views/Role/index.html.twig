@@ -37,7 +37,6 @@
                     <th class="sorting_disabled"><input class="group-checkable" type="checkbox"></th>
                     <th class="hidden-phone">{{ knp_pagination_sortable(pagination, 'Id', 'r.id') }}</th>
                     <th>{{ knp_pagination_sortable(pagination, 'Name', 'r.name') }}</th>
-                    <th>{{ knp_pagination_sortable(pagination, 'Role', 'r.role') }}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -49,7 +48,6 @@
                         </td>
                         <td class="hidden-phone">{{entity.id}}</td>
                         <td>{{entity.name}}</td>
-                        <td>{{entity.role}}</td>
                         <td>
                             <a class="btn btn-success" title="Show" href="{{ path('role_show', { 'id': entity.id }) }}"><i class="icon-search"></i></a>
                             <a class="btn btn-primary" title="Edit" href="{{ path('role_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i></a>
