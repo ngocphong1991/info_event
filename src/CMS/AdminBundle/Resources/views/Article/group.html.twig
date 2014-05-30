@@ -72,3 +72,12 @@
         <!-- END BASIC PORTLET-->
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+           var idGroup = '#group-{{ idGroup }}';
+            $(idGroup).addClass('active').parent().parent().addClass('active');
+        });
+    </script>
+{% endblock %}

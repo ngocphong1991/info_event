@@ -103,7 +103,7 @@ class ArticleController extends Controller
         );
 
         // parameters to template
-        return array('pagination' => $pagination);
+        return array('pagination' => $pagination, 'idGroup' => $idGroup);
     }
 
     /**

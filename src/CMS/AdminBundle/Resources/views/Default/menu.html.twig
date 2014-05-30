@@ -22,7 +22,7 @@
         </a>
         <ul class="sub">
             {% for group in groupArticle %}
-            <li><a href="{{ path('article_group', { 'idGroup': group.id }) }}">{{ group.name }}</a></li>
+            <li id="group-{{ group.id }}"><a href="{{ path('article_group', { 'idGroup': group.id }) }}">{{ group.name }}</a></li>
             {% endfor %}
         </ul>
     </li>
