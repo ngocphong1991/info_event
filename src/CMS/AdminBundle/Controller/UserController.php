@@ -9,13 +9,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use CMS\AdminBundle\Entity\User;
 use CMS\AdminBundle\Form\UserType;
-use Symfony\Component\Translation\Translator;
-use Symfony\Component\Translation\MessageSelector;
-use Symfony\Component\Translation\Loader\ArrayLoader;
-use Symfony\Component\Translation\Loader\XliffFileLoader;
-use Symfony\Component\HttpFoundation\Response;
+use CMS\AdminBundle\Api\GetRoleApi;
+
 class UserController extends Controller
 {
+    public $roles;
+
+    public function __construct(){
+        $this->roles = new GetRoleApi();
+    }
+
     /**
      * Lists all User entities.
      *
@@ -25,6 +28,9 @@ class UserController extends Controller
      */
     public function indexAction()
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['view'], 'user'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $keyword = $this->get('request')->query->get('keyword', '');
         $em = $this->getDoctrine()->getManager();
 
@@ -63,6 +69,9 @@ class UserController extends Controller
      */
     public function createAction(Request $request)
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['add'], 'user'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $entity = new User();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -112,6 +121,9 @@ class UserController extends Controller
      */
     public function newAction()
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['add'], 'user'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $entity = new User();
         $form   = $this->createCreateForm($entity);
 
@@ -130,6 +142,9 @@ class UserController extends Controller
      */
     public function showAction($id)
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['view'], 'user'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CMSAdminBundle:User')->find($id);
@@ -152,6 +167,9 @@ class UserController extends Controller
      */
     public function editAction($id)
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['edit'], 'user'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CMSAdminBundle:User')->find($id);
@@ -193,6 +211,9 @@ class UserController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['edit'], 'user'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CMSAdminBundle:User')->find($id);
@@ -228,6 +249,9 @@ class UserController extends Controller
      */
     public function deleteAction($id)
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['del'], 'user'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('CMSAdminBundle:User')->find($id);
 

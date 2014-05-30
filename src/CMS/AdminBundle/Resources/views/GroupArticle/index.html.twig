@@ -37,6 +37,7 @@
                     <th class="sorting_disabled"><input class="group-checkable" type="checkbox"></th>
                     <th class="hidden-phone">{{ knp_pagination_sortable(pagination, 'Id', 'g.id') }}</th>
                     <th>{{ knp_pagination_sortable(pagination, 'Name', 'g.name') }}</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'Position', 'g.position') }}</th>
                     <th>{{ knp_pagination_sortable(pagination, 'Is active', 'g.isActive') }}</th>
                     <th>{{ knp_pagination_sortable(pagination, 'Is special', 'g.isSpecial') }}</th>
                     <th></th>
@@ -50,6 +51,7 @@
                         </td>
                         <td class="hidden-phone">{{entity.id}}</td>
                         <td>{{entity.name}}</td>
+                        <td>{{entity.position}}</td>
                         <td>{% if entity.isActive == 1 %}Yes{% else %}No{% endif %}</td>
                         <td>{% if entity.isSpecial == 1 %}Yes{% else %}No{% endif %}</td>
                         <td>
@@ -59,6 +61,9 @@
                         </td>
                     </tr>
                     {% endfor %}
+                    {% if pagination is empty %}
+                        {{ render(controller("CMSAdminBundle:Default:noItem"))}}
+                    {% endif %}
                 </tbody>
             </table>
             {{ knp_pagination_render(pagination) }}

@@ -9,9 +9,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use CMS\AdminBundle\Entity\Article;
 use CMS\AdminBundle\Form\ArticleType;
+use CMS\AdminBundle\Api\GetRoleApi;
 
 class ArticleController extends Controller
 {
+    public $roles;
+
+    public function __construct(){
+        $this->roles = new GetRoleApi();
+    }
+
     /**
      * Lists all Article entities.
      *
@@ -21,10 +28,58 @@ class ArticleController extends Controller
      */
     public function indexAction()
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['view'], 'article'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $keyword = $this->get('request')->query->get('keyword', '');
         $em    = $this->getDoctrine()->getManager();
 
         if(!$keyword) $query = $em->getRepository('CMSAdminBundle:Article')->findAllSql();
+        else{//Searching
+            $query = $em->getRepository('CMSAdminBundle:Article')->findByKeywordSql($keyword);
+            $count = count($query->getResult());
+
+            if($count)  $this->get('session')->getFlashBag()->add(
+                'successfull',
+                "Have $count result with keyword \"<em><b> $keyword </b></em>\""
+            );
+            else    $this->get('session')->getFlashBag()->add(
+                'error',
+                "No reult with keyword \"<em><b> $keyword </b></em>\""
+            );
+        }
+
+        //Pager
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $this->get('request')->query->get('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+
+        // parameters to template
+        return array('pagination' => $pagination);
+    }
+
+    /**
+     * Lists all Article entities.
+     *
+     * @Route("/group/{idGroup}", name="article_group")
+     * @Method("GET")
+     * @Template()
+     */
+    public function groupAction($idGroup)
+    {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['view'], 'article'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
+        if(!$idGroup || !is_numeric($idGroup))
+            throw $this->createNotFoundException('Have not parameter idGroup!');
+
+        $keyword = $this->get('request')->query->get('keyword', '');
+        $em    = $this->getDoctrine()->getManager();
+
+        if(!$keyword) $query = $em->getRepository('CMSAdminBundle:Article')->findAllByGroupSql($idGroup);
         else{//Searching
             $query = $em->getRepository('CMSAdminBundle:Article')->findByKeywordSql($keyword);
             $count = count($query->getResult());
@@ -60,6 +115,9 @@ class ArticleController extends Controller
      */
     public function createAction(Request $request)
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['add'], 'article'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $entity = new Article();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -108,6 +166,9 @@ class ArticleController extends Controller
      */
     public function newAction()
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['add'], 'article'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $entity = new Article();
         $form   = $this->createCreateForm($entity);
 
@@ -126,6 +187,9 @@ class ArticleController extends Controller
      */
     public function showAction($id)
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['view'], 'article'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CMSAdminBundle:Article')->find($id);
@@ -148,6 +212,9 @@ class ArticleController extends Controller
      */
     public function editAction($id)
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['edit'], 'article'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CMSAdminBundle:Article')->find($id);
@@ -189,6 +256,9 @@ class ArticleController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['edit'], 'article'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CMSAdminBundle:Article')->find($id);
@@ -224,6 +294,9 @@ class ArticleController extends Controller
      */
     public function deleteAction($id)
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['view'], 'article'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('CMSAdminBundle:Article')->find($id);
 

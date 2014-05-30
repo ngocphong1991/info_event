@@ -194,7 +194,9 @@ a:hover{
     position: relative;
     display: inline-block;
     padding: 10px 12px 10px 8px;
-    font: bold 14px Arial,Helvetica,sans-serif;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    font-weight: 700;
     color: #fff;
     background: url("../img/slash.png")no-repeat right;
     background-size: 2px 16px;
@@ -232,7 +234,7 @@ a:hover{
 /* Sidebar modules for boxing content */
 .sidebar-module {
     padding: 0 15px;
-    margin: 0 -15px 10px;
+    margin: 0 -15px 5px;
     clear: both;
 }
 .sidebar-module h4{
@@ -400,7 +402,7 @@ a:hover{
 }
 .nav-bot{background: #464646; border-bottom: 2px solid #fdb813}
 .nav-bot .container{padding: 0}
-.nav-bot .blog-nav-item{font-weight: normal; background: url("../img/slash-black.png") no-repeat scroll right center}
+.nav-bot .blog-nav-item{font-weight: normal; font: 14px Arial; background: url("../img/slash-black.png") no-repeat scroll right center}
 .nav-main-bot{text-align: left; margin: 20px 117px}
 .nav-main-bot ul{float: left; margin: 0}
 .nav-main-bot ul li{list-style: none; margin-bottom: 5px}

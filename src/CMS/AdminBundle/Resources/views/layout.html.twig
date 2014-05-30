@@ -125,12 +125,16 @@
             <!-- BEGIN PAGE CONTENT-->
             {% for flashMessage in app.session.flashbag.get('successfull') %}
             <div class="flash-notice alert-success alert">
-             {{ flashMessage|raw('html') }}
+                <button class="close" data-dismiss="alert">×</button>
+                <strong><i class="icon-bell-alt"></i> Success!</strong>
+                {{ flashMessage|raw('html') }}
             </div>
             {% endfor %}
             {% for flashMessage in app.session.flashbag.get('error') %}
             <div class="flash-notice alert-danger alert">
-             {{ flashMessage|raw('html') }}
+                <button class="close" data-dismiss="alert">×</button>
+                <strong><i class="icon-bell-alt"></i> Error!</strong>
+                {{ flashMessage|raw('html') }}
             </div>
             {% endfor %}
             <div class="row-fluid">

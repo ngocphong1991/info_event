@@ -87,6 +87,27 @@ class GroupArticle
     private $isSpecial;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="is_on_top", type="smallint", length=1, nullable=false)
+     */
+    private $isOnTop;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="is_on_bot", type="smallint", length=1, nullable=false)
+     */
+    private $isOnBot;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="position", type="integer", nullable=true)
+     */
+    private $position;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="parent_id", type="integer", nullable=true)
@@ -125,6 +146,9 @@ class GroupArticle
         $this->articles = new ArrayCollection();
         $this->isActive = self::ACTIVE_NO;
         $this->isSpecial = self::ACTIVE_NO;
+        $this->isOnBot = self::ACTIVE_NO;
+        $this->isOnTop = self::ACTIVE_NO;
+        $this->position = 0;
     }
 
     public function __toString()
@@ -219,7 +243,7 @@ class GroupArticle
     /**
      * Get isActive
      *
-     * @return string
+     * @return integer
      */
     public function getIsActive()
     {
@@ -250,7 +274,7 @@ class GroupArticle
     /**
      * Get isActive
      *
-     * @return string
+     * @return integer
      */
     public function getIsSpecial()
     {
@@ -260,6 +284,68 @@ class GroupArticle
             $this->isSpecial = self::ACTIVE_NO;
 
         return $this->isSpecial;
+    }
+
+    /**
+     * Set isOnTop
+     *
+     * @param string $isOnTop
+     * @return GroupArticle
+     */
+    public function setIsOnTop($isOnTop)
+    {
+        if (!in_array($isOnTop, array(self::ACTIVE_YES, self::ACTIVE_NO))) {
+            throw new \InvalidArgumentException("Invalid active");
+        }
+        $this->isOnTop = $isOnTop;
+
+        return $this;
+    }
+
+    /**
+     * Get isOnTop
+     *
+     * @return integer
+     */
+    public function getIsOnTop()
+    {
+        if($this->isOnTop && $this->isOnTop == 1){
+            $this->isOnTop = self::ACTIVE_YES;
+        }else
+            $this->isOnTop = self::ACTIVE_NO;
+
+        return $this->isOnTop;
+    }
+
+    /**
+     * Set isOnBot
+     *
+     * @param string $isOnBot
+     * @return GroupArticle
+     */
+    public function setIsOnBot($isOnBot)
+    {
+        if (!in_array($isOnBot, array(self::ACTIVE_YES, self::ACTIVE_NO))) {
+            throw new \InvalidArgumentException("Invalid active");
+        }
+        $this->isOnBot = $isOnBot;
+
+        return $this;
+    }
+
+    /**
+     * Get isOnBot
+     *
+     * @return integer
+     */
+    public function getIsOnBot()
+    {
+        if($this->isOnBot && $this->isOnBot == 1){
+            $this->isOnBot = self::ACTIVE_YES;
+        }else
+            $this->isOnBot = self::ACTIVE_NO;
+
+        return $this->isOnBot;
     }
 
     /**
@@ -273,6 +359,28 @@ class GroupArticle
             self::ACTIVE_YES => 'Yes',
             self::ACTIVE_NO => 'No'
         );
+    }
+    /**
+     * Set Position
+     *
+     * @param string $position
+     * @return GroupArticle
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get Position
+     *
+     * @return string
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 
     /**

@@ -1,9 +1,7 @@
 {% if position == 'top' %}
 <nav class="blog-nav">
-    {% for entity in menus %}
-        {% if loop.index <= 10 %}
+    {% for entity in menuTop %}
         <a class="blog-nav-item" id="group-{{ entity.id }}" title="{{ entity.name|stripslashes }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.url }}">{{ entity.name|stripslashes }}</a>
-        {% endif %}
     {%  endfor %}
 </nav>
 <div class="search">
@@ -30,7 +28,7 @@
     <div class="footer-content container">
         <div class="row nav-main-bot">
             <ul>
-                {% for entity in menus %}
+                {% for entity in menuBot %}
                 <li><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.url }}" title="{{ entity.name|stripslashes }}">{{ entity.name|stripslashes }}</a></li>
                 {% if loop.index % 4 == 0 %}</ul><ul>{% endif %}
                 {%  endfor %}

@@ -12,6 +12,7 @@ class AdminExtension extends \Twig_Extension
             new \Twig_SimpleFilter('stripslashes', array($this, 'stripSlashesString')),
             new \Twig_SimpleFilter('checkACL', array($this, 'checkPermission')),
             new \Twig_SimpleFilter('checkAdvanceACL', array($this, 'checkAdvancePermission')),
+            new \Twig_SimpleFilter('isEmptyACL', array($this, 'isEmptyPermission')),
         );
     }
 
@@ -27,6 +28,19 @@ class AdminExtension extends \Twig_Extension
         foreach($roles as $role){
             $permission = (array) json_decode($role->getResource());
             if($permission[$module] & $acl){
+                return true;
+            }
+
+        }
+
+        return false;
+    }
+
+    function isEmptyPermission($roles, $module){
+
+        foreach($roles as $role){
+            $permission = (array) json_decode($role->getResource());
+            if($permission[$module] != 0){
                 return true;
             }
 

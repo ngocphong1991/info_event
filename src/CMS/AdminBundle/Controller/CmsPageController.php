@@ -9,10 +9,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use CMS\AdminBundle\Entity\CmsPage;
 use CMS\AdminBundle\Form\CmsPageType;
+use CMS\AdminBundle\Api\GetRoleApi;
 
 
 class CmsPageController extends Controller
 {
+    public $roles;
+
+    public function __construct(){
+        $this->roles = new GetRoleApi();
+    }
 
     /**
      * Lists all CmsPage entities.
@@ -23,6 +29,9 @@ class CmsPageController extends Controller
      */
     public function indexAction()
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['view'], 'cms_page'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $keyword = $this->get('request')->query->get('keyword', '');
         $em = $this->getDoctrine()->getManager();
 
@@ -61,6 +70,9 @@ class CmsPageController extends Controller
      */
     public function createAction(Request $request)
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['add'], 'cms_page'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $entity = new CmsPage();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -110,6 +122,9 @@ class CmsPageController extends Controller
      */
     public function newAction()
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['add'], 'cms_page'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $entity = new CmsPage();
         $form   = $this->createCreateForm($entity);
 
@@ -128,6 +143,10 @@ class CmsPageController extends Controller
      */
     public function showAction($id)
     {
+
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['view'], 'cms_page'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CMSAdminBundle:CmsPage')->find($id);
@@ -150,6 +169,9 @@ class CmsPageController extends Controller
      */
     public function editAction($id)
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['edit'], 'cms_page'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CMSAdminBundle:CmsPage')->find($id);
@@ -191,6 +213,10 @@ class CmsPageController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['edit'], 'cms_page'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CMSAdminBundle:CmsPage')->find($id);
@@ -226,6 +252,10 @@ class CmsPageController extends Controller
      */
     public function deleteAction($id)
     {
+
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['del'], 'cms_page'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('CMSAdminBundle:CmsPage')->find($id);
 

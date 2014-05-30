@@ -45,9 +45,20 @@ class DefaultController extends Controller
     {
         $file   = __DIR__."/../Resources/config/resources.yml";
         $resources = Yaml::parse(file_get_contents($file));
-        $listRole = $resources['resources'];
         $acl = $resources['acl'];
 
-        return array('acl' => $acl);
+        $em = $this->getDoctrine()->getManager();
+        $groupArticle = $em->getRepository('CMSAdminBundle:GroupArticle')->findAllSql()->getResult();
+
+        return array('acl' => $acl, 'groupArticle' => $groupArticle);
+    }
+
+    /**
+     * @Route("/no-item")
+     * @Template()
+     */
+    public function noItemAction()
+    {
+        return array();
     }
 }

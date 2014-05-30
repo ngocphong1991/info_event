@@ -24,6 +24,7 @@ class SpecialGroupArticleType extends AbstractType
                 )
             )
             ->add('name')
+            ->add('maxEntries')
             ->add('position')
         ;
     }

@@ -55,6 +55,9 @@
                         </td>
                     </tr>
                     {% endfor %}
+                    {% if pagination is empty %}
+                        {{ render(controller("CMSAdminBundle:Default:noItem"))}}
+                    {% endif %}
                 </tbody>
             </table>
             {{ knp_pagination_render(pagination) }}

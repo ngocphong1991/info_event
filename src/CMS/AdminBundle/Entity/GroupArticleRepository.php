@@ -17,7 +17,23 @@ class GroupArticleRepository extends EntityRepository
     {
         return $this->getEntityManager()
             ->createQuery(
-                'SELECT g FROM CMSAdminBundle:GroupArticle g WHERE g.isSpecial = 1 AND g.isActive = 1 ORDER BY g.id ASC'
+                'SELECT g FROM CMSAdminBundle:GroupArticle g WHERE g.isSpecial = 1 AND g.isActive = 1 ORDER BY g.position ASC'
+            );
+    }
+
+    public function findMenuTopSql()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT g FROM CMSAdminBundle:GroupArticle g WHERE g.isOnTop = 1 AND g.isActive = 1 ORDER BY g.position ASC'
+            );
+    }
+
+    public function findMenuBotSql()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT g FROM CMSAdminBundle:GroupArticle g WHERE g.isOnBot = 1 AND g.isActive = 1 ORDER BY g.position ASC'
             );
     }
 

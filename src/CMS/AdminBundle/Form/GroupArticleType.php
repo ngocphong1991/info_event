@@ -29,6 +29,22 @@ class GroupArticleType extends AbstractType
                     )
                 )
             )
+            ->add('isOnTop','checkbox', array(
+                    'label' => 'Show on Menu Top',
+                    'required'  => false,
+                    'label_attr' => array(
+                        'class' => 'control-label'
+                    )
+                )
+            )
+            ->add('isOnBot','checkbox', array(
+                    'label' => 'Show on Menu Bottom',
+                    'required'  => false,
+                    'label_attr' => array(
+                        'class' => 'control-label'
+                    )
+                )
+            )
             ->add('name')
             ->add('file', null, array('label' => 'Avatar Group',
                     'attr' => array(
@@ -46,6 +62,12 @@ class GroupArticleType extends AbstractType
                     'label_attr' => array(
                         'class' => 'control-label hidden-phone'
                     )
+                )
+            )
+            ->add('position', null,  array(
+                    'label_attr' => array(
+                        'class' => 'control-label'
+                    ),
                 )
             )
             ->add('url', null, array(

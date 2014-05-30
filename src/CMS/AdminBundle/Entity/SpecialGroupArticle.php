@@ -38,14 +38,21 @@ class SpecialGroupArticle
     private $name;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="position", type="smallint", nullable=false)
+     * @ORM\Column(name="position", type="integer", nullable=false)
      */
     private $position;
 
     /**
-     * @var string
+     * @var integer
+     *
+     * @ORM\Column(name="max_entries", type="integer", nullable=false)
+     */
+    private $maxEntries;
+
+    /**
+     * @var integer
      *
      * @ORM\Column(name="is_active", type="smallint", length=1, nullable=false)
      */
@@ -80,11 +87,34 @@ class SpecialGroupArticle
      * Set name
      *
      * @param string $name
-     * @return GroupArticle
+     * @return SpecialGroupArticle
      */
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get maxEntries
+     *
+     * @return integer
+     */
+    public function getMaxEntries()
+    {
+        return $this->maxEntries;
+    }
+
+    /**
+     * Set maxEntries
+     *
+     * @param integer $maxEntries
+     * @return SpecialGroupArticle
+     */
+    public function setMaxEntries($maxEntries)
+    {
+        $this->maxEntries = $maxEntries;
 
         return $this;
     }
@@ -103,7 +133,7 @@ class SpecialGroupArticle
      * Set isActive
      *
      * @param string $isActive
-     * @return GroupArticle
+     * @return SpecialGroupArticle
      */
     public function setIsActive($isActive)
     {

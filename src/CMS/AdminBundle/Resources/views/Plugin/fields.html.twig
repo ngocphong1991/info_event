@@ -167,7 +167,7 @@
     {% spaceless %}
         {% set type = type|default('text') %}
         <div class="controls">
-            <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} readonly data-format="dd-MM-yyyy hh:mm:ss" data-field="datetime">
+            <input type="{{ type }}" {{ block('widget_attributes') }} value="{% if value is not empty %}{{ value }}{% else %}{{ "now"|date("d-m-Y H:i") }}{% endif %}"  readonly data-format="dd-MM-yyyy hh:mm:ss" data-field="datetime">
             {{ form_errors(form) }}
         </div>
     {% endspaceless %}

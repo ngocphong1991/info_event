@@ -1,4 +1,5 @@
 <ul class="sidebar-menu">
+    {% if app.user.roles|isEmptyACL('special_group') or app.user.roles|isEmptyACL('group_article') %}
     <li class="sub-menu">
         <a href="javascript:;">
             <i class="icon-tasks"></i>
@@ -7,17 +8,27 @@
         </a>
         <ul class="sub">
             <li {% if app.request.get('_route') == 'grouparticle' %}class="active"{% endif %}><a href="{{ path('grouparticle') }}">Group Articles</a></li>
-            <li {% if app.request.get('_route') == 'grouparticle_new' %}class="active"{% endif %}><a href="{{ path('grouparticle_new') }}">New Group</a></li>
             <li {% if app.request.get('_route') == 'specgrp' %}class="active"{% endif %}><a href="{{ path('specgrp') }}">Special Group</a></li>
-            <li {% if app.request.get('_route') == 'specgrp_new' %}class="active"{% endif %}><a href="{{ path('specgrp_new') }}">New Special Group</a></li>
         </ul>
     </li>
+    {% endif %}
+
+    {% if app.user.roles|isEmptyACL('article') %}
     <li {% if app.request.get('_route') == 'article' %}class="active sub-menu"{% endif %}  class="sub-menu">
-        <a href="{{ path('article') }}">
+        <a href="javascript:;">
             <i class="icon-book"></i>
             <span>Article</span>
+            <span class="arrow"></span>
         </a>
+        <ul class="sub">
+            {% for group in groupArticle %}
+            <li><a href="{{ path('article_group', { 'idGroup': group.id }) }}">{{ group.name }}</a></li>
+            {% endfor %}
+        </ul>
     </li>
+    {% endif %}
+
+    {% if app.user.roles|isEmptyACL('cms_page') %}
     <li class="sub-menu">
         <a href="javascript:;">
             <i class="icon-file-alt"></i>
@@ -29,6 +40,9 @@
             <li {% if app.request.get('_route') == 'cmspage_new' %}class="active"{% endif %}><a href="{{ path('cmspage_new') }}">New CMS Pages</a></li>
         </ul>
     </li>
+    {% endif %}
+
+    {% if app.user.roles|isEmptyACL('user') or app.user.roles|isEmptyACL('role') %}
     <li class="sub-menu">
         <a href="javascript:;">
             <i class="icon-user"></i>
@@ -37,15 +51,19 @@
         </a>
         <ul class="sub">
             {% if app.user.roles|checkAdvanceACL(acl.view, 'user') %}<li {% if app.request.get('_route') == 'user' %}class="active"{% endif %}><a href="{{ path('user') }}">Users</a></li>{% endif %}
-            {% if app.user.roles|checkAdvanceACL(acl.view, 'user') %}<li {% if app.request.get('_route') == 'user_new' %}class="active"{% endif %}><a href="{{ path('user_new') }}">New User</a></li>{% endif %}
+            {% if app.user.roles|checkAdvanceACL(acl.add, 'user') %}<li {% if app.request.get('_route') == 'user_new' %}class="active"{% endif %}><a href="{{ path('user_new') }}">New User</a></li>{% endif %}
             {% if app.user.roles|checkAdvanceACL(acl.view, 'role') %}<li {% if app.request.get('_route') == 'role' %}class="active"{% endif %}><a href="{{ path('role') }}">Roles</a></li>{% endif %}
             {% if app.user.roles|checkAdvanceACL(acl.add, 'role') %}<li {% if app.request.get('_route') == 'role_new' %}class="active"{% endif %}><a href="{{ path('role_new') }}">New Role</a></li>{% endif %}
         </ul>
     </li>
+    {% endif %}
+
+    {% if app.user.roles|isEmptyACL('setting') %}
     <li>
         <a href="#">
             <i class="icon-wrench"></i>
             <span>Setting</span>
         </a>
     </li>
+    {% endif %}
 </ul>

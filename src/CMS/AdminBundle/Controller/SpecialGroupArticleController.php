@@ -9,10 +9,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use CMS\AdminBundle\Entity\SpecialGroupArticle;
 use CMS\AdminBundle\Form\SpecialGroupArticleType;
+use CMS\AdminBundle\Api\GetRoleApi;
 
 
 class SpecialGroupArticleController extends Controller
 {
+    public $roles;
+
+    public function __construct(){
+        $this->roles = new GetRoleApi();
+    }
 
     /**
      * Lists all SpecialGroupArticle entities.
@@ -23,6 +29,9 @@ class SpecialGroupArticleController extends Controller
      */
     public function indexAction()
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['view'], 'special_group'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $keyword = $this->get('request')->query->get('keyword', '');
         $em = $this->getDoctrine()->getManager();
 
@@ -61,6 +70,9 @@ class SpecialGroupArticleController extends Controller
      */
     public function createAction(Request $request)
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['add'], 'special_group'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $entity = new SpecialGroupArticle();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -110,6 +122,9 @@ class SpecialGroupArticleController extends Controller
      */
     public function newAction()
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['add'], 'special_group'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $entity = new SpecialGroupArticle();
         $form   = $this->createCreateForm($entity);
 
@@ -128,6 +143,9 @@ class SpecialGroupArticleController extends Controller
      */
     public function showAction($id)
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['view'], 'special_group'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CMSAdminBundle:SpecialGroupArticle')->find($id);
@@ -150,6 +168,9 @@ class SpecialGroupArticleController extends Controller
      */
     public function editAction($id)
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['edit'], 'special_group'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CMSAdminBundle:SpecialGroupArticle')->find($id);
@@ -191,6 +212,9 @@ class SpecialGroupArticleController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['edit'], 'special_group'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CMSAdminBundle:SpecialGroupArticle')->find($id);
@@ -226,6 +250,9 @@ class SpecialGroupArticleController extends Controller
      */
     public function deleteAction($id)
     {
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['del'], 'special_group'))
+            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
+
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('CMSAdminBundle:SpecialGroupArticle')->find($id);
 

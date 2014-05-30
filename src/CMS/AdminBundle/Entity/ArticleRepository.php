@@ -42,6 +42,28 @@ class ArticleRepository extends EntityRepository
             ->setParameter('dateNow', date('Y-m-d H:i:s'));
     }
 
+    public function findAllByGroupSql($idGroup)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT a FROM CMSAdminBundle:Article a WHERE  a.idGroupArticle = :idGroup ORDER BY a.dateCreate DESC'
+            )->setParameter('idGroup', $idGroup);
+    }
+
+    public function findBySpecialGroupSql($idSpecialGroup, $maxEntries = 4)
+    {
+        return $this->getEntityManager()->createQueryBuilder()
+            ->select('a, s')
+            ->from('CMSAdminBundle:Article', 'a')
+            ->innerJoin('a.specialGroupArticle', 's')
+            ->where('s.id = :idSpecialGroup AND :dateNow >= a.dateStart AND a.isActive = 1')
+            ->orderBy('a.dateCreate','DESC')
+            ->setParameter('idSpecialGroup', $idSpecialGroup)
+            ->setParameter('dateNow', date('Y-m-d H:i:s'))
+            ->setMaxResults($maxEntries)
+            ->getQuery();
+    }
+
     public function findNewestSql()
     {
         return $this->getEntityManager()

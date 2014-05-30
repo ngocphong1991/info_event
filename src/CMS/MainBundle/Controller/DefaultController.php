@@ -173,15 +173,28 @@ class DefaultController extends Controller
      */
     public function menuAction($position)
     {
-        $menus = $this->getDoctrine()
-            ->getRepository('CMSAdminBundle:GroupArticle')
-            ->findAll();
+        if($position == 'top'){
+            $menuTop = $this->getDoctrine()
+                ->getRepository('CMSAdminBundle:GroupArticle')
+                ->findMenuTopSql()->getResult();
 
-        $cms = $this->getDoctrine()
-            ->getRepository('CMSAdminBundle:CmsPage')
-            ->findAll();
+            return array('menuTop' => $menuTop, 'position' => $position);
+        }
 
-        return array('menus' => $menus, 'cms' => $cms, 'position' => $position);
+        if($position == 'bot'){
+
+            $menuBot = $this->getDoctrine()
+                ->getRepository('CMSAdminBundle:GroupArticle')
+                ->findMenuBotSql()->getResult();
+
+            $cms = $this->getDoctrine()
+                ->getRepository('CMSAdminBundle:CmsPage')
+                ->findAll();
+
+            return array('menuBot' => $menuBot, 'cms' => $cms, 'position' => $position);
+        }
+
+        return array();
     }
 
     /**
@@ -203,7 +216,8 @@ class DefaultController extends Controller
                 'cpc' => isset($cpc) && $cpc ? $cpc : false,
                 'likeBox' => $likeBox && $likeBox ? $likeBox : false,
                 'specials' => $specials->getResult(),
-                'viewBests' => $viewBest->getResult()
+                'viewBests' => $viewBest->getResult(),
+                'em' => $this->getDoctrine()->getRepository('CMSAdminBundle:Article')
         );
     }
 }
