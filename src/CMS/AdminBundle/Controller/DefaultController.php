@@ -41,7 +41,7 @@ class DefaultController extends Controller
      * @Route("/menu")
      * @Template()
      */
-    public function menuAction()
+    public function menuAction($router)
     {
         $file   = __DIR__."/../Resources/config/resources.yml";
         $resources = Yaml::parse(file_get_contents($file));
@@ -50,7 +50,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $groupArticle = $em->getRepository('CMSAdminBundle:GroupArticle')->findAllSql()->getResult();
 
-        return array('acl' => $acl, 'groupArticle' => $groupArticle);
+        return array('acl' => $acl, 'groupArticle' => $groupArticle, 'router' =>$router);
     }
 
     /**

@@ -28,6 +28,10 @@ class MenuBuilder
             case 'article':
                 $menu->addChild('Article')->setCurrent(true);
             break;
+            case 'article_group':
+                $menu->addChild('Article', array('route' => 'article'));
+                $menu->addChild('Group')->setCurrent(true);
+            break;
             case 'article_new':
                 $menu->addChild('Article', array('route' => 'article'));
                 $menu->addChild('New')->setCurrent(true);

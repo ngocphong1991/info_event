@@ -86,7 +86,7 @@
          </div>
          <!-- END RESPONSIVE QUICK SEARCH FORM -->
          <!-- BEGIN SIDEBAR MENU -->
-         {{ render(controller("CMSAdminBundle:Default:menu"))}}
+         {{ render(controller("CMSAdminBundle:Default:menu", {'router': app.request.get('_route')}))}}
          <!-- END SIDEBAR MENU -->
       </div>
       </div>
