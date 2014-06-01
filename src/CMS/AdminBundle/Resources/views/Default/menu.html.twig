@@ -14,7 +14,7 @@
     {% endif %}
 
     {% if app.user.roles|isEmptyACL('article') %}
-    <li {% if router == 'article' or router == 'article_group' %}class="active sub-menu"{% endif %}  class="sub-menu">
+    <li class="sub-menu{% if router == 'article' or router == 'article_group' %} active{% endif %}">
         <a href="javascript:;">
             <i class="icon-book"></i>
             <span>Article</span>
@@ -42,6 +42,15 @@
     </li>
     {% endif %}
 
+    {% if app.user.roles|isEmptyACL('advertise') %}
+    <li class="sub-menu{% if router == 'advertise'%} active{% endif %}">
+        <a href="{{ path('advertise') }}">
+            <i class="icon-briefcase"></i>
+            <span>Advertises</span>
+        </a>
+    </li>
+    {% endif %}
+    
     {% if app.user.roles|isEmptyACL('user') or app.user.roles|isEmptyACL('role') %}
     <li class="sub-menu">
         <a href="javascript:;">

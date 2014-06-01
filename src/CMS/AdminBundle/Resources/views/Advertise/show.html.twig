@@ -1,13 +1,13 @@
 {% extends "CMSAdminBundle::layout.html.twig" %}
 
-{% block title %}Article - Detail{% endblock %}
+{% block title %}Advertise - Detail{% endblock %}
 
 {% block content %}
     <div class="span12">
         <!-- BEGIN VALIDATION STATES-->
         <div class="widget red">
             <div class="widget-title">
-                <h4><i class="icon-reorder"></i> Article Detail</h4>
+                <h4><i class="icon-reorder"></i> Advertise Detail</h4>
             <span class="tools">
                <a class="icon-chevron-down" href="javascript:;"></a>
                <a class="icon-remove" href="javascript:;"></a>
@@ -21,18 +21,18 @@
                     </div>
                 </div>
                 <div class="control-group ">
-                    <label class="control-label">Title</label>
+                    <label class="control-label">Name</label>
                     <div class="controls">
-                        <span>{{ entity.title|stripslashes }}</span>
+                        <span>{{ entity.name|stripslashes }}</span>
                     </div>
                 </div>
                 {% if entity.image %}
                 <div class="control-group ">
-                    <label class="control-label">Avatar</label>
+                    <label class="control-label">Image</label>
                     <div class="controls">
                         <div class="mws-form-item avatar">
                         <span class="thumbnail span5">
-    					<img src="{{ asset('uploads/article/') }}{{ entity.image }}" alt="{{ entity.title }}" />
+    					<img src="{{ asset('uploads/advertises/') }}{{ entity.image }}" alt="{{ entity.name }}" />
                         </span>
                         </div>
                     </div>
@@ -41,17 +41,9 @@
                 <div class="control-group ">
                     <label class="control-label">Create date</label>
                     <div class="controls">
-                        <span>{{ entity.dateCreate|date('d-m-Y h:i a') }}</span>
+                        <span>{{ entity.createDate|date('d-m-Y h:i a') }}</span>
                     </div>
                 </div>
-                {% if entity.dateStart %}
-                <div class="control-group ">
-                    <label class="control-label">Date Start</label>
-                    <div class="controls">
-                        <span>{{ entity.dateStart|date('d-m-Y h:i a') }}</span>
-                    </div>
-                </div>
-                {% endif %}
                 <div class="control-group ">
                     <label class="control-label">Description</label>
                     <div class="controls">
@@ -66,14 +58,6 @@
                     </div>
                 </div>
                 {% endif %}
-                {% if entity.specialGroupArticle|length %}
-                    <div class="control-group ">
-                        <label class="control-label">Special Group</label>
-                        <div class="controls">
-                            <span>{% for specialGroup in entity.specialGroupArticle %}<a href="{{ path('specgrp_show', { 'id': specialGroup.id }) }}" title="{{specialGroup.name}}">{{specialGroup.name}}</a>, {% endfor %}</span>
-                        </div>
-                    </div>
-                {% endif %}
                 <div class="control-group ">
                     <label class="control-label">Views</label>
                     <div class="controls">
@@ -86,11 +70,17 @@
                         <span>{% if entity.isActive == 1 %}Yes{% else %}No{% endif %}</span>
                     </div>
                 </div>
+                <div class="control-group ">
+                    <label class="control-label">Url</label>
+                    <div class="controls">
+                        <span>{{ entity.url|stripslashes|raw('html') }}</span>
+                    </div>
+                </div>
                 <div class="form-actions">
-                    <a class="btn btn-danger" href="{{ path('article_edit', { 'id': entity.id }) }}">
+                    <a class="btn btn-danger" href="{{ path('advertise_edit', { 'id': entity.id }) }}">
                         Edit
                     </a>
-                    <a class="btn btn-warning" href="{{ path('article_delete', { 'id': entity.id }) }}">
+                    <a class="btn btn-warning" href="{{ path('advertise_delete', { 'id': entity.id }) }}">
                         Delete
                     </a>
                 </div>

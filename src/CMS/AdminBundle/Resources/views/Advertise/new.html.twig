@@ -2,7 +2,6 @@
 
 {% block stylesheets %}
     <link href="{{ asset('bundles/admin/assets/bootstrap/css/bootstrap-fileupload.css') }}" rel="stylesheet" />
-    <link href="{{ asset('bundles/admin/assets/DateTimePicker/DateTimePicker.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/assets/jquery-tags-input/jquery.tagsinput.css') }}" />
     <!--[if lt IE 9]>
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/assets/DateTimePicker/DateTimePicker-ltie9.min.css') }}" />
@@ -12,14 +11,14 @@
     <link rel="stylesheet" href="{{ asset('bundles/admin/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css') }}" />
 {% endblock %}
 
-{% block title %}Article - New{% endblock %}
+{% block title %}Advertise - New{% endblock %}
 
 {% block content %}
 <div class="span12">
     <!-- BEGIN VALIDATION STATES-->
     <div class="widget orange">
         <div class="widget-title">
-            <h4><i class="icon-reorder"></i> Article Form</h4>
+            <h4><i class="icon-reorder"></i> Advertise Form</h4>
             <span class="tools">
                <a class="icon-chevron-down" href="javascript:;"></a>
                <a class="icon-remove" href="javascript:;"></a>
@@ -39,10 +38,6 @@
 
 {% block javascripts %}
     <script type="text/javascript" src="{{ asset('bundles/admin/assets/chosen-bootstrap/chosen/chosen.jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/admin/assets/DateTimePicker/DateTimePicker.min.js') }}"></script>
-    <!--[if lt IE 9]>
-    <script type="text/javascript" src="{{ asset('bundles/admin/assets/DateTimePicker/DateTimePicker-ltie9.min.js') }}"></script>
-    <![endif]-->
     <script type="text/javascript" src="{{ asset('bundles/admin/assets/jquery-tags-input/jquery.tagsinput.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/admin/assets/bootstrap-summernote/summernote.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/admin/assets/bootstrap/js/bootstrap-fileupload.js') }}"></script>
@@ -78,7 +73,7 @@
             });
     
             // setup button checkbox togged
-            $('.metro-checkbox').toggleButtons({
+            $('#cms_adminbundle_advertise_isActive').toggleButtons({
                 height: 30,
                 font: {
                     'line-height': '30px',
@@ -86,14 +81,30 @@
                     'font-style': 'regular'
                 }
             });
-    
-            //Setup text area editor
-            $('textarea[id="article_description"]').html('&nbsp;').summernote({
-                height: 300   //set editable area's height
+            
+            $('#cms_adminbundle_advertise_position').toggleButtons({
+                height: 30,
+                font: {
+                    'line-height': '30px',
+                    'font-size': '18px',
+                    'font-style': 'regular'
+                },
+                width: 220,
+                label: {
+                    enabled: "Top",
+                    disabled: "Right"
+                },
+                style: {
+                    // Accepted values ["primary", "danger", "info", "success", "warning"] or nothing
+                    enabled: "success",
+                    disabled: "warning"
+                }
             });
     
-            //Setup date time picker
-            $("#dtBox").DateTimePicker();
+            //Setup text area editor
+            $('textarea[id="cms_adminbundle_advertise_description"]').html('&nbsp;').summernote({
+                height: 300   //set editable area's height
+            });
         });
     </script>
 {% endblock %}

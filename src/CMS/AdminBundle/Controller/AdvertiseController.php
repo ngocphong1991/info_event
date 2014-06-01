@@ -7,12 +7,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use CMS\AdminBundle\Entity\CmsPage;
-use CMS\AdminBundle\Form\CmsPageType;
+use CMS\AdminBundle\Entity\Advertise;
+use CMS\AdminBundle\Form\AdvertiseType;
 use CMS\AdminBundle\Api\GetRoleApi;
 
-
-class CmsPageController extends Controller
+class AdvertiseController extends Controller
 {
     public $roles;
 
@@ -21,23 +20,23 @@ class CmsPageController extends Controller
     }
 
     /**
-     * Lists all CmsPage entities.
+     * Lists all Advertise entities.
      *
-     * @Route("/", name="cmspage")
+     * @Route("/", name="advertise")
      * @Method("GET")
      * @Template()
      */
     public function indexAction()
     {
-        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['view'], 'cms_page'))
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['view'], 'advertise'))
             throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
 
         $keyword = $this->get('request')->query->get('keyword', '');
         $em = $this->getDoctrine()->getManager();
 
-        if(!$keyword) $query = $em->getRepository('CMSAdminBundle:CmsPage')->findAllSql();
+        if(!$keyword) $query = $em->getRepository('CMSAdminBundle:Advertise')->findAllSql();
         else{//Searching
-            $query = $em->getRepository('CMSAdminBundle:CmsPage')->findByKeywordSql($keyword);
+            $query = $em->getRepository('CMSAdminBundle:Advertise')->findByKeywordSql($keyword);
             $count = count($query->getResult());
 
             if($count)  $this->get('session')->getFlashBag()->add(
@@ -62,18 +61,18 @@ class CmsPageController extends Controller
         return array('pagination' => $pagination);
     }
     /**
-     * Creates a new CmsPage entity.
+     * Creates a new Advertise entity.
      *
-     * @Route("/create", name="cmspage_create")
+     * @Route("/create", name="advertise_create")
      * @Method("POST")
-     * @Template("CMSAdminBundle:CmsPage:new.html.twig")
+     * @Template("CMSAdminBundle:Advertise:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['add'], 'cms_page'))
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['add'], 'advertise'))
             throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
 
-        $entity = new CmsPage();
+        $entity = new Advertise();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -84,10 +83,9 @@ class CmsPageController extends Controller
 
             $this->get('session')->getFlashBag()->add(
                 'successfull',
-                'Insert CMS Page were successfull!'
+                'Insert Advertise were successfull!'
             );
-
-            return $this->redirect($this->generateUrl('cmspage_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('advertise_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -97,16 +95,16 @@ class CmsPageController extends Controller
     }
 
     /**
-    * Creates a form to create a CmsPage entity.
+    * Creates a form to create a Advertise entity.
     *
-    * @param CmsPage $entity The entity
+    * @param Advertise $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createCreateForm(CmsPage $entity)
+    private function createCreateForm(Advertise $entity)
     {
-        $form = $this->createForm(new CmsPageType(), $entity, array(
-            'action' => $this->generateUrl('cmspage_create'),
+        $form = $this->createForm(new AdvertiseType(), $entity, array(
+            'action' => $this->generateUrl('advertise_create'),
             'method' => 'POST',
         ));
 
@@ -114,18 +112,18 @@ class CmsPageController extends Controller
     }
 
     /**
-     * Displays a form to create a new CmsPage entity.
+     * Displays a form to create a new Advertise entity.
      *
-     * @Route("/new", name="cmspage_new")
+     * @Route("/new", name="advertise_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['add'], 'cms_page'))
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['add'], 'advertise'))
             throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
 
-        $entity = new CmsPage();
+        $entity = new Advertise();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -135,48 +133,47 @@ class CmsPageController extends Controller
     }
 
     /**
-     * Finds and displays a CmsPage entity.
+     * Finds and displays a Advertise entity.
      *
-     * @Route("/show/{id}", name="cmspage_show")
+     * @Route("/show/{id}", name="advertise_show")
      * @Method("GET")
      * @Template()
      */
     public function showAction($id)
     {
-        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['view'], 'cms_page'))
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['view'], 'advertise'))
             throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
 
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('CMSAdminBundle:CmsPage')->find($id);
+        $entity = $em->getRepository('CMSAdminBundle:Advertise')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find CmsPage entity.');
+            throw $this->createNotFoundException('Unable to find Advertise entity.');
         }
-
         return array(
             'entity'      => $entity,
         );
     }
 
     /**
-     * Displays a form to edit an existing CmsPage entity.
+     * Displays a form to edit an existing Advertise entity.
      *
-     * @Route("/edit/{id}", name="cmspage_edit")
+     * @Route("/edit/{id}", name="advertise_edit")
      * @Method("GET")
      * @Template()
      */
     public function editAction($id)
     {
-        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['edit'], 'cms_page'))
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['edit'], 'advertise'))
             throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
 
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('CMSAdminBundle:CmsPage')->find($id);
+        $entity = $em->getRepository('CMSAdminBundle:Advertise')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find CmsPage entity.');
+            throw $this->createNotFoundException('Unable to find Advertise entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -188,39 +185,39 @@ class CmsPageController extends Controller
     }
 
     /**
-    * Creates a form to edit a CmsPage entity.
+    * Creates a form to edit a Advertise entity.
     *
-    * @param CmsPage $entity The entity
+    * @param Advertise $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(CmsPage $entity)
+    private function createEditForm(Advertise $entity)
     {
-        $form = $this->createForm(new CmsPageType(), $entity, array(
-            'action' => $this->generateUrl('cmspage_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new AdvertiseType(), $entity, array(
+            'action' => $this->generateUrl('advertise_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
         return $form;
     }
     /**
-     * Edits an existing CmsPage entity.
+     * Edits an existing Advertise entity.
      *
-     * @Route("/update/{id}", name="cmspage_update")
+     * @Route("/update/{id}", name="advertise_update")
      * @Method("PUT")
-     * @Template("CMSAdminBundle:CmsPage:edit.html.twig")
+     * @Template("CMSAdminBundle:Advertise:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
-        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['edit'], 'cms_page'))
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['edit'], 'advertise'))
             throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
 
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('CMSAdminBundle:CmsPage')->find($id);
+        $entity = $em->getRepository('CMSAdminBundle:Advertise')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find CmsPage entity.');
+            throw $this->createNotFoundException('Unable to find Advertise entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -231,10 +228,10 @@ class CmsPageController extends Controller
 
             $this->get('session')->getFlashBag()->add(
                 'successfull',
-                'Update CMS Page were successfull!'
+                'Update Advertise were successfull!'
             );
-
-            return $this->redirect($this->generateUrl('cmspage_edit', array('id' => $id)));
+            
+            return $this->redirect($this->generateUrl('advertise_edit', array('id' => $id)));
         }
 
         return array(
@@ -243,21 +240,21 @@ class CmsPageController extends Controller
         );
     }
     /**
-     * Deletes a CmsPage entity.
+     * Deletes a Advertise entity.
      *
-     * @Route("del/{id}", name="cmspage_delete")
+     * @Route("/del/{id}", name="advertise_delete")
      * @Method("GET")
      */
-    public function deleteAction($id)
-    {
-        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['del'], 'cms_page'))
+    public function deleteAction(Request $request, $id)
+    {   
+        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['del'], 'advertise'))
             throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
 
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('CMSAdminBundle:CmsPage')->find($id);
+        $entity = $em->getRepository('CMSAdminBundle:Advertise')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find CmsPage entity.');
+            throw $this->createNotFoundException('Unable to find Advertise entity.');
         }
 
         $em->remove($entity);
@@ -265,9 +262,9 @@ class CmsPageController extends Controller
 
         $this->get('session')->getFlashBag()->add(
             'successfull',
-            'Delete CMS Page were successfull!'
+            'Delete Advertise were successfull!'
         );
 
-        return $this->redirect($this->generateUrl('cmspage'));
+        return $this->redirect($this->generateUrl('advertise'));
     }
 }

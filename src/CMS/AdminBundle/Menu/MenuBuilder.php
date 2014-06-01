@@ -52,6 +52,32 @@ class MenuBuilder
                 $menu->addChild('Article', array('route' => 'article'));
                 $menu->addChild('Detail')->setCurrent(true);
             break;
+            
+            //advertise menu
+            case 'advertise':
+                $menu->addChild('Advertises')->setCurrent(true);
+            break;
+            case 'advertisearticle_new':
+                $menu->addChild('Advertise', array('route' => 'advertise'));
+                $menu->addChild('New')->setCurrent(true);
+            break;
+            case 'advertise_create':
+                $menu->addChild('Advertises', array('route' => 'advertise'));
+                $menu->addChild('New')->setCurrent(true);
+            break;
+            case 'advertise_edit':
+                $menu->addChild('Advertises', array('route' => 'advertise'));
+                $menu->addChild('Edit')->setCurrent(true);
+            break;
+            case 'advertise_update':
+                $menu->addChild('Advertises', array('route' => 'advertise'));
+                $menu->addChild('Edit')->setCurrent(true);
+            break;
+            case 'advertise_show':
+                $menu->addChild('Advertises', array('route' => 'advertise'));
+                $menu->addChild('Detail')->setCurrent(true);
+            break;
+            
             //Group Article menu
             case 'grouparticle':
                 $menu->addChild('Article Group')->setCurrent(true);

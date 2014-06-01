@@ -61,6 +61,17 @@ class DefaultController extends Controller
             array('url' => $slug, 'isActive' => 1)
         );
 
+        // get advertise
+        $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findViewBestSql(
+            0, null
+        );
+
+foreach($advertise as $t){
+    count($t);
+}
+        
+        die();
+        // get article
         $query = $em->getRepository('CMSAdminBundle:Article')->findByGroupSql(
             $group->getId()
         );

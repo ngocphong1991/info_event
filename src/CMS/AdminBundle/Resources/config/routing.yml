@@ -38,3 +38,8 @@ cms_admin_cmspage:
     type:     annotation
     prefix:   /cmspage
 
+cms_admin_advertise:
+    resource: "@CMSAdminBundle/Controller/AdvertiseController.php"
+    type:     annotation
+    prefix:   /advertise
+

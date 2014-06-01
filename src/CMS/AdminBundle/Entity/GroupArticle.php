@@ -118,6 +118,11 @@ class GroupArticle
      * @ORM\OneToMany(targetEntity="Article", mappedBy="groupArticle")
      */
     protected $articles;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Advertise", mappedBy="groupArticle")
+     */
+    protected $advertises;
 
     /**
      * @Assert\File(
@@ -144,6 +149,7 @@ class GroupArticle
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->advertises = new ArrayCollection();
         $this->isActive = self::ACTIVE_NO;
         $this->isSpecial = self::ACTIVE_NO;
         $this->isOnBot = self::ACTIVE_NO;
@@ -437,6 +443,39 @@ class GroupArticle
     public function getArticles()
     {
         return $this->articles;
+    }
+    
+    /**
+     * Add advertises
+     *
+     * @param \CMS\AdminBundle\Entity\Advertise $advertises
+     * @return GroupArticle
+     */
+    public function addAdvertise(\CMS\AdminBundle\Entity\Advertise $advertises)
+    {
+        $this->advertises[] = $advertises;
+
+        return $this;
+    }
+
+    /**
+     * Remove advertises
+     *
+     * @param \CMS\AdminBundle\Entity\Article $advertises
+     */
+    public function removeAdvertise(\CMS\AdminBundle\Entity\Advertise $advertises)
+    {
+        $this->advertises->removeElement($advertises);
+    }
+
+    /**
+     * Get advertises
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAdvertise()
+    {
+        return $this->advertises;
     }
 
     /**

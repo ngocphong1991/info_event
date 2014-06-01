@@ -6,6 +6,7 @@ resources:
     - { label: Group Article, code: group_article, acl: 0 }
     - { label: CMS Page, code: cms_page, acl: 0 }
     - { label: Article, code: article, acl: 0 }
+    - { label: Advertise, code: advertise, acl: 0 }
 
 acl:
     view: 1

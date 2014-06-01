@@ -12,14 +12,14 @@
     <link rel="stylesheet" href="{{ asset('bundles/admin/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css') }}" />
 {% endblock %}
 
-{% block title %}Article - New{% endblock %}
+{% block title %}Advertise - Edit{% endblock %}
 
 {% block content %}
 <div class="span12">
     <!-- BEGIN VALIDATION STATES-->
     <div class="widget orange">
         <div class="widget-title">
-            <h4><i class="icon-reorder"></i> Article Form</h4>
+            <h4><i class="icon-reorder"></i> Advertise Form</h4>
             <span class="tools">
                <a class="icon-chevron-down" href="javascript:;"></a>
                <a class="icon-remove" href="javascript:;"></a>
@@ -78,7 +78,7 @@
             });
     
             // setup button checkbox togged
-            $('.metro-checkbox').toggleButtons({
+            $('#cms_adminbundle_advertise_isActive').toggleButtons({
                 height: 30,
                 font: {
                     'line-height': '30px',
@@ -86,9 +86,33 @@
                     'font-style': 'regular'
                 }
             });
+            
+            $('#cms_adminbundle_advertise_position').toggleButtons({
+                height: 30,
+                font: {
+                    'line-height': '30px',
+                    'font-size': '18px',
+                    'font-style': 'regular'
+                },
+                width: 220,
+                label: {
+                    enabled: "Top",
+                    disabled: "Right"
+                },
+                style: {
+                    // Accepted values ["primary", "danger", "info", "success", "warning"] or nothing
+                    enabled: "success",
+                    disabled: "warning"
+                }
+            });
+            
+            //Setup Image
+            {% if entity.image %}
+                $('#cms_adminbundle_advertise_file').attr({'src':"{{ asset('uploads/advertises/300x300/') }}m_{{ entity.image }}", 'alt':'{{ entity.name }}'});
+            {% endif %}
     
             //Setup text area editor
-            $('textarea[id="article_description"]').html('&nbsp;').summernote({
+            $('textarea[id="cms_adminbundle_advertise_description"]').summernote({
                 height: 300   //set editable area's height
             });
     
