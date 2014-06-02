@@ -1,10 +1,6 @@
 <div class="col-sm-4 blog-sidebar">
-    {% if cpc %}
-    <div class="sidebar-module ad">
-        <a href="#" title="cpc">
-            <img src="{{ asset('bundles/main/img/ad.png') }}" alt="">
-        </a>
-    </div>
+    {% if slug %}
+    {{ render(controller("CMSMainBundle:Default:bannerRight", {'slug': slug}))}}
     {% endif %}
     {% for entity in specials %}
         {% if listSpecial|length == 0 or entity.id  not in listSpecial %}

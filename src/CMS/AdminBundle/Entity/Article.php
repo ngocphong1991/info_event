@@ -32,8 +32,10 @@ use CMS\AdminBundle\Api\ConvertToSlugApi;
  */
 class Article
 {
-    const ACTIVE_YES = true;
-    const ACTIVE_NO = false;
+    const ACTIVE_POST = 1;
+    const ACTIVE_CANCEL = 0;
+    const ACTIVE_PENDING_APPROVE = 3;
+    const ACTIVE_PENDING_POST = 4;
     /**
      * @var integer
      *
@@ -153,7 +155,7 @@ class Article
     public function __construct()
     {
         $this->specialGroupArticle = new ArrayCollection();
-        $this->isActive = self::ACTIVE_NO;
+        $this->isActive = self::ACTIVE_CANCEL;
     }
 
     public  function  __toString(){
@@ -421,7 +423,7 @@ class Article
      */
     public function setIsActive($isActive)
     {
-        if (!in_array($isActive, array(self::ACTIVE_YES, self::ACTIVE_NO))) {
+        if (!in_array($isActive, array(self::ACTIVE_CANCEL, self::ACTIVE_PENDING_APPROVE, self::ACTIVE_PENDING_POST, self::ACTIVE_POST))) {
             throw new \InvalidArgumentException("Invalid active");
         }
         $this->isActive = $isActive;
@@ -436,11 +438,6 @@ class Article
      */
     public function getIsActive()
     {
-        if($this->isActive && $this->isActive == 1){
-            $this->isActive = self::ACTIVE_YES;
-        }else
-            $this->isActive = self::ACTIVE_NO;
-
         return $this->isActive;
     }
 
@@ -452,8 +449,10 @@ class Article
     public static function getIsActiveTypes()
     {
         return array(
-            self::ACTIVE_YES => 'Yes',
-            self::ACTIVE_NO => 'No'
+            self::ACTIVE_CANCEL => 'Cancel',
+            self::ACTIVE_PENDING_APPROVE => 'Pending approve',
+            self::ACTIVE_PENDING_POST => 'Pending post',
+            self::ACTIVE_POST => 'Post',
         );
     }
 

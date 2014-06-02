@@ -60,17 +60,7 @@ class DefaultController extends Controller
         $group = $em->getRepository('CMSAdminBundle:GroupArticle')->findOneBy(
             array('url' => $slug, 'isActive' => 1)
         );
-
-        // get advertise
-        $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findViewBestSql(
-            0, null
-        );
-
-foreach($advertise as $t){
-    count($t);
-}
         
-        die();
         // get article
         $query = $em->getRepository('CMSAdminBundle:Article')->findByGroupSql(
             $group->getId()
@@ -209,10 +199,90 @@ foreach($advertise as $t){
     }
 
     /**
+     * @Route("/banner-top")
+     * @Template()
+     */
+    public function bannerTopAction($slug)
+    {
+        $advertise = null;
+        
+        if($slug = explode('/', $slug)){
+            $em = $this->getDoctrine()->getManager();
+            $group = $em->getRepository('CMSAdminBundle:GroupArticle')->findOneBy(
+                array('url' => $slug[Count($slug)-1], 'isActive' => 1)
+            );  
+            
+            $article = $em->getRepository('CMSAdminBundle:Article')->findOneBy(
+                array('url' => $slug[Count($slug)-1], 'isActive' => 1)
+            );  
+            
+            if($group){
+                $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findViewBestSql(
+                    1, $group->getId()
+                )->getOneOrNullResult();
+            }
+            
+            if($article){
+                $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findViewBestSql(
+                    1, $article->getGroupArticle()->getId()
+                )->getOneOrNullResult();
+            }
+        }
+        
+        if(!$advertise){
+            $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findViewBestSql(
+                    1, null
+                )->getOneOrNullResult();
+        }
+        
+        return array('advertise' => $advertise);
+    }
+    
+    /**
+     * @Route("/banner-right")
+     * @Template()
+     */
+    public function bannerRightAction($slug)
+    {
+        $advertise = null;
+        
+        if($slug = explode('/', $slug)){
+            $em = $this->getDoctrine()->getManager();
+            $group = $em->getRepository('CMSAdminBundle:GroupArticle')->findOneBy(
+                array('url' => $slug[Count($slug)-1], 'isActive' => 1)
+            );  
+            
+            $article = $em->getRepository('CMSAdminBundle:Article')->findOneBy(
+                array('url' => $slug[Count($slug)-1], 'isActive' => 1)
+            );  
+            
+            if($group){
+                $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findViewBestSql(
+                    0, $group->getId()
+                )->getOneOrNullResult();
+            }
+            
+            if($article){
+                $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findViewBestSql(
+                    0, $article->getGroupArticle()->getId()
+                )->getOneOrNullResult();
+            }
+        }
+        
+        if(!$advertise){
+            $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findViewBestSql(
+                    0, null
+                )->getOneOrNullResult();
+        }
+        
+        return array('advertise' => $advertise);
+    }
+
+    /**
      * @Route("/right")
      * @Template()
      */
-    public function rightSlideBarAction($cpc, $listSpecial, $likeBox)
+    public function rightSlideBarAction($slug, $listSpecial, $likeBox)
     {
         $specials = $this->getDoctrine()
             ->getRepository('CMSAdminBundle:SpecialGroupArticle')
@@ -224,7 +294,7 @@ foreach($advertise as $t){
 
         return array(
                 'listSpecial' => $listSpecial ? $listSpecial : array(),
-                'cpc' => isset($cpc) && $cpc ? $cpc : false,
+                'slug' => isset($slug) && $slug ? $slug : false,
                 'likeBox' => $likeBox && $likeBox ? $likeBox : false,
                 'specials' => $specials->getResult(),
                 'viewBests' => $viewBest->getResult(),

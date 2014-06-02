@@ -27,7 +27,7 @@
             </div><!-- /.blog-post -->
         {% endif %}
         </div><!-- /.blog-main -->
-        {{ render(controller("CMSMainBundle:Default:rightSlideBar", {'cpc': true, 'listSpecial': false, 'likeBox': false}))}}
+        {{ render(controller("CMSMainBundle:Default:rightSlideBar", {'slug': app.request.pathInfo,  'listSpecial': false, 'likeBox': false}))}}
     </div><!-- /.row -->
 {% endblock %}
 {% block javascripts %}

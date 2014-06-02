@@ -47,7 +47,7 @@
 <div class="header">
     <div class="container">
         <div class="logo"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" title="Home"><img src="{{ asset('bundles/main/img/logo.png') }}"></a></div>
-        <div class="banner"><img src="{{ asset('bundles/main/img/banner.png') }}"></div>
+        <div class="banner">{{ render(controller("CMSMainBundle:Default:bannerTop", {'slug': app.request.pathInfo}))}}</div>
     </div>
 </div>
 <div class="nav-top">

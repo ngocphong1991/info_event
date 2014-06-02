@@ -16,12 +16,14 @@ class ArticleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('isActive','checkbox', array(
-                    'required'  => false,
-                    'label_attr' => array(
-                        'class' => 'control-label'
+            ->add('isActive','choice', array(
+                        'choices'   => Article::getIsActiveTypes(),
+                        'multiple'  => false,
+                        'expanded'  => false,
+                        'label_attr' => array(
+                            'class' => 'control-label'
+                        )
                     )
-                )
             )
             ->add('title', null, array(
                     'attr' => array(

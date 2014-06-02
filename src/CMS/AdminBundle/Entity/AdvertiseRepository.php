@@ -23,12 +23,20 @@ class AdvertiseRepository extends EntityRepository
     
     public function findViewBestSql($position = 0, $idGroup = null)
     {
-        return $this->getEntityManager()
-            ->createQuery(
-                'SELECT a FROM CMSAdminBundle:Advertise a WHERE a.idParent = :idGroup AN a.position = :position AND a.isActive = 1 ORDER BY a.createDate DESC'
-            )->setParameter('position', $position)
-            ->setParameter('idGroup', $idGroup)
-            ->setMaxResults(1);
+        if($idGroup === null){
+            return $this->getEntityManager()
+                ->createQuery(
+                    'SELECT a FROM CMSAdminBundle:Advertise a WHERE a.idParent IS NULL AND a.position = :position AND a.isActive = 1 ORDER BY a.createDate DESC'
+                )->setParameter('position', $position)
+                ->setMaxResults(1);
+        }else{
+            return $this->getEntityManager()
+                ->createQuery(
+                    'SELECT a FROM CMSAdminBundle:Advertise a WHERE a.idParent = :idGroup AND a.position = :position AND a.isActive = 1 ORDER BY a.createDate DESC'
+                )->setParameter('position', $position)
+                ->setParameter('idGroup', $idGroup)
+                ->setMaxResults(1);
+        }
     }
 }
 ?>
