@@ -34,6 +34,7 @@ class Article
 {
     const ACTIVE_POST = 1;
     const ACTIVE_CANCEL = 0;
+    const ACTIVE_DRAFT = 2;
     const ACTIVE_PENDING_APPROVE = 3;
     const ACTIVE_PENDING_POST = 4;
     /**
@@ -423,7 +424,7 @@ class Article
      */
     public function setIsActive($isActive)
     {
-        if (!in_array($isActive, array(self::ACTIVE_CANCEL, self::ACTIVE_PENDING_APPROVE, self::ACTIVE_PENDING_POST, self::ACTIVE_POST))) {
+        if (!in_array($isActive, array(self::ACTIVE_CANCEL, self::ACTIVE_DRAFT, self::ACTIVE_PENDING_APPROVE, self::ACTIVE_PENDING_POST, self::ACTIVE_POST))) {
             throw new \InvalidArgumentException("Invalid active");
         }
         $this->isActive = $isActive;
@@ -450,6 +451,7 @@ class Article
     {
         return array(
             self::ACTIVE_CANCEL => 'Cancel',
+            self::ACTIVE_DRAFT => 'Save draft',
             self::ACTIVE_PENDING_APPROVE => 'Pending approve',
             self::ACTIVE_PENDING_POST => 'Pending post',
             self::ACTIVE_POST => 'Post',
