@@ -118,8 +118,10 @@ class ArticleController extends Controller
         if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['add'], 'article'))
             throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
 
+        $isLocked = $this->roles->isAdministrator($this->getUser()->getRoles());
+
         $entity = new Article();
-        $form = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity, $isLocked);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -147,9 +149,9 @@ class ArticleController extends Controller
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createCreateForm(Article $entity)
+    private function createCreateForm(Article $entity, $isLocked = false)
     {
-        $form = $this->createForm(new ArticleType(), $entity, array(
+        $form = $this->createForm(new ArticleType($isLocked), $entity, array(
             'action' => $this->generateUrl('article_create'),
             'method' => 'POST',
         ));
@@ -169,8 +171,10 @@ class ArticleController extends Controller
         if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['add'], 'article'))
             throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
 
+        $isLocked = $this->roles->isAdministrator($this->getUser()->getRoles());
+
         $entity = new Article();
-        $form   = $this->createCreateForm($entity);
+        $form   = $this->createCreateForm($entity, $isLocked);
 
         return array(
             'entity' => $entity,
@@ -215,6 +219,9 @@ class ArticleController extends Controller
         if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['edit'], 'article'))
             throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
 
+        $isLocked = $this->roles->isAdministrator($this->getUser()->getRoles());
+
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CMSAdminBundle:Article')->find($id);
@@ -223,7 +230,15 @@ class ArticleController extends Controller
             throw $this->createNotFoundException('Unable to find Article entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
+        if($entity->getIsLocked() && !$isLocked){
+            $this->get('session')->getFlashBag()->add(
+                'error',
+                'This article have been locked. If you want to edit it, Please contact with Administrator!'
+            );
+            return $this->redirect($this->getRequest()->headers->get('referer'));
+        }
+
+        $editForm = $this->createEditForm($entity, $isLocked);
 
         return array(
             'entity'      => $entity,
@@ -238,9 +253,9 @@ class ArticleController extends Controller
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Article $entity)
+    private function createEditForm(Article $entity, $isLocked = false)
     {
-        $form = $this->createForm(new ArticleType(), $entity, array(
+        $form = $this->createForm(new ArticleType($isLocked), $entity, array(
             'action' => $this->generateUrl('article_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
@@ -259,6 +274,8 @@ class ArticleController extends Controller
         if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['edit'], 'article'))
             throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
 
+        $isLocked = $this->roles->isAdministrator($this->getUser()->getRoles());
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CMSAdminBundle:Article')->find($id);
@@ -267,7 +284,15 @@ class ArticleController extends Controller
             throw $this->createNotFoundException('Unable to find Article entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
+        if($entity->getIsLocked() && !$isLocked){
+            $this->get('session')->getFlashBag()->add(
+                'error',
+                'This article have been locked. If you want to edit it, Please contact with Administrator!'
+            );
+            return $this->redirect($this->getRequest()->headers->get('referer'));
+        }
+
+        $editForm = $this->createEditForm($entity, $isLocked);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {

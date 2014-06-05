@@ -27,4 +27,19 @@ class GetRoleApi
 
         return false;
     }
+
+    public function isAdministrator($roles) {
+
+        foreach($roles as $role){
+            $permission = json_decode($role->getResource());
+            foreach($permission as $value){
+                if(!($value & 15)){
+                    return false;
+                }
+            }
+
+        }
+
+        return true;
+    }
 }

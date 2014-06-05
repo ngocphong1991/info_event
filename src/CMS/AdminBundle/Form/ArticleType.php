@@ -9,7 +9,13 @@ use CMS\AdminBundle\Entity\Article;
 
 class ArticleType extends AbstractType
 {
-        /**
+    protected $isLocked;
+
+    public function  __construct($isLocked){
+        $this->isLocked = $isLocked;
+    }
+
+     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -99,6 +105,15 @@ class ArticleType extends AbstractType
             )
             ->add('dateStart','datePicker', array())
         ;
+        if($this->isLocked){
+            $builder->add('isLocked','checkbox', array(
+                    'required'  => false,
+                    'label_attr' => array(
+                        'class' => 'control-label'
+                    )
+                )
+            );
+        }
     }
     
     /**

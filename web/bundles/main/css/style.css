@@ -172,7 +172,7 @@ a:hover{
 .search img{margin-right: -5px}
 .search-form{
     background: none repeat scroll 0 0 #7D7D7D;
-    padding: 1em;
+    padding: 1em 1.35em;
     position: absolute;
     right: 0;
     top: 40px;
@@ -234,7 +234,7 @@ a:hover{
 /* Sidebar modules for boxing content */
 .sidebar-module {
     padding: 0 15px;
-    margin: 0 -15px 5px;
+    margin: 0 -15px 15px;
     clear: both;
 }
 .sidebar-module h4{

@@ -37,6 +37,10 @@ class Article
     const ACTIVE_DRAFT = 2;
     const ACTIVE_PENDING_APPROVE = 3;
     const ACTIVE_PENDING_POST = 4;
+
+    const LOCKED_YES = true;
+    const LOCKED_NO = false;
+
     /**
      * @var integer
      *
@@ -124,6 +128,13 @@ class Article
     private $isActive;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="is_locked", type="smallint", length=1, nullable=true)
+     */
+    private $isLocked;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="tags", type="string", length=500, nullable=true)
@@ -157,6 +168,7 @@ class Article
     {
         $this->specialGroupArticle = new ArrayCollection();
         $this->isActive = self::ACTIVE_CANCEL;
+        $this->isLocked = self::LOCKED_NO;
     }
 
     public  function  __toString(){
@@ -457,6 +469,51 @@ class Article
             self::ACTIVE_POST => 'Post',
         );
     }
+
+    /**
+     * Set isLocked
+     *
+     * @param string $isLocked
+     * @return Article
+     */
+    public function setIsLocked($isLocked)
+    {
+        if (!in_array($isLocked, array(self::LOCKED_YES, self::LOCKED_NO))) {
+            throw new \InvalidArgumentException("Invalid Locked");
+        }
+        $this->isLocked = $isLocked;
+
+        return $this;
+    }
+
+    /**
+     * Get isLocked
+     *
+     * @return string
+     */
+    public function getIsLocked()
+    {
+        if($this->isLocked && $this->isLocked == 1){
+            $this->isLocked = self::LOCKED_YES;
+        }else
+            $this->isLocked = self::LOCKED_NO;
+
+        return $this->isLocked;
+    }
+
+    /**
+     * Get isLockedTypes
+     *
+     * @return array
+     */
+    public static function getIsLockedTypes()
+    {
+        return array(
+            self::LOCKED_YES => 'Yes',
+            self::LOCKED_NO => 'No'
+        );
+    }
+
 
     /**
      * Set groupArticle
