@@ -2,7 +2,7 @@
     {% if app.user.roles|isEmptyACL('special_group') or app.user.roles|isEmptyACL('group_article') %}
     <li class="sub-menu">
         <a href="javascript:;">
-            <i class="icon-tasks"></i>
+            <i class="icon-folder-open"></i>
             <span>Group Article</span>
             <span class="arrow"></span>
         </a>
@@ -29,16 +29,12 @@
     {% endif %}
 
     {% if app.user.roles|isEmptyACL('cms_page') %}
-    <li class="sub-menu">
-        <a href="javascript:;">
+    <li class="sub-menu{% if router == 'cmspage' %} active{% endif %}">
+        <a href="{{ path('cmspage') }}">
             <i class="icon-file-alt"></i>
             <span>CMS Pages</span>
             <span class="arrow"></span>
         </a>
-        <ul class="sub">
-            <li {% if router == 'cmspage' %}class="active"{% endif %}><a href="{{ path('cmspage') }}">List CMS Pages</a></li>
-            <li {% if router == 'cmspage_new' %}class="active"{% endif %}><a href="{{ path('cmspage_new') }}">New CMS Pages</a></li>
-        </ul>
     </li>
     {% endif %}
 
@@ -60,9 +56,7 @@
         </a>
         <ul class="sub">
             {% if app.user.roles|checkAdvanceACL(acl.view, 'user') %}<li {% if router == 'user' %}class="active"{% endif %}><a href="{{ path('user') }}">Users</a></li>{% endif %}
-            {% if app.user.roles|checkAdvanceACL(acl.add, 'user') %}<li {% if router == 'user_new' %}class="active"{% endif %}><a href="{{ path('user_new') }}">New User</a></li>{% endif %}
             {% if app.user.roles|checkAdvanceACL(acl.view, 'role') %}<li {% if router == 'role' %}class="active"{% endif %}><a href="{{ path('role') }}">Roles</a></li>{% endif %}
-            {% if app.user.roles|checkAdvanceACL(acl.add, 'role') %}<li {% if router == 'role_new' %}class="active"{% endif %}><a href="{{ path('role_new') }}">New Role</a></li>{% endif %}
         </ul>
     </li>
     {% endif %}

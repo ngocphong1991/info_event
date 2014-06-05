@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
+
 use CMS\AdminBundle\Entity\Advertise;
 use CMS\AdminBundle\Form\AdvertiseType;
 use CMS\AdminBundle\Api\GetRoleApi;
@@ -266,5 +268,41 @@ class AdvertiseController extends Controller
         );
 
         return $this->redirect($this->generateUrl('advertise'));
+    }
+
+    /**
+     * List all City by Country entities.
+     *
+     * @Route("/cpc/update", name="advertise_update_cpc")
+     * @Method("GET")
+     */
+    public function updateCpcAction(Request $request)
+    {
+        $id = $request->query->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('CMSAdminBundle:Advertise')->find($id);
+
+        if (!$entities) {
+            return new Response(json_encode(
+                    array('root' => array(
+                        'msg' => false,
+                        'url' => null
+                    )
+                    )
+                )
+            );
+        }
+
+        $entities->setClick($entities->getClick()+1);
+        $em->flush();
+
+        return new Response(json_encode(
+                array('root' => array(
+                    'msg' => true,
+                    'url' => $entities->getUrl()
+                )
+                )
+            )
+        );
     }
 }

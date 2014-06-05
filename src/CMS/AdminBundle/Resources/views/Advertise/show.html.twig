@@ -59,9 +59,39 @@
                 </div>
                 {% endif %}
                 <div class="control-group ">
-                    <label class="control-label">Views</label>
+                    <label class="control-label">Impression</label>
                     <div class="controls">
                         <span>{{ entity.views }}</span>
+                    </div>
+                </div>
+                <div class="control-group ">
+                    <label class="control-label">CPM - Cost per 1000 impression </label>
+                    <div class="controls">
+                        <span>{{ entity.cpm|number_format(0, ',', '.') }} (VNĐ)</span>
+                    </div>
+                </div>
+                <div class="control-group ">
+                    <label class="control-label">Click count</label>
+                    <div class="controls">
+                        <span>{{ entity.click }}</span>
+                    </div>
+                </div>
+                <div class="control-group ">
+                    <label class="control-label">CPC - Cost per click </label>
+                    <div class="controls">
+                        <span>{{ entity.cpc|number_format(0, ',', '.') }} (VNĐ)</span>
+                    </div>
+                </div>
+                <div class="control-group ">
+                    <label class="control-label">Budget for advertise</label>
+                    <div class="controls">
+                        <span>{{ entity.budget|number_format(0, ',', '.')  }} (VNĐ)</span>
+                    </div>
+                </div>
+                <div class="control-group ">
+                    <label class="control-label">Used</label>
+                    <div class="controls">
+                        <span>{{ (entity.cpc*entity.click + (entity.views/1000)*entity.cpm)|number_format(0, ',', '.')  }} (VNĐ)</span>
                     </div>
                 </div>
                 <div class="control-group ">

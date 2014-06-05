@@ -77,6 +77,27 @@ class AdvertiseType extends AbstractType
                     )
                 )
             )
+            ->add('cpc', null, array(
+                    'label' => 'CPC - Cost/ 1 click (VNĐ)',
+                    'label_attr' => array(
+                        'class' => 'control-label',
+                    ),
+                )
+            )
+            ->add('cpm', null, array(
+                    'label' => 'CPM - Cost/ 1000 impression (VNĐ)',
+                    'label_attr' => array(
+                        'class' => 'control-label'
+                    ),
+                )
+            )
+            ->add('budget', null, array(
+                    'label' => 'Budget for Advertise',
+                    'label_attr' => array(
+                        'class' => 'control-label'
+                    ),
+                )
+            )
             ->add('url')
         ;
     }

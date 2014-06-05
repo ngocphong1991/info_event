@@ -6,8 +6,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use CMS\AdminBundle\Api\SaveLogsApi;
+
 class DefaultController extends Controller
 {
+    public $logs;
+
+    public function __construct(){
+        $this->logs = new SaveLogsApi();
+    }
+
     /**
      * @Route("/")
      * @Template()
@@ -45,6 +53,9 @@ class DefaultController extends Controller
         );
         $pagination->setTemplate('CMSMainBundle:Default:pager.html.twig');
 
+        //save log
+        $this->logs->save($em, $this->getRequest()->getUri(), 'visit');
+
         // parameters to template
         return array('pagination' => $pagination, 'specialGroup' => $specialGroup, 'sliderGroups' => $listSpecial);
     }
@@ -60,7 +71,7 @@ class DefaultController extends Controller
         $group = $em->getRepository('CMSAdminBundle:GroupArticle')->findOneBy(
             array('url' => $slug, 'isActive' => 1)
         );
-        
+
         // get article
         $query = $em->getRepository('CMSAdminBundle:Article')->findByGroupSql(
             $group->getId()
@@ -74,6 +85,9 @@ class DefaultController extends Controller
             5/*limit per page*/
         );
         $pagination->setTemplate('CMSMainBundle:Default:pager.html.twig');
+
+        //save log
+        $this->logs->save($em, $this->getRequest()->getUri(), 'visit');
 
         return array('pagination' => $pagination, 'groupName' => $group->getName(), 'idGroup' => $group->getId() );
 
@@ -106,6 +120,10 @@ class DefaultController extends Controller
 
         $article->setViews($article->getViews()+1);
         $em->flush();
+
+        //save log
+        $this->logs->save($em, $this->getRequest()->getUri(), 'visit');
+
         return $this->render('CMSMainBundle:Default:article.html.twig',
             array('article' => $article, 'listSpecial' => $listSpecial, 'related' => $related->getResult())
         );
@@ -121,6 +139,9 @@ class DefaultController extends Controller
         $article = $em->getRepository('CMSAdminBundle:Article')->findOneBy(
             array('url' => $slugArticle, 'isActive' => 1)
         );
+
+        //save log
+        $this->logs->save($em, $this->getRequest()->getUri(), 'print');
 
         return array('article' => $article);
     }
@@ -149,6 +170,9 @@ class DefaultController extends Controller
         );
         $pagination->setTemplate('CMSMainBundle:Default:pager.html.twig');
 
+        //save log
+        $this->logs->save($em, $this->getRequest()->getUri(), 'search');
+
         return array('pagination' => $pagination, 'result' => $result);
 
     }
@@ -164,6 +188,9 @@ class DefaultController extends Controller
         $cms = $em->getRepository('CMSAdminBundle:CmsPage')->findOneBy(
             array('url' => $slug, 'isActive' => 1)
         );
+
+        //save log
+        $this->logs->save($em, $this->getRequest()->getUri(), 'visit');
 
         return array('cms' => $cms);
     }
@@ -205,39 +232,50 @@ class DefaultController extends Controller
     public function bannerTopAction($slug)
     {
         $advertise = null;
-        
+
+        $em = $this->getDoctrine()->getManager();
+
         if($slug = explode('/', $slug)){
-            $em = $this->getDoctrine()->getManager();
             $group = $em->getRepository('CMSAdminBundle:GroupArticle')->findOneBy(
                 array('url' => $slug[Count($slug)-1], 'isActive' => 1)
-            );  
-            
+            );
+
             $article = $em->getRepository('CMSAdminBundle:Article')->findOneBy(
                 array('url' => $slug[Count($slug)-1], 'isActive' => 1)
-            );  
-            
+            );
+
             if($group){
                 $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findViewBestSql(
                     1, $group->getId()
                 )->getOneOrNullResult();
             }
-            
+
             if($article){
                 $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findViewBestSql(
                     1, $article->getGroupArticle()->getId()
                 )->getOneOrNullResult();
             }
         }
-        
+
         if(!$advertise){
             $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findViewBestSql(
-                    1, null
-                )->getOneOrNullResult();
+                1, null
+            )->getOneOrNullResult();
         }
-        
+
+        if($advertise){
+            $used = $advertise->getCpc()* $advertise->getClick() + ($advertise->getViews()/1000)*$advertise->getCpm();
+            if($used >= $advertise->getBudget()){
+                $advertise = null;
+            }else{
+                $advertise->setViews($advertise->getViews()+1);
+                $em->flush();
+            }
+        }
+
         return array('advertise' => $advertise);
     }
-    
+
     /**
      * @Route("/banner-right")
      * @Template()
@@ -245,36 +283,47 @@ class DefaultController extends Controller
     public function bannerRightAction($slug)
     {
         $advertise = null;
-        
+
+        $em = $this->getDoctrine()->getManager();
+
         if($slug = explode('/', $slug)){
-            $em = $this->getDoctrine()->getManager();
             $group = $em->getRepository('CMSAdminBundle:GroupArticle')->findOneBy(
                 array('url' => $slug[Count($slug)-1], 'isActive' => 1)
-            );  
-            
+            );
+
             $article = $em->getRepository('CMSAdminBundle:Article')->findOneBy(
                 array('url' => $slug[Count($slug)-1], 'isActive' => 1)
-            );  
-            
+            );
+
             if($group){
                 $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findViewBestSql(
                     0, $group->getId()
                 )->getOneOrNullResult();
             }
-            
+
             if($article){
                 $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findViewBestSql(
                     0, $article->getGroupArticle()->getId()
                 )->getOneOrNullResult();
             }
         }
-        
+
         if(!$advertise){
             $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findViewBestSql(
-                    0, null
-                )->getOneOrNullResult();
+                0, null
+            )->getOneOrNullResult();
         }
-        
+
+        if($advertise){
+            $used = $advertise->getCpc()* $advertise->getClick() + round($advertise->getViews()/1000)*$advertise->getCpm();
+            if($used >= $advertise->getBudget()){
+                $advertise = null;
+            }else{
+                $advertise->setViews($advertise->getViews()+1);
+                $em->flush();
+            }
+        }
+
         return array('advertise' => $advertise);
     }
 
@@ -293,12 +342,12 @@ class DefaultController extends Controller
             ->findViewBestSql();
 
         return array(
-                'listSpecial' => $listSpecial ? $listSpecial : array(),
-                'slug' => isset($slug) && $slug ? $slug : false,
-                'likeBox' => $likeBox && $likeBox ? $likeBox : false,
-                'specials' => $specials->getResult(),
-                'viewBests' => $viewBest->getResult(),
-                'em' => $this->getDoctrine()->getRepository('CMSAdminBundle:Article')
+            'listSpecial' => $listSpecial ? $listSpecial : array(),
+            'slug' => isset($slug) && $slug ? $slug : false,
+            'likeBox' => $likeBox && $likeBox ? $likeBox : false,
+            'specials' => $specials->getResult(),
+            'viewBests' => $viewBest->getResult(),
+            'em' => $this->getDoctrine()->getRepository('CMSAdminBundle:Article')
         );
     }
 }

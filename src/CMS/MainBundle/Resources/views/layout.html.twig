@@ -19,6 +19,7 @@
     <link href="{{ asset('bundles/main/css/style.css') }}" rel="stylesheet">
     {% block stylesheets %}{% endblock %}
 
+    <script src="{{ asset('bundles/main/js/jquery.min.js') }}"></script>
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="{{ asset('bundles/main/js/ie8-responsive-file-warning.js') }}"></script><![endif]-->
 
@@ -74,7 +75,6 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="{{ asset('bundles/main/js/jquery.min.js') }}"></script>
 <script src="{{ asset('bundles/main/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('bundles/main/js/docs.min.js') }}"></script>
 {% block javascripts %}{% endblock %}

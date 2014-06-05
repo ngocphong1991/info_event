@@ -56,6 +56,27 @@ class Advertise
     private $name;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="cpc", type="integer", nullable=true)
+     */
+    private $cpc;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cpm", type="integer", nullable=true)
+     */
+    private $cpm;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="budget", type="integer", nullable=true)
+     */
+    private $budget;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
@@ -390,6 +411,75 @@ class Advertise
     public function getViews()
     {
         return $this->views;
+    }
+
+    /**
+     * Set cpc
+     *
+     * @param integer $cpc
+     * @return Advertise
+     */
+    public function setCpc($cpc)
+    {
+        $this->cpc = $cpc;
+
+        return $this;
+    }
+
+    /**
+     * Get cpc
+     *
+     * @return integer
+     */
+    public function getCpc()
+    {
+        return $this->cpc;
+    }
+
+    /**
+     * Set cpm
+     *
+     * @param integer $cpm
+     * @return Advertise
+     */
+    public function setCpm($cpm)
+    {
+        $this->cpm = $cpm;
+
+        return $this;
+    }
+
+    /**
+     * Get cpm
+     *
+     * @return integer
+     */
+    public function getCpm()
+    {
+        return $this->cpm;
+    }
+
+    /**
+     * Set budget
+     *
+     * @param integer $budget
+     * @return Advertise
+     */
+    public function setBudget($budget)
+    {
+        $this->budget = $budget;
+
+        return $this;
+    }
+
+    /**
+     * Get budget
+     *
+     * @return integer
+     */
+    public function getBudget()
+    {
+        return $this->budget;
     }
 
     /**

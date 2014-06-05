@@ -1,5 +1,25 @@
 <div class="sidebar-module ad">
-    <a href="{{ advertise.url }}" title="{{ advertise.name }}">
+{% if advertise %}
+    <a href="{{ advertise.url }}" title="{{ advertise.name }}" class="banner-right">
     <img src="{{ asset('uploads/advertises/300x300/') }}m_{{ advertise.image }}" alt="{{ advertise.name }}" />
     </a>
+    <script type="text/javascript">
+        $(document).ready(function(){
+           $(".banner-right").click( function() {
+                $.ajax({
+                    type: "GET",
+                    data: "id=" + '{{ advertise.id }}',
+                    url: "{{ path('advertise_update_cpc') }}",
+                    success: function(msg){
+                        var data = $.parseJSON(msg);
+                        var root = data.root;
+                        if(root.msg == true)
+                            window.location.href = root.url;
+                   }
+               });
+               return false;
+           }); 
+        });
+    </script>
+{% endif %}
 </div>

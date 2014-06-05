@@ -1,3 +1,23 @@
-<a href="{{ advertise.url }}" title="{{ advertise.name }}">
+{% if advertise %}
+<a class="banner-top" href="{{ advertise.url }}" title="{{ advertise.name }}">
     <img src="{{ asset('uploads/advertises/650x000/') }}l_{{ advertise.image }}" alt="{{ advertise.name }}" />
 </a>
+<script type="text/javascript">
+    $(document).ready(function(){
+       $(".banner-top").click( function() {
+            $.ajax({
+                type: "GET",
+                data: "id=" + '{{ advertise.id }}',
+                url: "{{ path('advertise_update_cpc') }}",
+                success: function(msg){
+                    var data = $.parseJSON(msg);
+                    var root = data.root;
+                    if(root.msg == true)
+                        window.location.href = root.url;
+               }
+           });
+           return false;
+       }); 
+    });
+</script>
+{% endif %}
