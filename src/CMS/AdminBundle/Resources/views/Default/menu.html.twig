@@ -62,10 +62,11 @@
     {% endif %}
 
     {% if app.user.roles|isEmptyACL('setting') %}
-    <li>
-        <a href="#">
+    <li class="sub-menu{% if router == 'setting'%} active{% endif %}">
+        <a href="{{ path('setting') }}">
             <i class="icon-wrench"></i>
             <span>Setting</span>
+            <span class="arrow"></span>
         </a>
     </li>
     {% endif %}

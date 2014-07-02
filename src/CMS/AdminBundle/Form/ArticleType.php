@@ -21,8 +21,14 @@ class ArticleType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('isActive','choice', array(
+        if($this->isLocked){
+            $builder->add('isLocked','checkbox', array(
+                    'required'  => false,
+                    'label_attr' => array(
+                        'class' => 'control-label'
+                    )
+                )
+            )->add('isActive','choice', array(
                         'choices'   => Article::getIsActiveTypes(),
                         'multiple'  => false,
                         'expanded'  => false,
@@ -30,7 +36,10 @@ class ArticleType extends AbstractType
                             'class' => 'control-label'
                         )
                     )
-            )
+                )
+            ;
+        }
+        $builder
             ->add('title', null, array(
                     'attr' => array(
                         'class' => 'span8',
@@ -105,15 +114,6 @@ class ArticleType extends AbstractType
             )
             ->add('dateStart','datePicker', array())
         ;
-        if($this->isLocked){
-            $builder->add('isLocked','checkbox', array(
-                    'required'  => false,
-                    'label_attr' => array(
-                        'class' => 'control-label'
-                    )
-                )
-            );
-        }
     }
     
     /**

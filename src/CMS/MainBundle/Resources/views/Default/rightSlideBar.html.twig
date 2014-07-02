@@ -7,7 +7,7 @@
             {% set articles = em.findBySpecialGroupSql(entity.id, entity.maxEntries).result %}
             {% if loop.index == 1 %}
                 <div class="sidebar-module">
-                    <h4>{{ entity.name|stripslashes }}</h4>
+                    <h4><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc-dac-biet/{{ entity.id }}">{{ entity.name|stripslashes }}</a></h4>
                     {% for article in articles %}
                     <div class="sidebar-half">
                         <div class="sidebar-img">
@@ -22,7 +22,7 @@
                 </div>
             {% else %}
                 <div class="sidebar-module">
-                    <h4>{{ entity.name }}</h4>
+                    <h4><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc-dac-biet/{{ entity.id }}">{{ entity.name|stripslashes }}</a></h4>
                     {% for article in articles %}
                     <div class="sidebar-full">
                         <div class="sidebar-img">

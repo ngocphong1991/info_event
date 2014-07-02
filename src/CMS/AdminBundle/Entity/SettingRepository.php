@@ -12,4 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class SettingRepository extends EntityRepository
 {
+    public function findViewBestSql()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT s FROM CMSAdminBundle:Setting s ORDER BY s.id DESC'
+            )
+            ->setMaxResults(1);
+    }
 }

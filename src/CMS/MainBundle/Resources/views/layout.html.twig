@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{{ render(controller("CMSMainBundle:Default:session"))}}
 <html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
 <head>
     <meta charset="utf-8">
@@ -7,10 +8,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta charset="utf-8">
-    <meta property="fb:app_id" content="792431360769278" />
-    <link rel="shortcut icon" href="{{ asset('bundles/main/ico/favicon.ico') }}">
+    <meta property="fb:app_id" content="{{ app.session.get('settingWebsite').websiteAppApiFacebook }}" />
+    <link rel="shortcut icon" href="{{ asset('uploads/banner/') }}{{ app.session.get('settingWebsite').websiteLogo }}">
 
-    <title>Thông tin sự kiện - {% block title %}{% endblock %}</title>
+    <title>{{ app.session.get('settingWebsite').websiteName }} - {% block title %}{% endblock %}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('bundles/main/css/bootstrap-full.css') }}" rel="stylesheet">
@@ -47,7 +48,7 @@
 
 <div class="header">
     <div class="container">
-        <div class="logo"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" title="Home"><img src="{{ asset('bundles/main/img/logo.png') }}"></a></div>
+        <div class="logo"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" title="Home"><img src="{{ asset('uploads/banner/') }}{{ app.session.get('settingWebsite').websiteBanner }}" alt="{{ app.session.get('settingWebsite').websiteName }}"></a></div>
         <div class="banner">{{ render(controller("CMSMainBundle:Default:bannerTop", {'slug': app.request.pathInfo}))}}</div>
     </div>
 </div>

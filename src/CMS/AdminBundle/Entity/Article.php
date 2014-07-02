@@ -78,7 +78,7 @@ class Article
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=255, nullable=true, unique=true)
+     * @ORM\Column(name="url", type="string", length=255, nullable=false, unique=true)
      */
     private $url;
 

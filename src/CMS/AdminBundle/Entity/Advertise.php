@@ -79,13 +79,6 @@ class Advertise
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", nullable=true)
-     */
-    private $description;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="key_words", type="string", length=255, nullable=true)
      */
     private $keyWords;
@@ -147,9 +140,8 @@ class Advertise
     private $position;
 
     /**
-    * @ORM\ManyToOne(targetEntity="GroupArticle", inversedBy="advertises")
-    * @ORM\JoinColumn(name="id_parent", referencedColumnName="id")
-    */
+     * @ORM\ManyToMany(targetEntity="GroupArticle", inversedBy="advertises")
+     */
     protected $groupArticle;
 
     /**
@@ -167,6 +159,7 @@ class Advertise
     {
         $this->isActive = self::ACTIVE_NO;
         $this->position = self::POSITION_RIGHT;
+        $this->groupArticle = new ArrayCollection();
     }
 
     public  function  __toString(){
@@ -227,29 +220,6 @@ class Advertise
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Advertise
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string 
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**
@@ -601,30 +571,40 @@ class Advertise
             self::ACTIVE_NO => 'No'
         );
     }
-    
+
     /**
-     * Set groupArticle
+     * Add GroupArticle
      *
      * @param \CMS\AdminBundle\Entity\GroupArticle $groupArticle
-     * @return Advertise
+     * @return GroupArticle
      */
-    public function setGroupArticle(\CMS\AdminBundle\Entity\GroupArticle $groupArticle = null)
+    public function addGroupArticle(\CMS\AdminBundle\Entity\GroupArticle $groupArticle)
     {
-        $this->groupArticle = $groupArticle;
+        $this->groupArticle[] = $groupArticle;
 
         return $this;
     }
 
     /**
-     * Get groupArticle
+     * Remove GroupArticle
      *
-     * @return \CMS\AdminBundle\Entity\GroupArticle
+     * @param \CMS\AdminBundle\Entity\GroupArticle $groupArticle
+     */
+    public function removeGroupArticle(\CMS\AdminBundle\Entity\GroupArticle $groupArticle)
+    {
+        $this->groupArticle->removeElement($groupArticle);
+    }
+
+    /**
+     * Get GroupArticle
+     *
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getGroupArticle()
     {
         return $this->groupArticle;
     }
-    
+
     public function getAbsolutePath()
     {
         return null === $this->image

@@ -50,18 +50,29 @@ class ArticleRepository extends EntityRepository
             )->setParameter('idGroup', $idGroup);
     }
 
-    public function findBySpecialGroupSql($idSpecialGroup, $maxEntries = 4)
+    public function findBySpecialGroupSql($idSpecialGroup, $maxEntries = 0)
     {
-        return $this->getEntityManager()->createQueryBuilder()
-            ->select('a, s')
-            ->from('CMSAdminBundle:Article', 'a')
-            ->innerJoin('a.specialGroupArticle', 's')
-            ->where('s.id = :idSpecialGroup AND :dateNow >= a.dateStart AND a.isActive = 1')
-            ->orderBy('a.dateCreate','DESC')
-            ->setParameter('idSpecialGroup', $idSpecialGroup)
-            ->setParameter('dateNow', date('Y-m-d H:i:s'))
-            ->setMaxResults($maxEntries)
-            ->getQuery();
+        if($maxEntries)
+            return $this->getEntityManager()->createQueryBuilder()
+                ->select('a, s')
+                ->from('CMSAdminBundle:Article', 'a')
+                ->innerJoin('a.specialGroupArticle', 's')
+                ->where('s.id = :idSpecialGroup AND :dateNow >= a.dateStart AND a.isActive = 1')
+                ->orderBy('a.dateCreate','DESC')
+                ->setParameter('idSpecialGroup', $idSpecialGroup)
+                ->setParameter('dateNow', date('Y-m-d H:i:s'))
+                ->setMaxResults($maxEntries)
+                ->getQuery();
+        else
+            return $this->getEntityManager()->createQueryBuilder()
+                ->select('a, s')
+                ->from('CMSAdminBundle:Article', 'a')
+                ->innerJoin('a.specialGroupArticle', 's')
+                ->where('s.id = :idSpecialGroup AND :dateNow >= a.dateStart AND a.isActive = 1')
+                ->orderBy('a.dateCreate','DESC')
+                ->setParameter('idSpecialGroup', $idSpecialGroup)
+                ->setParameter('dateNow', date('Y-m-d H:i:s'))
+                ->getQuery();
     }
 
     public function findNewestSql()

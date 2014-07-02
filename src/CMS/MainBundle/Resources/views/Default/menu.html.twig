@@ -35,10 +35,7 @@
             </ul>
         </div>
         <div class="row info">
-            <p>Bản quyền © 2014 thongtinsukien.info<br>
-                Ghi rõ nguồn thongtinsukien.info khi phát hành lại thông tin từ website này.<br>
-                Website đang trong quá trình thử nghiệm, chờ cấp phép của Bộ Thông Tin và Truyền Thông
-            </p>
+            {{ app.session.get('settingWebsite').websiteCopyright|raw('html') }}
         </div>
     </div>
 {% endif %}

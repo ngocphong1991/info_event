@@ -57,8 +57,17 @@ class ArticleController extends Controller
             10/*limit per page*/
         );
 
+        //Define status
+        $status = array(
+            0 => 'Cancel',
+            1 => 'Post',
+            2 => 'Save draft',
+            3 => 'Pending Approve',
+            4 => 'Pending Post'
+        );
+
         // parameters to template
-        return array('pagination' => $pagination);
+        return array('pagination' => $pagination, 'status' => $status);
     }
 
     /**

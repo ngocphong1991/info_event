@@ -40,6 +40,7 @@
                     <th>Group</th>
                     <th class="hidden-phone">{{ knp_pagination_sortable(pagination, 'Date Create', 'a.dateCreate') }}</th>
                     <th class="hidden-phone">{{ knp_pagination_sortable(pagination, 'Views', 'a.views') }}</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'Status', 'a.isActive') }}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -54,6 +55,7 @@
                         <td>{% if entity.groupArticle %}{{entity.groupArticle.name|stripslashes}}{% endif %}</td>
                         <td class="hidden-phone">{% if entity.datecreate %}{{ entity.datecreate|date('H:i:s d-m-Y') }}{% endif %}</td>
                         <td class="hidden-phone">{{entity.views}}</td>
+                        <td>{% if entity.isActive %}{{status[entity.isActive]}}{% endif %}</td>
                         <td>
                             <a class="btn btn-success" title="Show" href="{{ path('article_show', { 'id': entity.id }) }}"><i class="icon-search"></i></a>
                             <a class="btn btn-primary" title="Edit" href="{{ path('article_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i></a>

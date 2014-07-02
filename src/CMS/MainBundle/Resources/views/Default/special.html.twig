@@ -1,0 +1,32 @@
+{% extends "CMSMainBundle::layout.html.twig" %}
+{% block title %}{{ name }}{% endblock %}
+{% block content %}
+    <div class="row">
+
+        <div class="col-sm-8 blog-main article">
+            {% set length = pagination|length %}
+            {% if length %}
+                {% for entity in pagination %}
+                    <div class="blog-post{% if loop.index == length %} last{% elseif loop.index == 1 %} first{% endif %}">
+                        <h2 class="blog-post-title"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="{{ entity.title|stripslashes }}">{{ entity.title|stripslashes }}</a></h2>
+                        <p class="blog-post-meta">{% if entity.datecreate %}{{ entity.datecreate|date('H:i d/m/Y') }}{% endif %}</p>
+                        <div class="blog-post-image">
+                            <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.groupArticle.url }}/{{ entity.url }}" title="{{ entity.title|stripslashes }}">
+                                <img src="{{ asset('uploads/article/') }}{{ entity.image }}" alt="{{ entity.title|stripslashes }}">
+                            </a>
+                        </div>
+                        <div class="blog-post-description">
+                            {{ entity.sortDescription|stripslashes|cut(520) }}
+                        </div>
+                    </div><!-- /.blog-post -->
+                    {{ knp_pagination_render(pagination) }}
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-warning">
+                    <span>Dữ liệu đang được cập nhật</span>
+                </div><!-- /.blog-post -->
+            {% endif %}
+        </div><!-- /.blog-main -->
+        {{ render(controller("CMSMainBundle:Default:rightSlideBar", {'slug': app.request.pathInfo,  'listSpecial': false, 'likeBox': false}))}}
+    </div><!-- /.row -->
+{% endblock %}

@@ -147,6 +147,38 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/chuyen-muc-dac-biet/{id}")
+     * @Template()
+     */
+    public function specialAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $special = $em->getRepository('CMSAdminBundle:SpecialGroupArticle')->find($id);
+
+        if($special){
+            $article = $em->getRepository('CMSAdminBundle:Article')->findBySpecialGroupSql($id);
+            $name = $special->getName();
+        }else{
+            $name = 'Not found';
+            $article =array();
+        }
+
+        //Pager
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $article,
+            $this->get('request')->query->get('page', 1)/*page number*/,
+            5/*limit per page*/
+        );
+        $pagination->setTemplate('CMSMainBundle:Default:pager.html.twig');
+
+        //save log
+        $this->logs->save($em, $this->getRequest()->getUri(), 'visit special');
+
+        return array('pagination' => $pagination, 'name' => $name);
+    }
+
+    /**
      * @Route("/tim-kiem", name="cms_main_search")
      * @Template()
      */
@@ -349,5 +381,19 @@ class DefaultController extends Controller
             'viewBests' => $viewBest->getResult(),
             'em' => $this->getDoctrine()->getRepository('CMSAdminBundle:Article')
         );
+    }
+    /**
+     * @Route("/session")
+     * @Template()
+     */
+    public function sessionAction()
+    {
+        $session = $this->get('session');
+
+        if (!$session->has('settingWebsite')) {
+            $session->set('settingWebsite', $this->getDoctrine()->getRepository('CMSAdminBundle:Setting')->findViewBestSql()->getOneOrNullResult());
+        }
+
+        return array();
     }
 }

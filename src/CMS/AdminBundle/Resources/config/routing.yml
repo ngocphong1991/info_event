@@ -43,3 +43,9 @@ cms_admin_advertise:
     type:     annotation
     prefix:   /advertise
 
+cms_admin_setting:
+    resource: "@CMSAdminBundle/Controller/SettingController.php"
+    type:     annotation
+    prefix:   /setting
+
+

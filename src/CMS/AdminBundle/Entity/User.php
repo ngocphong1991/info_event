@@ -57,7 +57,6 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
-     *
      */
     private $roles;
 

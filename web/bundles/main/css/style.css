@@ -180,6 +180,11 @@ a:hover{
     z-index: 1000;
     height: 60px;
 }
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .search-form{
+        right: 1px;
+    }
+}
 .search-form input{
     background: none repeat scroll 0 0 #FFFFFF;
     border: 1px solid #D9D9D9;
@@ -190,10 +195,11 @@ a:hover{
     padding: 2px 5px !important;
     width: 262px;
 }
+
 .blog-nav-item {
     position: relative;
     display: inline-block;
-    padding: 10px 12px 10px 8px;
+    padding: 10px 16px 10px 10px;
     font-family: Arial,Helvetica,sans-serif;
     font-size: 12px;
     font-weight: 700;
@@ -234,15 +240,23 @@ a:hover{
 /* Sidebar modules for boxing content */
 .sidebar-module {
     padding: 0 15px;
-    margin: 0 -15px 15px;
+    margin: 0 -15px 5px;
     clear: both;
 }
 .sidebar-module h4{
     background: url("../img/righ-core.png") no-repeat right #7D7D7D;
     padding: 10px;
     color: #ffffff;
-    font: bold 18px Arial,Helvetica,sans-serif;
+    font: bold 16px Arial,Helvetica,sans-serif;
 }
+.sidebar-module h4 a{
+    color: #ffffff;
+    font: bold 16px Arial,Helvetica,sans-serif;
+}
+.sidebar-module h4 a:hover{
+    color: #000000;
+}
+.sidebar-module.ad{margin-bottom: 15px}
 .sidebar-module .sidebar-half{
     float: left;
     max-width: 145px;

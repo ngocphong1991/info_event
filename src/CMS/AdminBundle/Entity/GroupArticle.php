@@ -120,7 +120,7 @@ class GroupArticle
     protected $articles;
     
     /**
-     * @ORM\OneToMany(targetEntity="Advertise", mappedBy="groupArticle")
+     * @ORM\ManyToMany(targetEntity="Advertise", mappedBy="groupArticle")
      */
     protected $advertises;
 

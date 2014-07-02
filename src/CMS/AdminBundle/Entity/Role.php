@@ -58,8 +58,6 @@ class Role implements RoleInterface
         return $this->role;
     }
 
-    // ... getters and setters for each property
-
     /**
      * Get id
      *

@@ -49,17 +49,6 @@ class AdvertiseType extends AbstractType
                     ),    
                 )
             )
-             ->add('description', null, array( 
-                        'attr' => array(
-                            'class' => 'span12',
-                            'row' => 5,
-                            'style' => 'min-height: 200px;'
-                        ),
-                        'label_attr' => array(
-                        'class' => 'control-label'
-                    ),
-                )
-            )
             ->add('keyWords',null, array(
                 'attr' => array(
                     'class' => 'tags',

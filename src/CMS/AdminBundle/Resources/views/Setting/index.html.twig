@@ -1,0 +1,52 @@
+{% extends "CMSAdminBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/assets/uniform/css/uniform.default.css') }}" />
+    <link href="{{ asset('bundles/admin/assets/bootstrap/css/bootstrap-fileupload.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/assets/bootstrap-summernote/summernote.css') }}" />
+{% endblock %}
+
+{% block title %}Setting{% endblock %}
+
+{% block content %}
+<div class="span12">
+    <!-- BEGIN BASIC PORTLET-->
+    <div class="widget red">
+        <div class="widget-title">
+            <h4><i class="icon-reorder"></i> Setting</h4>
+        <span class="tools">
+            <a class="icon-chevron-down" href="javascript:;"></a>
+            <a class="icon-remove" href="javascript:;"></a>
+        </span>
+        </div>
+        <div class="widget-body form">
+            <!-- BEGIN FORM-->
+            {{ form(form, { 'attr': {'class': 'cmxform form-horizontal'}}) }}
+            <!-- END FORM-->
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/admin/assets/uniform/jquery.uniform.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/admin/assets/bootstrap/js/bootstrap-fileupload.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/admin/assets/bootstrap-summernote/summernote.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            //Setup text area editor
+            $('textarea[id="setting_websiteCopyright"]').summernote({
+                height: 100   //set editable area's height
+            });
+
+            //Setup Image for Company logo
+            {% if entity.websiteBanner %}
+            $('#setting_file').attr({'src':"{{ asset('uploads/banner/260xYYY/') }}s_{{ entity.websiteBanner }}", 'alt':'{{ entity.websiteName }}'});
+            {% endif %}
+            {% if entity.websiteLogo %}
+            $('#setting_fileLogo').attr({'src':"{{ asset('uploads/banner/') }}{{ entity.websiteLogo }}", 'alt':'{{ entity.websiteName }}'});
+            {% endif %}
+        });
+    </script>
+{% endblock %}
