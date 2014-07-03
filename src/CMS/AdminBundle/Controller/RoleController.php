@@ -186,7 +186,7 @@ class RoleController extends Controller
             throw $this->createNotFoundException('Unable to find Role entity.');
         }
 
-        $permission = (array) json_decode($entity->getResource());
+        $permission = (array) json_decode(stripcslashes($entity->getResource()));
 
         foreach($this->roles->resources as $key => $resource){
             if(array_key_exists($resource['code'], $permission)){
