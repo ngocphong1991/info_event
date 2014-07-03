@@ -26,7 +26,7 @@ class AdminExtension extends \Twig_Extension
     function checkAdvancePermission($roles, $acl, $module){
 
         foreach($roles as $role){
-            $permission = (array) json_decode($role->getResource());
+            $permission = (array) json_decode(stripslashes($role->getResource()));
             if($permission[$module] & $acl){
                 return true;
             }
@@ -39,7 +39,7 @@ class AdminExtension extends \Twig_Extension
     function isEmptyPermission($roles, $module){
 
         foreach($roles as $role){
-            $permission = (array) json_decode($role->getResource());
+            $permission = (array) json_decode(stripslashes($role->getResource()));
             if($permission[$module] != 0){
                 return true;
             }

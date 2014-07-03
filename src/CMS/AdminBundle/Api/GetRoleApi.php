@@ -18,7 +18,7 @@ class GetRoleApi
     public function checkACL($roles, $acl, $module) {
 
         foreach($roles as $role){
-            $permission = (array) json_decode($role->getResource());
+            $permission = (array) json_decode(stripslashes($role->getResource()));
             if($permission[$module] & $acl){
                 return true;
             }
@@ -31,7 +31,7 @@ class GetRoleApi
     public function isAdministrator($roles) {
 
         foreach($roles as $role){
-            $permission = json_decode($role->getResource());
+            $permission = json_decode(stripslashes($role->getResource()));
             foreach($permission as $value){
                 if(!($value & 15)){
                     return false;
