@@ -21,6 +21,7 @@
             <span class="arrow"></span>
         </a>
         <ul class="sub">
+            <li class="{% if router == 'article' %}active{% endif %}"><a href="{{ path('article')}}" title="Article">All article</a> </li>
             {% for group in groupArticle %}
             <li id="group-{{ group.id }}"><a href="{{ path('article_group', { 'idGroup': group.id }) }}">{{ group.name }}</a></li>
             {% endfor %}

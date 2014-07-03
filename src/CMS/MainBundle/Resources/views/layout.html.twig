@@ -90,7 +90,7 @@
             var $scrollDom = $('.blog-sidebar .view-best');
             $scrollDom.css('position','relative');
             {% if app.request.get('_route') == 'cms_main_default_index' %}
-            var $viewTop = $scrollDom.offset().top + 250 + $scrollDom.height();
+            var $viewTop = $scrollDom.offset().top + $scrollDom.height();
             {% else %}
             var $viewTop = $scrollDom.offset().top;
             {% endif %}

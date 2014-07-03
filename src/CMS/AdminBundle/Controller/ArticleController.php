@@ -28,9 +28,6 @@ class ArticleController extends Controller
      */
     public function indexAction()
     {
-        if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['view'], 'article'))
-            throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
-
         $keyword = $this->get('request')->query->get('keyword', '');
         $em    = $this->getDoctrine()->getManager();
 
