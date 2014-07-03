@@ -112,11 +112,15 @@ a:hover{
 .header .container{padding: 10px 0 10px 0}
 .header .container div{float: left}
 .header .logo{
-    padding-top: 20px;
     margin: 0 24px;
     width: 260px;
     height: 90px;
     overflow: hidden;
+    display: table;
+}
+.header .logo a{
+    display: table-cell;
+    vertical-align: middle;
 }
 /*
 * Desktop version

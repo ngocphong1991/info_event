@@ -110,9 +110,17 @@ class ArticleController extends Controller
             $this->get('request')->query->get('page', 1)/*page number*/,
             10/*limit per page*/
         );
+        //Define status
+        $status = array(
+            0 => 'Cancel',
+            1 => 'Post',
+            2 => 'Save draft',
+            3 => 'Pending Approve',
+            4 => 'Pending Post'
+        );
 
         // parameters to template
-        return array('pagination' => $pagination, 'idGroup' => $idGroup);
+        return array('pagination' => $pagination, 'status' => $status, 'idGroup' => $idGroup);
     }
 
     /**
@@ -158,9 +166,9 @@ class ArticleController extends Controller
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createCreateForm(Article $entity, $isLocked = false)
+    private function createCreateForm(Article $entity, $isLocked = false, $em = null, $idGroup = 0)
     {
-        $form = $this->createForm(new ArticleType($isLocked), $entity, array(
+        $form = $this->createForm(new ArticleType($isLocked, $em, $idGroup), $entity, array(
             'action' => $this->generateUrl('article_create'),
             'method' => 'POST',
         ));
@@ -180,10 +188,15 @@ class ArticleController extends Controller
         if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['add'], 'article'))
             throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
 
+        $em = $this->getDoctrine()->getManager();
         $isLocked = $this->roles->isAdministrator($this->getUser()->getRoles());
+        $idGroup = $keyword = $this->get('request')->query->get('group', '');
 
         $entity = new Article();
-        $form   = $this->createCreateForm($entity, $isLocked);
+        if($idGroup && $em->getRepository('CMSAdminBundle:GroupArticle')->find($idGroup))
+            $form   = $this->createCreateForm($entity, $isLocked, $this->getDoctrine()->getManager(), $idGroup);
+        else
+            $form   = $this->createCreateForm($entity, $isLocked);
 
         return array(
             'entity' => $entity,

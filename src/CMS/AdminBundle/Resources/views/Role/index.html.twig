@@ -51,7 +51,7 @@
                         <td>
                             <a class="btn btn-success" title="Show" href="{{ path('role_show', { 'id': entity.id }) }}"><i class="icon-search"></i></a>
                             <a class="btn btn-primary" title="Edit" href="{{ path('role_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i></a>
-                            <a class="btn btn-danger" title="Delete" href="{{ path('role_delete', { 'id': entity.id }) }}"><i class="icon-trash"></i></a>
+                            <a class="btn btn-danger" id="btn-delEntity" data-href="{{ path('role_delete', { 'id': entity.id }) }}" data-toggle="modal" data-target="#delEntity" title="Delete" href="javascript:void(0)"><i class="icon-trash"></i></a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -64,5 +64,15 @@
         </div>
     </div>
     <!-- END BASIC PORTLET-->
+    {{ render(controller("CMSAdminBundle:Default:alert"))}}
 </div>
 {% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $('table tbody td #btn-delEntity').click(function() {
+            $('a.agree').attr('href', $(this).attr('data-href'));
+        })
+    </script>
+{% endblock %}
+

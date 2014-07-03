@@ -192,8 +192,13 @@ class User implements AdvancedUserInterface, \Serializable
      */
     public function setPassword($password)
     {
-        $encoder = new MessageDigestPasswordEncoder('sha512', true, 10);
-        $this->password = $encoder->encodePassword($password, $this->getSalt());
+        if($password == NULL){
+            $this->password = $this->getPassword();
+        }
+        else{
+            $encoder = new MessageDigestPasswordEncoder('sha512', true, 10);
+            $this->password = $encoder->encodePassword($password, $this->getSalt());
+        }
 
         return $this;
     }

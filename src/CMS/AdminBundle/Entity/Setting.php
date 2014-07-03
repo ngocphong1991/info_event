@@ -13,7 +13,7 @@ use CMS\AdminBundle\Api\ImageResizeApi;
 /**
  * Setting
  *
- * @ORM\Table()
+ * @ORM\Table(name="setting")
  * @ORM\Entity(repositoryClass="CMS\AdminBundle\Entity\SettingRepository")
  * @ORM\HasLifecycleCallbacks()
  *  * @UniqueEntity(

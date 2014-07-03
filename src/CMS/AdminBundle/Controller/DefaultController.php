@@ -61,4 +61,13 @@ class DefaultController extends Controller
     {
         return array();
     }
+
+    /**
+     * @Route("/alert")
+     * @Template()
+     */
+    public function alertAction()
+    {
+        return array();
+    }
 }

@@ -16,7 +16,7 @@
             <div class="widget-body">
                 <div class="clearfix">
                     <div class="btn-group">
-                        <a href="{{ path('article_new') }}" class="btn green">
+                        <a href="{{ path('article_new') }}?group={{ idGroup }}" class="btn green">
                             Add New <i class="icon-plus"></i>
                         </a>
                     </div>
@@ -40,6 +40,7 @@
                         <th>Group</th>
                         <th class="hidden-phone">{{ knp_pagination_sortable(pagination, 'Date Create', 'a.dateCreate') }}</th>
                         <th class="hidden-phone">{{ knp_pagination_sortable(pagination, 'Views', 'a.views') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Status', 'a.isActive') }}</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -54,10 +55,11 @@
                             <td>{% if entity.groupArticle %}{{entity.groupArticle.name|stripslashes}}{% endif %}</td>
                             <td class="hidden-phone">{% if entity.datecreate %}{{ entity.datecreate|date('H:i:s d-m-Y') }}{% endif %}</td>
                             <td class="hidden-phone">{{entity.views}}</td>
+                            <td>{% if entity.isLocked %}Locked{% else %}{{status[entity.isActive]}}{% endif %}</td>
                             <td>
                                 <a class="btn btn-success" title="Show" href="{{ path('article_show', { 'id': entity.id }) }}"><i class="icon-search"></i></a>
                                 <a class="btn btn-primary" title="Edit" href="{{ path('article_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i></a>
-                                <a class="btn btn-danger" title="Delete" href="{{ path('article_delete', { 'id': entity.id }) }}"><i class="icon-trash"></i></a>
+                                <a class="btn btn-danger" id="btn-delEntity" data-href="{{ path('article_delete', { 'id': entity.id }) }}" data-toggle="modal" data-target="#delEntity" title="Delete" href="javascript:void(0)"><i class="icon-trash"></i></a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -71,6 +73,7 @@
         </div>
         <!-- END BASIC PORTLET-->
     </div>
+    {{ render(controller("CMSAdminBundle:Default:alert"))}}
 {% endblock %}
 
 {% block javascripts %}
@@ -79,5 +82,10 @@
            var idGroup = '#group-{{ idGroup }}';
             $(idGroup).addClass('active');
         });
+    </script>
+    <script type="text/javascript">
+        $('table tbody td #btn-delEntity').click(function() {
+            $('a.agree').attr('href', $(this).attr('data-href'));
+        })
     </script>
 {% endblock %}

@@ -10,9 +10,13 @@ use CMS\AdminBundle\Entity\Article;
 class ArticleType extends AbstractType
 {
     protected $isLocked;
+    protected $em;
+    protected $idGroup;
 
-    public function  __construct($isLocked){
+    public function  __construct($isLocked, $em = null, $idGroup = 0){
         $this->isLocked = $isLocked;
+        $this->em = $em;
+        $this->idGroup = $idGroup;
     }
 
      /**
@@ -83,8 +87,42 @@ class ArticleType extends AbstractType
                 'label_attr' => array(
                     'class' => 'control-label'
                 ),
-            ))
-            ->add('groupArticle', null, array(
+            ));
+
+        if($this->idGroup){
+            $builder->add('groupArticle', null, array(
+                    'empty_value' => 'Choose your Article Group',
+                    'empty_data'  => null,
+                    'attr' => array(
+                        'class' => 'span4 chzn-select',
+                        'data-placeholder'=> 'Choose a Article Group',
+                        'tabindex' => '1',
+                    ),
+                    'label_attr' => array(
+                        'class' => 'control-label'
+                    ),
+                    'required'  => true,
+                    'data' => $this->em->getReference("CMSAdminBundle:GroupArticle", $this->idGroup)
+                )
+            )
+                ->add('specialGroupArticle', null, array(
+                        'empty_value' => 'Add Special Group for Article',
+                        'empty_data'  => null,
+                        'attr' => array(
+                            'class' => 'span4 chzn-select',
+                            'data-placeholder'=> 'Add Special Group for Article',
+                            'tabindex' => '1',
+                        ),
+                        'label_attr' => array(
+                            'class' => 'control-label'
+                        ),
+                        'required'  => false,
+                    )
+                )
+                ->add('dateStart','datePicker', array())
+            ;
+        }else{
+            $builder->add('groupArticle', null, array(
                     'empty_value' => 'Choose your Article Group',
                     'empty_data'  => null,
                     'attr' => array(
@@ -98,22 +136,24 @@ class ArticleType extends AbstractType
                     'required'  => true,
                 )
             )
-            ->add('specialGroupArticle', null, array(
-                    'empty_value' => 'Add Special Group for Article',
-                    'empty_data'  => null,
-                    'attr' => array(
-                        'class' => 'span4 chzn-select',
-                        'data-placeholder'=> 'Add Special Group for Article',
-                        'tabindex' => '1',
-                    ),
-                    'label_attr' => array(
-                        'class' => 'control-label'
-                    ),
-                    'required'  => false,
+                ->add('specialGroupArticle', null, array(
+                        'empty_value' => 'Add Special Group for Article',
+                        'empty_data'  => null,
+                        'attr' => array(
+                            'class' => 'span4 chzn-select',
+                            'data-placeholder'=> 'Add Special Group for Article',
+                            'tabindex' => '1',
+                        ),
+                        'label_attr' => array(
+                            'class' => 'control-label'
+                        ),
+                        'required'  => false,
+                    )
                 )
-            )
-            ->add('dateStart','datePicker', array())
-        ;
+                ->add('dateStart','datePicker', array())
+            ;
+        }
+
     }
     
     /**
