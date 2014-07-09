@@ -147,8 +147,8 @@ class Advertise
     /**
      * @Assert\File(
      *     maxSize = "6000000",
-     *     mimeTypes = {"image/jpeg", "image/jpg", "image/png", "image/gif"},
-     *     mimeTypesMessage = "Please upload a valid Avatar (.png, .jpg, .jpeg, .gif) and smaller 2 Mb"
+     *     mimeTypes = {"image/jpeg", "image/jpg", "image/png", "image/gif", "application/x-shockwave-flash"},
+     *     mimeTypesMessage = "Please upload a valid Image (.png, .jpg, .jpeg, .gif) or Flash file and smaller 6 Mb"
      * )
      */
     private $file;
@@ -697,51 +697,57 @@ class Advertise
         if (null === $this->getFile()) {
             return;
         }
-
+        $ext = $this->getFile()->guessExtension();
         // if there is an error when moving the file, an exception will
         // be automatically thrown by move(). This will properly prevent
         // the entity from being persisted to the database on error
         $this->getFile()->move($this->getUploadRootDir(), $this->image);
 
-        // resize images to thumbnail
-        $imagePath = $this->getUploadRootDir();
-        $thumbPath = $this->getUploadRootDir().'/650x000';
-        $fs = new Filesystem();
-        if(!$fs->exists($thumbPath)){
-            try {
-                $fs->mkdir($thumbPath);
-            } catch (IOExceptionInterface $e) {
-                echo "An error occurred while creating your directory at ".$e->getPath();
+        //if file upload is flash file
+        if($ext != 'swf'){
+            // resize images to thumbnail
+            $imagePath = $this->getUploadRootDir();
+            $thumbPath = $this->getUploadRootDir().'/650x000';
+            $fs = new Filesystem();
+            if(!$fs->exists($thumbPath)){
+                try {
+                    $fs->mkdir($thumbPath);
+                } catch (IOExceptionInterface $e) {
+                    echo "An error occurred while creating your directory at ".$e->getPath();
+                }
             }
-        }
-        $thumb = new ImageResizeApi($imagePath, $thumbPath, $this->image, 'l_'.$this->image, 650, 0, 100);
-        $thumb->resize();
+            $thumb = new ImageResizeApi($imagePath, $thumbPath, $this->image, 'l_'.$this->image, 650, 0, 100);
+            $thumb->resize();
 
-        // resize images to small image
-        $smallPath = $this->getUploadRootDir().'/300x300';
-        $fs = new Filesystem();
-        if(!$fs->exists($smallPath)){
-            try {
-                $fs->mkdir($smallPath);
-            } catch (IOExceptionInterface $e) {
-                echo "An error occurred while creating your directory at ".$e->getPath();
+            // resize images to small image
+            $smallPath = $this->getUploadRootDir().'/300x300';
+            $fs = new Filesystem();
+            if(!$fs->exists($smallPath)){
+                try {
+                    $fs->mkdir($smallPath);
+                } catch (IOExceptionInterface $e) {
+                    echo "An error occurred while creating your directory at ".$e->getPath();
+                }
             }
+            $small = new ImageResizeApi($imagePath, $smallPath, $this->image, 'm_'.$this->image, 300, 0, 100);
+            $small->resize();
         }
-        $small = new ImageResizeApi($imagePath, $smallPath, $this->image, 'm_'.$this->image, 300, 0, 100);
-        $small->resize();
+
 
         // check if we have an old image
         if (isset($this->temp)) {
             // delete the old image
+
             if(file_exists($this->getUploadRootDir().'/'.$this->temp))
                 unlink($this->getUploadRootDir().'/'.$this->temp);
 
-            if(file_exists($this->getUploadRootDir().'/650x000/l_'.$this->temp))
-                unlink($this->getUploadRootDir().'/650x000/l_'.$this->temp);
+            if($ext != 'swf'){
+                if(file_exists($this->getUploadRootDir().'/650x000/l_'.$this->temp))
+                    unlink($this->getUploadRootDir().'/650x000/l_'.$this->temp);
 
-            if(file_exists($this->getUploadRootDir().'/300x300/m_'.$this->temp))
-                unlink($this->getUploadRootDir().'/300x300/m_'.$this->temp);
-
+                if(file_exists($this->getUploadRootDir().'/300x300/m_'.$this->temp))
+                    unlink($this->getUploadRootDir().'/300x300/m_'.$this->temp);
+            }
             // clear the temp image path
             $this->temp = null;
         }
