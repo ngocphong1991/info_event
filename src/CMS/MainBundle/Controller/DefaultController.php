@@ -257,6 +257,48 @@ class DefaultController extends Controller
         return array();
     }
 
+    // define position value of advertise
+    const POSITION_TOP = 1;
+    const POSITION_RIGHT = 0;
+
+    // get banner for advertise from slug of url
+    private function getAdvertiseFromSlug($slug = array(), $position){
+
+        $advertise = null;
+
+        $em = $this->getDoctrine()->getManager();
+
+
+        $article = $em->getRepository('CMSAdminBundle:Article')->findOneBy(
+            array('url' => $slug[Count($slug)-1], 'isActive' => 1)
+        );
+
+        if($article){
+            $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findByGroupSql(
+                $article->getGroupArticle()->getId(), $position
+            )->getOneOrNullResult();
+
+            if($advertise) return $advertise;
+        }
+
+        $group = $em->getRepository('CMSAdminBundle:GroupArticle')->findOneBy(
+            array('url' => $slug[Count($slug)-1], 'isActive' => 1)
+        );
+
+        if($group){
+            $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findByGroupSql(
+                $group->getId(), $position
+            )->getOneOrNullResult();
+
+            if($advertise) return $advertise;
+        }
+
+        $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findGlobalSql($position)->getOneOrNullResult();
+
+        return $advertise;
+    }
+
+
     /**
      * @Route("/banner-top")
      * @Template()
@@ -265,43 +307,16 @@ class DefaultController extends Controller
     {
         $advertise = null;
 
-        $em = $this->getDoctrine()->getManager();
-
-        if($slug = explode('/', $slug)){
-            $group = $em->getRepository('CMSAdminBundle:GroupArticle')->findOneBy(
-                array('url' => $slug[Count($slug)-1], 'isActive' => 1)
-            );
-
-            $article = $em->getRepository('CMSAdminBundle:Article')->findOneBy(
-                array('url' => $slug[Count($slug)-1], 'isActive' => 1)
-            );
-
-            if($group){
-                $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findViewBestSql(
-                    1, $group->getId()
-                )->getOneOrNullResult();
-            }
-
-            if($article){
-                $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findViewBestSql(
-                    1, $article->getGroupArticle()->getId()
-                )->getOneOrNullResult();
-            }
-        }
-
-        if(!$advertise){
-            $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findViewBestSql(
-                1, null
-            )->getOneOrNullResult();
-        }
+        if($slug = explode('/', $slug))
+            $advertise = $this->getAdvertiseFromSlug($slug, $this::POSITION_TOP);
 
         if($advertise){
-            $used = $advertise->getCpc()* $advertise->getClick() + ($advertise->getViews()/1000)*$advertise->getCpm();
+            $used = $advertise->getCpc()* $advertise->getClick() + round($advertise->getViews()/1000)*$advertise->getCpm();
             if($used >= $advertise->getBudget()){
                 $advertise = null;
             }else{
                 $advertise->setViews($advertise->getViews()+1);
-                $em->flush();
+                $this->getDoctrine()->getManager()->flush();
             }
         }
 
@@ -314,37 +329,11 @@ class DefaultController extends Controller
      */
     public function bannerRightAction($slug)
     {
+
         $advertise = null;
 
-        $em = $this->getDoctrine()->getManager();
-
-        if($slug = explode('/', $slug)){
-            $group = $em->getRepository('CMSAdminBundle:GroupArticle')->findOneBy(
-                array('url' => $slug[Count($slug)-1], 'isActive' => 1)
-            );
-
-            $article = $em->getRepository('CMSAdminBundle:Article')->findOneBy(
-                array('url' => $slug[Count($slug)-1], 'isActive' => 1)
-            );
-
-            if($group){
-                $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findViewBestSql(
-                    0, $group->getId()
-                )->getOneOrNullResult();
-            }
-
-            if($article){
-                $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findViewBestSql(
-                    0, $article->getGroupArticle()->getId()
-                )->getOneOrNullResult();
-            }
-        }
-
-        if(!$advertise){
-            $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findViewBestSql(
-                0, null
-            )->getOneOrNullResult();
-        }
+        if($slug = explode('/', $slug))
+            $advertise = $this->getAdvertiseFromSlug($slug, $this::POSITION_RIGHT);
 
         if($advertise){
             $used = $advertise->getCpc()* $advertise->getClick() + round($advertise->getViews()/1000)*$advertise->getCpm();
@@ -352,7 +341,7 @@ class DefaultController extends Controller
                 $advertise = null;
             }else{
                 $advertise->setViews($advertise->getViews()+1);
-                $em->flush();
+                $this->getDoctrine()->getManager()->flush();
             }
         }
 

@@ -55,7 +55,7 @@
                         <td>{% if entity.groupArticle %}{{entity.groupArticle.name|stripslashes}}{% endif %}</td>
                         <td class="hidden-phone">{% if entity.datecreate %}{{ entity.datecreate|date('H:i:s d-m-Y') }}{% endif %}</td>
                         <td class="hidden-phone">{{entity.views}}</td>
-                        <td>{% if entity.isLocked %}Locked{% else %}{{status[entity.isActive]}}{% endif %}</td>
+                        <td>{% if entity.isLocked %}<i class="icon-lock"></i> {% endif %}{{status[entity.isActive]}}</td>
                         <td>
                             <a class="btn btn-success" title="Show" href="{{ path('article_show', { 'id': entity.id }) }}"><i class="icon-search"></i></a>
                             <a class="btn btn-primary" title="Edit" href="{{ path('article_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i></a>

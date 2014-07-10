@@ -305,4 +305,27 @@ class AdvertiseController extends Controller
             )
         );
     }
+
+    /**
+     * List all City by Country entities.
+     *
+     * @Route("/cpc/updateFlash", name="advertise_update_cpc_flash")
+     * @Method("GET")
+     */
+    public function updateCpcFlashAction(Request $request)
+    {
+        $id = $request->query->get('id');
+
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('CMSAdminBundle:Advertise')->find($id);
+
+        if (!$entities) {
+            return new Response('Not found Advertise');
+        }
+
+        $entities->setClick($entities->getClick()+1);
+        $em->flush();
+
+        return $this->redirect($entities->getUrl());
+    }
 }

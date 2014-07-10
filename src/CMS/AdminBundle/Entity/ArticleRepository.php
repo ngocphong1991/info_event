@@ -87,7 +87,7 @@ class ArticleRepository extends EntityRepository
     {
         return $this->getEntityManager()
             ->createQuery(
-                'SELECT a FROM CMSAdminBundle:Article a WHERE a.id NOT IN ('.$listId.') AND :dateNow >= a.dateStart AND a.isActive = 1 ORDER BY a.dateCreate DESC'
+                "SELECT a FROM CMSAdminBundle:Article a WHERE a.id NOT IN ('.$listId.') AND :dateNow >= a.dateStart AND a.isActive = 1 ORDER BY a.dateCreate DESC"
             )
             ->setParameter('dateNow', date('Y-m-d H:i:s'));
     }

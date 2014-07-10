@@ -44,19 +44,13 @@
                         <span>{{ entity.createDate|date('d-m-Y h:i a') }}</span>
                     </div>
                 </div>
-                <div class="control-group ">
-                    <label class="control-label">Description</label>
-                    <div class="controls">
-                        <span>{{ entity.description|stripslashes|raw('html') }}</span>
+                {% if entity.groupArticle|length %}
+                    <div class="control-group ">
+                        <label class="control-label">Special Group</label>
+                        <div class="controls">
+                            <span>{% for groupArticle in entity.groupArticle %}<a href="{{ path('grouparticle_show', { 'id': groupArticle.id }) }}" title="{{groupArticle.name}}">{{groupArticle.name}}</a>, {% endfor %}</span>
+                        </div>
                     </div>
-                </div>
-                {% if entity.groupArticle %}
-                <div class="control-group ">
-                    <label class="control-label">Group</label>
-                    <div class="controls">
-                        <span><a href="{{ path('grouparticle_show', { 'id': entity.groupArticle.id }) }}" title="{{ entity.groupArticle.name }}">{{ entity.groupArticle.name }}</a></span>
-                    </div>
-                </div>
                 {% endif %}
                 <div class="control-group ">
                     <label class="control-label">Impression</label>

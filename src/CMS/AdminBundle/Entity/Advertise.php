@@ -703,7 +703,7 @@ class Advertise
         // the entity from being persisted to the database on error
         $this->getFile()->move($this->getUploadRootDir(), $this->image);
 
-        //if file upload is flash file
+        //if file upload is not flash file
         if($ext != 'swf'){
             // resize images to thumbnail
             $imagePath = $this->getUploadRootDir();
@@ -741,13 +741,12 @@ class Advertise
             if(file_exists($this->getUploadRootDir().'/'.$this->temp))
                 unlink($this->getUploadRootDir().'/'.$this->temp);
 
-            if($ext != 'swf'){
-                if(file_exists($this->getUploadRootDir().'/650x000/l_'.$this->temp))
-                    unlink($this->getUploadRootDir().'/650x000/l_'.$this->temp);
+            if(file_exists($this->getUploadRootDir().'/650x000/l_'.$this->temp))
+                unlink($this->getUploadRootDir().'/650x000/l_'.$this->temp);
 
-                if(file_exists($this->getUploadRootDir().'/300x300/m_'.$this->temp))
-                    unlink($this->getUploadRootDir().'/300x300/m_'.$this->temp);
-            }
+            if(file_exists($this->getUploadRootDir().'/300x300/m_'.$this->temp))
+                unlink($this->getUploadRootDir().'/300x300/m_'.$this->temp);
+
             // clear the temp image path
             $this->temp = null;
         }

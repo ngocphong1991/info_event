@@ -466,3 +466,4 @@ a:hover{
 @media (max-width: 1090px){
     .left-nav-bg, .right-nav-bg{display: none}
 }
+.nav-main-bot ul{padding-left: 45px}
