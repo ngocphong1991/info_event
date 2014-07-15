@@ -46,11 +46,12 @@ class AdvertiseRepository extends EntityRepository
         $statement =  $em->getConnection()->prepare('SELECT DISTINCT advertise_id FROM advertise_grouparticle');
         $statement->execute();
         $listLocalAdvertise = implode(',', $statement->fetchAll(7));
+        if(!$listLocalAdvertise) $listLocalAdvertise = 0;
 
         return $em->createQuery(
-                "SELECT a FROM CMSAdminBundle:Advertise a WHERE a.id NOT IN ('$listLocalAdvertise') AND a.position = :position AND a.isActive = 1 ORDER BY a.createDate DESC"
+                'SELECT a FROM CMSAdminBundle:Advertise a WHERE a.id NOT IN ('.$listLocalAdvertise.') AND a.position = :pos AND a.isActive = 1 ORDER BY a.createDate DESC'
             )
-            ->setParameter('position', $position)
+            ->setParameter('pos', $position)
             ->setMaxResults(1);
     }
 

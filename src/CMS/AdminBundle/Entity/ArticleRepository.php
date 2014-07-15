@@ -85,9 +85,10 @@ class ArticleRepository extends EntityRepository
 
     public function findNewestNotSliderSql($listId)
     {
+        if(!$listId) $listId = 0;
         return $this->getEntityManager()
             ->createQuery(
-                "SELECT a FROM CMSAdminBundle:Article a WHERE a.id NOT IN ('.$listId.') AND :dateNow >= a.dateStart AND a.isActive = 1 ORDER BY a.dateCreate DESC"
+                'SELECT a FROM CMSAdminBundle:Article a WHERE a.id NOT IN ('.$listId.') AND :dateNow >= a.dateStart AND a.isActive = 1 ORDER BY a.dateCreate DESC'
             )
             ->setParameter('dateNow', date('Y-m-d H:i:s'));
     }
