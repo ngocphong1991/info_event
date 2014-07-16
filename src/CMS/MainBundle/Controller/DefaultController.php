@@ -267,10 +267,22 @@ class DefaultController extends Controller
         $advertise = null;
 
         $em = $this->getDoctrine()->getManager();
+        $path = $slug[Count($slug)-1];
 
+        //is home page
+        if($path == ''){
+            $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findHomeAdvertiseSql($position)->getOneOrNullResult();
+            if($advertise) return $advertise;
+            else{
+                $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findGlobalSql($position)->getOneOrNullResult();
+                return $advertise;
+            }
 
+        }
+
+        //is article detail page
         $article = $em->getRepository('CMSAdminBundle:Article')->findOneBy(
-            array('url' => $slug[Count($slug)-1], 'isActive' => 1)
+            array('url' => $path, 'isActive' => 1)
         );
 
         if($article){
@@ -281,8 +293,9 @@ class DefaultController extends Controller
             if($advertise) return $advertise;
         }
 
+        //is group article page
         $group = $em->getRepository('CMSAdminBundle:GroupArticle')->findOneBy(
-            array('url' => $slug[Count($slug)-1], 'isActive' => 1)
+            array('url' => $path, 'isActive' => 1)
         );
 
         if($group){
@@ -293,6 +306,7 @@ class DefaultController extends Controller
             if($advertise) return $advertise;
         }
 
+        //is global advertise
         $advertise = $em->getRepository('CMSAdminBundle:Advertise')->findGlobalSql($position)->getOneOrNullResult();
 
         return $advertise;

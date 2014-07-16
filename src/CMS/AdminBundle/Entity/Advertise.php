@@ -29,6 +29,8 @@ class Advertise
 {
     const ACTIVE_YES = true;
     const ACTIVE_NO = false;
+    const HOME_PAGE_YES = true;
+    const HOME_PAGE_NO = false;
     const POSITION_TOP = true;
     const POSITION_RIGHT = false;
     
@@ -131,6 +133,13 @@ class Advertise
      * @ORM\Column(name="is_active", type="smallint", length=1, nullable=true)
      */
     private $isActive;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="is_home_page", type="smallint", length=1, nullable=true)
+     */
+    private $isHomePage;
     
     /**
      * @var string
@@ -526,6 +535,37 @@ class Advertise
             $this->isActive = self::ACTIVE_NO;
 
         return $this->isActive;
+    }
+
+    /**
+     * Set isHomePage
+     *
+     * @param string $isHomePage
+     * @return Advertise
+     */
+    public function setIsHomePage($isHomePage)
+    {
+        if (!in_array($isHomePage, array(self::ACTIVE_YES, self::ACTIVE_NO))) {
+            throw new \InvalidArgumentException("Invalid Home Page");
+        }
+        $this->isHomePage = $isHomePage;
+
+        return $this;
+    }
+
+    /**
+     * Get isHomePage
+     *
+     * @return string
+     */
+    public function getIsHomePage()
+    {
+        if($this->isHomePage && $this->isHomePage == 1){
+            $this->isHomePage = self::ACTIVE_YES;
+        }else
+            $this->isHomePage = self::ACTIVE_NO;
+
+        return $this->isHomePage;
     }
     
     /**

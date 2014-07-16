@@ -30,6 +30,14 @@ class AdvertiseType extends AbstractType
                     )
                 )
             )
+            ->add('isHomePage','checkbox', array(
+                    'label' => 'Show it at Home Page',
+                    'required'  => false,
+                    'label_attr' => array(
+                        'class' => 'control-label'
+                    )
+                )
+            )
             ->add('groupArticle', null, array(
                     'empty_value' => 'Choose your Article Group',
                     'empty_data'  => null,

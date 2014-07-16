@@ -467,3 +467,18 @@ a:hover{
     .left-nav-bg, .right-nav-bg{display: none}
 }
 .nav-main-bot ul{padding-left: 45px}
+
+/*********************************************
+*********** RESPONSIVE DESIGN ZONE ***********
+**********************************************/
+
+/* Responsive for device from 768px to 960px */
+@media (min-width: 768px) and (max-width: 959px){
+    /*----Header----*/
+    .header .container{text-align: center; padding: 0; margin: 20px 0}
+    .header .logo{margin: 0 auto}
+    .header .banner{display: none}
+    .header .container div{float: none}
+
+    .wrapper .blog-banner .blog-banner-main{display: none}
+}
