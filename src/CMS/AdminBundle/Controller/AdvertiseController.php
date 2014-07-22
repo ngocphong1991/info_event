@@ -62,14 +62,73 @@ class AdvertiseController extends Controller
         // parameters to template
         return array('pagination' => $pagination);
     }
+
     /**
-     * Creates a new Advertise entity.
+     * Lists all Advertise entities.
      *
-     * @Route("/create", name="advertise_create")
-     * @Method("POST")
-     * @Template("CMSAdminBundle:Advertise:new.html.twig")
+     * @Route("/export", name="advertise_export")
+     * @Method("GET")
+     * @Template()
      */
-    public function createAction(Request $request)
+    public function exportExcelAction()
+    {
+        // ask the service for a Excel5
+        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
+
+        $phpExcelObject->getProperties()->setCreator("Admin Info Website")
+            ->setLastModifiedBy("Administrator")
+            ->setTitle("Office 2005 XLSX Test Document")
+            ->setSubject("Office 2005 XLSX Test Document")
+            ->setDescription("Test document for Office 2005 XLSX, generated using PHP classes.")
+            ->setKeywords("office 2005 openxml php")
+            ->setCategory("Test result file");
+        $phpExcelObject->setActiveSheetIndex(0)
+            ->setCellValue('A1', 'Id')
+            ->setCellValue('B1', 'Name')
+            ->setCellValue('C1', 'Item Banner')
+            ->setCellValue('D1', 'Url')
+            ->setCellValue('E1', 'Impressions')
+            ->setCellValue('F1', 'Clicks!')
+            ->setCellValue('G1', 'Status')
+            ->setCellValue('H1', 'Date Create');
+        $advertise = $this->getDoctrine()->getManager()->getRepository('CMSAdminBundle:Advertise')->findAllSql()->getResult();
+        foreach($advertise as $key => $ad){
+            $key = $key+2;
+            $phpExcelObject->setActiveSheetIndex(0)
+                ->setCellValue('A'.$key, $ad->getId())
+                ->setCellValue('B'.$key, $ad->getName())
+                ->setCellValue('C'.$key, $ad->getPosition() ? 'Top Banner' : 'Right Banner')
+                ->setCellValue('D'.$key, $ad->getUrl())
+                ->setCellValue('E'.$key, $ad->getViews())
+                ->setCellValue('F'.$key, $ad->getClick())
+                ->setCellValue('G'.$key, $ad->getIsActive() ? 'Yes' : 'No')
+                ->setCellValue('H'.$key, date('d-m-Y H:i:s', time($ad->getCreateDate())));
+        }
+        $phpExcelObject->getActiveSheet()->setTitle('Simple');
+        // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+        $phpExcelObject->setActiveSheetIndex(0);
+
+        // create the writer
+        $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel5');
+        // create the response
+        $response = $this->get('phpexcel')->createStreamedResponse($writer);
+        // adding headers
+        $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
+        $response->headers->set('Content-Disposition', 'attachment;filename=advertise.xls');
+        $response->headers->set('Pragma', 'public');
+        $response->headers->set('Cache-Control', 'maxage=1');
+
+        return $response;
+    }
+
+        /**
+         * Creates a new Advertise entity.
+         *
+         * @Route("/create", name="advertise_create")
+         * @Method("POST")
+         * @Template("CMSAdminBundle:Advertise:new.html.twig")
+         */
+        public function createAction(Request $request)
     {
         if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['add'], 'advertise'))
             throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
@@ -96,14 +155,14 @@ class AdvertiseController extends Controller
         );
     }
 
-    /**
-    * Creates a form to create a Advertise entity.
-    *
-    * @param Advertise $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createCreateForm(Advertise $entity)
+        /**
+         * Creates a form to create a Advertise entity.
+         *
+         * @param Advertise $entity The entity
+         *
+         * @return \Symfony\Component\Form\Form The form
+         */
+        private function createCreateForm(Advertise $entity)
     {
         $form = $this->createForm(new AdvertiseType(), $entity, array(
             'action' => $this->generateUrl('advertise_create'),
@@ -113,14 +172,14 @@ class AdvertiseController extends Controller
         return $form;
     }
 
-    /**
-     * Displays a form to create a new Advertise entity.
-     *
-     * @Route("/new", name="advertise_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
+        /**
+         * Displays a form to create a new Advertise entity.
+         *
+         * @Route("/new", name="advertise_new")
+         * @Method("GET")
+         * @Template()
+         */
+        public function newAction()
     {
         if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['add'], 'advertise'))
             throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
@@ -134,14 +193,14 @@ class AdvertiseController extends Controller
         );
     }
 
-    /**
-     * Finds and displays a Advertise entity.
-     *
-     * @Route("/show/{id}", name="advertise_show")
-     * @Method("GET")
-     * @Template()
-     */
-    public function showAction($id)
+        /**
+         * Finds and displays a Advertise entity.
+         *
+         * @Route("/show/{id}", name="advertise_show")
+         * @Method("GET")
+         * @Template()
+         */
+        public function showAction($id)
     {
         if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['view'], 'advertise'))
             throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
@@ -158,14 +217,14 @@ class AdvertiseController extends Controller
         );
     }
 
-    /**
-     * Displays a form to edit an existing Advertise entity.
-     *
-     * @Route("/edit/{id}", name="advertise_edit")
-     * @Method("GET")
-     * @Template()
-     */
-    public function editAction($id)
+        /**
+         * Displays a form to edit an existing Advertise entity.
+         *
+         * @Route("/edit/{id}", name="advertise_edit")
+         * @Method("GET")
+         * @Template()
+         */
+        public function editAction($id)
     {
         if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['edit'], 'advertise'))
             throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
@@ -186,14 +245,14 @@ class AdvertiseController extends Controller
         );
     }
 
-    /**
-    * Creates a form to edit a Advertise entity.
-    *
-    * @param Advertise $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Advertise $entity)
+        /**
+         * Creates a form to edit a Advertise entity.
+         *
+         * @param Advertise $entity The entity
+         *
+         * @return \Symfony\Component\Form\Form The form
+         */
+        private function createEditForm(Advertise $entity)
     {
         $form = $this->createForm(new AdvertiseType(), $entity, array(
             'action' => $this->generateUrl('advertise_update', array('id' => $entity->getId())),
@@ -202,14 +261,14 @@ class AdvertiseController extends Controller
 
         return $form;
     }
-    /**
-     * Edits an existing Advertise entity.
-     *
-     * @Route("/update/{id}", name="advertise_update")
-     * @Method("PUT")
-     * @Template("CMSAdminBundle:Advertise:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
+        /**
+         * Edits an existing Advertise entity.
+         *
+         * @Route("/update/{id}", name="advertise_update")
+         * @Method("PUT")
+         * @Template("CMSAdminBundle:Advertise:edit.html.twig")
+         */
+        public function updateAction(Request $request, $id)
     {
         if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['edit'], 'advertise'))
             throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
@@ -232,7 +291,7 @@ class AdvertiseController extends Controller
                 'successfull',
                 'Update Advertise were successfull!'
             );
-            
+
             return $this->redirect($this->generateUrl('advertise_edit', array('id' => $id)));
         }
 
@@ -241,14 +300,14 @@ class AdvertiseController extends Controller
             'form'   => $editForm->createView(),
         );
     }
-    /**
-     * Deletes a Advertise entity.
-     *
-     * @Route("/del/{id}", name="advertise_delete")
-     * @Method("GET")
-     */
-    public function deleteAction(Request $request, $id)
-    {   
+        /**
+         * Deletes a Advertise entity.
+         *
+         * @Route("/del/{id}", name="advertise_delete")
+         * @Method("GET")
+         */
+        public function deleteAction(Request $request, $id)
+    {
         if(!$this->roles->checkACL($this->getUser()->getRoles(), $this->roles->acl['del'], 'advertise'))
             throw $this->createNotFoundException('You can not execute this function, please contact administrator!');
 
@@ -270,13 +329,13 @@ class AdvertiseController extends Controller
         return $this->redirect($this->generateUrl('advertise'));
     }
 
-    /**
-     * List all City by Country entities.
-     *
-     * @Route("/cpc/update", name="advertise_update_cpc")
-     * @Method("GET")
-     */
-    public function updateCpcAction(Request $request)
+        /**
+         * List all City by Country entities.
+         *
+         * @Route("/cpc/update", name="advertise_update_cpc")
+         * @Method("GET")
+         */
+        public function updateCpcAction(Request $request)
     {
         $id = $request->query->get('id');
         $em = $this->getDoctrine()->getManager();
@@ -306,13 +365,13 @@ class AdvertiseController extends Controller
         );
     }
 
-    /**
-     * List all City by Country entities.
-     *
-     * @Route("/cpc/updateFlash", name="advertise_update_cpc_flash")
-     * @Method("GET")
-     */
-    public function updateCpcFlashAction(Request $request)
+        /**
+         * List all City by Country entities.
+         *
+         * @Route("/cpc/updateFlash", name="advertise_update_cpc_flash")
+         * @Method("GET")
+         */
+        public function updateCpcFlashAction(Request $request)
     {
         $id = $request->query->get('id');
 
@@ -328,4 +387,4 @@ class AdvertiseController extends Controller
 
         return $this->redirect($entities->getUrl());
     }
-}
+    }

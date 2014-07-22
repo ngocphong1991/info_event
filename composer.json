@@ -21,7 +21,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
 		"knplabs/knp-paginator-bundle": "dev-master",
         "knplabs/knp-menu": "2.0.*@dev",
-        "knplabs/knp-menu-bundle": "dev-master"
+        "knplabs/knp-menu-bundle": "dev-master",
+        "liuggio/excelbundle": "~2.0"
     },
     "scripts": {
         "post-install-cmd": [

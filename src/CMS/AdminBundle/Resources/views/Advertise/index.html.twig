@@ -20,15 +20,9 @@
                             Add New <i class="icon-plus"></i>
                         </a>
                     </div>
-                    {#<div class="btn-group pull-right">#}
-                        {#<button data-toggle="dropdown" class="btn dropdown-toggle">Tools <i class="icon-angle-down"></i>#}
-                        {#</button>#}
-                        {#<ul class="dropdown-menu pull-right">#}
-                            {#<li><a href="#">Delete All</a></li>#}
-                            {#<li><a href="#">Save as PDF</a></li>#}
-                            {#<li><a href="#">Export to Excel</a></li>#}
-                        {#</ul>#}
-                    {#</div>#}
+                    <div class="btn-group pull-right">
+                        <a href="{{ path('advertise_export') }}" title="Export to Excel" class="btn"><i class="icon-file"></i> Export to Excel</a>
+                    </div>
                 </div>
                 <div class="space15"></div>
                 <table class="table table-striped table-bordered table-advance table-hover">
