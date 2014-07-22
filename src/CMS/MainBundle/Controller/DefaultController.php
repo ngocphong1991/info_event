@@ -366,22 +366,24 @@ class DefaultController extends Controller
      * @Route("/right")
      * @Template()
      */
-    public function rightSlideBarAction($slug, $listSpecial, $likeBox)
+    public function rightSlideBarAction($slug, $listSpecial, $likeBox, $viewBest)
     {
         $specials = $this->getDoctrine()
             ->getRepository('CMSAdminBundle:SpecialGroupArticle')
             ->findAllSortByPositionSql();
-
-        $viewBest = $this->getDoctrine()
-            ->getRepository('CMSAdminBundle:Article')
-            ->findViewBestSql();
+        if($viewBest)
+            $viewBest = $this->getDoctrine()
+                ->getRepository('CMSAdminBundle:Article')
+                ->findViewBestSql();
+        else
+            $viewBest = null;
 
         return array(
             'listSpecial' => $listSpecial ? $listSpecial : array(),
             'slug' => isset($slug) && $slug ? $slug : false,
             'likeBox' => $likeBox && $likeBox ? $likeBox : false,
             'specials' => $specials->getResult(),
-            'viewBests' => $viewBest->getResult(),
+            'viewBests' => $viewBest ? $viewBest->getResult() : null,
             'em' => $this->getDoctrine()->getRepository('CMSAdminBundle:Article')
         );
     }

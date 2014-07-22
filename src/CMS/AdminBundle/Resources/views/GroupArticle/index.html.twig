@@ -35,12 +35,12 @@
                 <thead>
                 <tr>
                     {#<th class="sorting_disabled"><input class="group-checkable" type="checkbox"></th>#}
-                    <th class="hidden-phone">{{ knp_pagination_sortable(pagination, 'Id', 'g.id') }}</th>
-                    <th>{{ knp_pagination_sortable(pagination, 'Name', 'g.name') }}</th>
-                    <th>{{ knp_pagination_sortable(pagination, 'Position', 'g.position') }}</th>
-                    <th>{{ knp_pagination_sortable(pagination, 'Is active', 'g.isActive') }}</th>
+                    <th width="20px" class="hidden-phone">{{ knp_pagination_sortable(pagination, 'Id', 'g.id') }}</th>
+                    <th width="20%">{{ knp_pagination_sortable(pagination, 'Name', 'g.name') }}</th>
+                    <th width="8%">{{ knp_pagination_sortable(pagination, 'Position', 'g.position') }}</th>
+                    <th width="8%">{{ knp_pagination_sortable(pagination, 'Status', 'g.isActive') }}</th>
                     <th>{{ knp_pagination_sortable(pagination, 'Is special', 'g.isSpecial') }}</th>
-                    <th></th>
+                    <th width="120px"></th>
                 </tr>
                 </thead>
                 <tbody>

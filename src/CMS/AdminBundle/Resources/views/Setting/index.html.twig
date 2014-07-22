@@ -44,6 +44,9 @@
             {% if entity.websiteBanner %}
             $('#setting_file').attr({'src':"{{ asset('uploads/banner/260xYYY/') }}s_{{ entity.websiteBanner }}", 'alt':'{{ entity.websiteName }}'});
             {% endif %}
+            {% if entity.websiteBanner %}
+            $('#setting_fileBottom').attr({'src':"{{ asset('uploads/banner/bottom/176xYYY/') }}s_{{ entity.websiteBannerBottom }}", 'alt':'{{ entity.websiteName }}'});
+            {% endif %}
             {% if entity.websiteLogo %}
             $('#setting_fileLogo').attr({'src':"{{ asset('uploads/banner/') }}{{ entity.websiteLogo }}", 'alt':'{{ entity.websiteName }}'});
             {% endif %}

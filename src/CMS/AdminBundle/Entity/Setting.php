@@ -48,6 +48,11 @@ class Setting
     private $websiteBanner;
 
     /**
+     * @ORM\Column(name="website_banner_bottom", type="string", length=255, unique=true, nullable=true)
+     */
+    private $websiteBannerBottom;
+
+    /**
      * @ORM\Column(name="website_logo", type="string", length=255, unique=true, nullable=true)
      */
     private $websiteLogo;
@@ -72,6 +77,17 @@ class Setting
     private $file;
 
     private $temp;
+
+    /**
+     * @Assert\File(
+     *     maxSize = "6000000",
+     *     mimeTypes = {"image/jpeg", "image/jpg", "image/png"},
+     *     mimeTypesMessage = "Please upload a valid Image (.png, .jpg, .jpeg) and smaller 6 Mb"
+     * )
+     */
+    private $fileBottom;
+
+    private $tempBottom;
 
     /**
      * @Assert\File(
@@ -130,6 +146,22 @@ class Setting
     public function getWebsiteBanner()
     {
         return $this->websiteBanner;
+    }
+
+    /**
+     * @param mixed $websiteBannerBottom
+     */
+    public function setWebsiteBannerBottom($websiteBannerBottom)
+    {
+        $this->websiteBannerBottom = $websiteBannerBottom;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWebsiteBannerBottom()
+    {
+        return $this->websiteBannerBottom;
     }
 
     /**
@@ -326,6 +358,141 @@ class Setting
         }
 
         if ($thumb = $this->getAbsoluteThumbPath()) {
+            if(file_exists($thumb))
+                unlink($thumb);
+        }
+    }
+
+    public function getAbsolutePathBottom()
+    {
+        return null === $this->websiteBannerBottom
+            ? null
+            : $this->getUploadRootDir().'/'.$this->websiteBannerBottom;
+    }
+
+    public function getAbsoluteThumbPathBottom()
+    {
+        return null === $this->websiteBannerBottom
+            ? null
+            : $this->getUploadRootDir().'/176xYYY/'.$this->websiteBannerBottom;
+    }
+
+    public function getWebPathBottom()
+    {
+        return null === $this->websiteBannerBottom
+            ? null
+            : $this->getUploadDir().'/'.$this->websiteBannerBottom;
+    }
+
+    protected function getUploadRootDirBottom()
+    {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__.'/../../../../web/'.$this->getUploadDirBottom();
+    }
+
+    protected function getUploadDirBottom()
+    {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'uploads/banner/bottom';
+    }
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFileBottom(UploadedFile $file = null)
+    {
+        $this->fileBottom = $file;
+        // check if we have an old image path
+        if (isset($this->websiteBannerBottom)) {
+            // store the old name to delete after the update
+            $this->tempBottom = $this->websiteBannerBottom;
+            $this->websiteBannerBottom = null;
+        } else {
+            $this->websiteBannerBottom = 'initial';
+        }
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFileBottom()
+    {
+        return $this->fileBottom;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUploadBottom()
+    {
+        if (null !== $this->getFileBottom()) {
+            // do whatever you want to generate a unique name
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->websiteBannerBottom = $filename.'.'.$this->getFileBottom()->guessExtension();
+        }
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function uploadBottom()
+    {
+        if (null === $this->getFileBottom()) {
+            return;
+        }
+
+        // if there is an error when moving the file, an exception will
+        // be automatically thrown by move(). This will properly prevent
+        // the entity from being persisted to the database on error
+        $this->getFileBottom()->move($this->getUploadRootDirBottom(), $this->websiteBannerBottom);
+
+        // resize images
+        $imagePath = $this->getUploadRootDirBottom();
+        $thumbPath = $this->getUploadRootDirBottom().'/176xYYY';
+        $fs = new Filesystem();
+        if(!$fs->exists($thumbPath)){
+            try {
+                $fs->mkdir($thumbPath);
+            } catch (IOExceptionInterface $e) {
+                echo "An error occurred while creating your directory at ".$e->getPath();
+            }
+        }
+        $thumb = new ImageResizeApi($imagePath, $thumbPath, $this->websiteBannerBottom, 's_'.$this->websiteBannerBottom, 176, 0, 100);
+        $thumb->resize();
+
+        // check if we have an old image
+        if (isset($this->tempBottom) && $this->tempBottom) {
+            // delete the old image
+            if(file_exists($this->getUploadRootDirBottom().'/'.$this->tempBottom))
+                unlink($this->getUploadRootDirBottom().'/'.$this->tempBottom);
+
+            if(file_exists($this->getUploadRootDirBottom().'/176xYYY/s_'.$this->tempBottom))
+                unlink($this->getUploadRootDirBottom().'/176xYYY/s_'.$this->tempBottom);
+            // clear the temp image path
+            $this->tempBottom = null;
+        }
+        $this->fileBottom = null;
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUploadBottom()
+    {
+        if ($file = $this->getAbsolutePathBottom()) {
+            if(file_exists($file))
+                unlink($file);
+        }
+
+        if ($thumb = $this->getAbsoluteThumbPathBottom()) {
             if(file_exists($thumb))
                 unlink($thumb);
         }

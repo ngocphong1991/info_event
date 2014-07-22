@@ -95,7 +95,7 @@ class Advertise
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=255, nullable=false)
+     * @ORM\Column(name="url", type="string", length=255, nullable=true)
      */
     private $url;
 

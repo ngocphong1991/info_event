@@ -18,7 +18,9 @@
     <div class="nav-bot">
         <div class="container">
             <nav class="blog-nav">
-                <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" class="home-footer" title="Home page">&nbsp;</a>
+                <a class="home-footer" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" title="Home page">
+                    <img src="{{ asset('uploads/banner/bottom/') }}{{ app.session.get('settingWebsite').websiteBannerBottom }}" alt="{{ app.session.get('settingWebsite').websiteName }}">
+                </a>
                 {% for page in cms  %}
                     <a class="blog-nav-item" id="page-{{ page.id }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ page.url }}" title="{{ page.title|stripslashes }}">{{ page.title|stripslashes }}</a>
                 {% endfor %}

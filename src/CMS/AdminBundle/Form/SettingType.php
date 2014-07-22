@@ -35,6 +35,15 @@ class SettingType extends AbstractType
                     )
                 )
             )
+            ->add('fileBottom', null, array('label' => 'Banner footer website',
+                    'attr' => array(
+                        'class' => 'default',
+                    ),
+                    'label_attr' => array(
+                        'class' => 'control-label hidden-phone'
+                    )
+                )
+            )
             ->add('fileLogo', null, array('label' => 'Logo website',
                     'attr' => array(
                         'class' => 'default',

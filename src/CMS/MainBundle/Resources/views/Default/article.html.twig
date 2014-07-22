@@ -52,7 +52,7 @@
                 </div><!-- /.blog-post -->
             {% endif %}
         </div><!-- /.blog-main -->
-        {{ render(controller("CMSMainBundle:Default:rightSlideBar", {'slug': app.request.pathInfo, 'listSpecial': listSpecial, 'likeBox': false}))}}
+        {{ render(controller("CMSMainBundle:Default:rightSlideBar", {'slug': app.request.pathInfo, 'listSpecial': listSpecial, 'likeBox': false, 'viewBest': true}))}}
     </div><!-- /.row -->
 
 {% endblock %}

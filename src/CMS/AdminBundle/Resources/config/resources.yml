@@ -1,12 +1,12 @@
 resources:
+    - { label: Group Article, code: group_article, acl: 0 }
+    - { label: Special Group, code: special_group, acl: 0 }
+    - { label: Article, code: article, acl: 0 }
+    - { label: CMS Page, code: cms_page, acl: 0 }
+    - { label: Advertise, code: advertise, acl: 0 }
     - { label: User, code: user, acl: 0 }
     - { label: Role, code: role, acl: 0 }
     - { label: Setting, code: setting, acl: 0 }
-    - { label: Special Group, code: special_group, acl: 0 }
-    - { label: Group Article, code: group_article, acl: 0 }
-    - { label: CMS Page, code: cms_page, acl: 0 }
-    - { label: Article, code: article, acl: 0 }
-    - { label: Advertise, code: advertise, acl: 0 }
 
 acl:
     view: 1

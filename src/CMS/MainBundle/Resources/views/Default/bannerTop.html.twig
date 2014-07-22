@@ -27,7 +27,7 @@
             <param value="always" name="AllowScriptAccess">
             <param value="High" name="quality">
             <param value="transparent" name="wmode">
-            <embed src="{{ asset('uploads/advertises/') }}{{ advertise.image }}?link={{ app.request.schemeAndHttpHost|url_encode }}{{ path('advertise_update_cpc_flash')|url_encode }}{{ '?id='|url_encode }}{{ advertise.id }}" width="100%" height="100%" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" menu="false" wmode="transparent"></embed>
+            <embed src="{{ asset('uploads/advertises/') }}{{ advertise.image }}?link={{ app.request.schemeAndHttpHost|url_encode }}{{ path('advertise_update_cpc_flash')|url_encode }}{{ '?id='|url_encode }}{{ advertise.id }}" width="650" height="90" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" menu="false" wmode="transparent"></embed>
         </object>
     {% endif %}
 {% endif %}
