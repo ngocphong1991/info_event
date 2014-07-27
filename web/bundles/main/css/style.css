@@ -439,6 +439,7 @@ a:hover{
     display: inline-block;
     overflow: hidden;
     float: left;
+    max-width: 176px;
 }
 .footer .info p{margin: 0}
 .scroll-top{
