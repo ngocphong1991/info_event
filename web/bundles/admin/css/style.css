@@ -4183,3 +4183,4 @@ a.element{
 }
 h3.main{margin: 20px 0!important;}
 .ajax-load{background: url('../img/ajax-loader.gif') no-repeat; padding: 5px; display: none;}
+.table.table-striped thead tr{background: #ddd}

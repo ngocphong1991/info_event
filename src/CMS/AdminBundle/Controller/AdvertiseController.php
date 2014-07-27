@@ -113,8 +113,10 @@ class AdvertiseController extends Controller
         // create the response
         $response = $this->get('phpexcel')->createStreamedResponse($writer);
         // adding headers
-        $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
-        $response->headers->set('Content-Disposition', 'attachment;filename=advertise.xls');
+        $filename = "advertise_" . date('Ymd') . ".xls";
+
+        $response->headers->set('Content-Type', 'application/vnd.ms-excel; charset=utf-8');
+        $response->headers->set("Content-Disposition", "inline;filename=\"$filename\"");
         $response->headers->set('Pragma', 'public');
         $response->headers->set('Cache-Control', 'maxage=1');
 
