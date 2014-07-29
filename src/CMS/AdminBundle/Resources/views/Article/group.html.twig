@@ -47,9 +47,9 @@
                     <tbody>
                     {% for entity in pagination %}
                         <tr>
-                            <td class="checkbox-column">
+                            {#<td class="checkbox-column">
                                 <input class="checkboxes" type="checkbox">
-                            </td>
+                            </td>#}
                             <td class="hidden-phone">{{entity.id}}</td>
                             <td>{{entity.title|stripslashes}}</td>
                             <td>{% if entity.groupArticle %}{{entity.groupArticle.name|stripslashes}}{% endif %}</td>

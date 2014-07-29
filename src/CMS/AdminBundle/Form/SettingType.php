@@ -26,7 +26,7 @@ class SettingType extends AbstractType
                     ),
                 )
             )
-            ->add('file', null, array('label' => 'Banner website',
+            ->add('file', null, array('label' => 'Banner website (260x50)',
                     'attr' => array(
                         'class' => 'default',
                     ),
@@ -35,7 +35,7 @@ class SettingType extends AbstractType
                     )
                 )
             )
-            ->add('fileBottom', null, array('label' => 'Banner footer website',
+            ->add('fileBottom', null, array('label' => 'Banner footer website (176x40)',
                     'attr' => array(
                         'class' => 'default',
                     ),
