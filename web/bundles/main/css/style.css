@@ -6,6 +6,10 @@
 body {
     font-family: Arial,Helvetica,sans-serif;
     color: #000000;
+    -moz-transition: left 100ms ease-in-out, right 100ms ease-in-out;
+    -webkit-transition: left 100ms ease-in-out, right 100ms ease-in-out;
+    transition: left 100ms ease-in-out, right 100ms ease-in-out;
+    min-width: 100%;
 }
 
 h1, .h1,
@@ -278,6 +282,9 @@ a:hover{
 .sidebar-module .sidebar-half:nth-child(odd){
     margin-left: 10px;
 }
+.sidebar-module .even{
+    margin-left: 10px;
+}
 .sidebar-module .sidebar-half a{
     color: #595251;
     font: 13px Arial,Helvetica,sans-serif;
@@ -476,14 +483,140 @@ a:hover{
 /*********************************************
 *********** RESPONSIVE DESIGN ZONE ***********
 **********************************************/
-
+@media (min-width: 960px){
+    .hidden-pc{display: none!important;}
+    .visible-pc{display: block!important;}
+}
+@media (max-width: 959px){
+    .hidden-tablet{display: none!important;}
+    .visible-tablet{display: block!important;}
+}
 /* Responsive for device from 768px to 960px */
 @media (min-width: 768px) and (max-width: 959px){
+
+    .container{width: 720px; padding: 0}
+}
+@media (min-width: 320px) and (max-width: 767px){
+
+    .container{width: 320px; padding: 0 10px}
+}
+@media (min-width: 320px) and (max-width: 959px){
     /*----Header----*/
-    .header .container{text-align: center; padding: 0; margin: 20px 0}
+    .header {text-align: center}
+    .header .container{text-align: center; padding: 0; margin: 20px auto}
     .header .logo{margin: 0 auto}
     .header .banner{display: none}
+    .row{margin: 0}
+    div[class*="col-sm"]{width: 100%}
     .header .container div{float: none}
-
     .wrapper .blog-banner .blog-banner-main{display: none}
+    .menu-mobile{ background: #7d7d7d url("../img/righ-core-mobile.png") no-repeat 100% 0;}
+    .menu-mobile button{padding: 10px; border: none; width: 70px; height: 70px; background: #7d7d7d url("../img/icon-menu-mobile.png") no-repeat scroll 7px 7px;}
+    /*----Menu Togged Style---*/
+    .logo-menu-mobile img{width: 100%}
+    .sidetogglemenu .category{border-top: 1px solid #333538; border-bottom: 1px solid #333538; padding: 10px; background-color: #161618; text-transform: uppercase; color: #898989; font-size: 22px; text-align: center}
+    .sidetogglemenu a{font-weight: normal}
+    .sidetogglemenu{ /* shared class for side toggle menus */
+        border-left: 1px solid #ffffff;
+        background: url("../img/bg-menu-mobile.png") repeat ;
+        width: 512px; /* default menu width */
+        overflow: hidden;
+        height: 100%;
+        position: fixed;
+        top: -100%;
+        clear: both;
+        display: block;
+        visibility: hidden;
+        -moz-transition: all 100ms ease-in-out; /* change 100ms to slide in animation time */
+        -webkit-transition: all 100ms ease-in-out;
+        transition: all 100ms ease-in-out;
+    }
+
+    .sidetogglemenu .footer{background-color: #464646; border-bottom: 4px solid #ffc40e}
+    .sidetogglemenu .footer .logo-mobile{text-align: center}
+    .sidetogglemenu .footer .static-menu{text-align: center; margin-bottom: 20px}
+    .sidetogglemenu .footer .static-menu a{padding:  20px 18px 0 20px; display: inline-block; background: url("../img/slash-footer-mobile.png") no-repeat 100% 20px; font-size: 16px; color: #ffffff; text-transform: uppercase}
+    .sidetogglemenu .footer .static-menu a:last-child{background: none}
+    .sidetogglemenu .item{border-bottom: 1px solid #343639}
+    .sidetogglemenu .item a{padding: 40px; color: #d3d3d4; text-transform: capitalize; font-size: 34px; border-bottom: 1px solid #141416}
+
+    .sidetogglemenu ul{
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    .sidetogglemenu a{
+        padding: 10px;
+        display: block;
+        color: #595959;
+        text-decoration: none;
+        text-align: center;
+    }
+
+    #boxscroll{width: 100%; height: 100%; overflow: auto}
+
+    /*-----Index Page CSS-----*/
+    .blog-main{border-top: 1px solid #fdb813;}
+    .blog-post{border-bottom: 1px solid #fdb813;}
+    .newest-mobile{
+        height: 145px;
+        margin: 15px 0;
+        overflow: hidden;
+        padding: 0;
+    }
+    .newest-mobile.active{
+
+    }
+    .newest-mobile ul{padding: 0; display: inline-block}
+    .newest-mobile li{
+        list-style: none;
+        margin-bottom: 5px;
+        position: relative;
+        width: 300px;
+        height: 145px;
+        overflow: hidden;
+        float: left;
+    }
+    .newest-mobile li:first-child{
+        margin: 0 40px ;
+    }
+    .newest-mobile li img{
+        position: absolute;
+        top: 0;
+    }
+    .newest-mobile li .opacity{
+        background: #9199A9;
+        bottom: 0;
+        left: 0;
+        padding: 10px;
+        position: absolute;
+        width: 100%;
+        height: 45px;
+        opacity: 0.8;
+        color: #ffffff;
+        font: bold 14px Arial,Helvetica,sans-serif;
+        line-height: 30px;
+    }
+    .blog-sidebar{margin-top: 25px; padding: 0}
+    .sidebar-module{margin: 0; padding: 0}
+    .sidebar-module p{padding: 0; margin: 0}
+    .sidebar-module p.visible-tablet a{background: url("../img/dot.png") repeat-x scroll center bottom rgba(0, 0, 0, 0); display: block; color: #484747; padding: 10px}
+    .sidebar-module p.visible-tablet a:hover{color: #000000}
+    .sidebar-module p.visible-tablet.start a{padding-top: 0}
+    .sidebar-module p.visible-tablet.end a{background: none}
+    .view-best{width: 100%; margin-bottom: 30px}
+    .view-best h4{margin-bottom: 10px}
+    .nav-bot .blog-nav.mobile{text-align: center}
+    .nav-bot .blog-nav.mobile{float: none;}
+    .nav-bot .blog-nav.mobile a{float: none}
+    .blog-post{background: none; padding: 0}
+    .blog-post .blog-post-title{margin: 0; padding-bottom: 10px; background: url("../img/flat.png") no-repeat scroll left top rgba(0, 0, 0, 0);padding-left: 32px;}
+    .blog-post .blog-post-meta{padding-left: 32px; padding-bottom: 5px}
+    .blog-post-tool, div#comments, .related-post{padding: 0 14px;}
+    .related-post{margin: 0}
+    .related-post ul{max-width: 100%}
+    .sidebar-module.ad{display: none}
+    .blog-post-description img{max-width: 100%; width: 100%}
+
 }

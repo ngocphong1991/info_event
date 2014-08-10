@@ -17,7 +17,7 @@
 {% if position == 'bot' %}
     <div class="nav-bot">
         <div class="container">
-            <nav class="blog-nav">
+            <nav class="blog-nav visible-pc hidden-tablet">
                 <a class="home-footer" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" title="Home page">
                     <img src="{{ asset('uploads/banner/bottom/') }}{{ app.session.get('settingWebsite').websiteBannerBottom }}" alt="{{ app.session.get('settingWebsite').websiteName }}">
                 </a>
@@ -25,9 +25,14 @@
                     <a class="blog-nav-item" id="page-{{ page.id }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ page.url }}" title="{{ page.title|stripslashes }}">{{ page.title|stripslashes }}</a>
                 {% endfor %}
             </nav>
+            <nav class="blog-nav hidden-pc visible-tablet mobile">
+                <a class="home-footer" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" title="Home page">
+                    <img src="{{ asset('uploads/banner/bottom/') }}{{ app.session.get('settingWebsite').websiteBannerBottom }}" alt="{{ app.session.get('settingWebsite').websiteName }}">
+                </a>
+            </nav>
         </div>
     </div>
-    <div class="footer-content container">
+    <div class="footer-content container visible-pc hidden-tablet">
         <div class="row nav-main-bot">
             <ul>
                 {% for entity in menuBot %}

@@ -2,7 +2,7 @@
 {% block stylesheets %}<link href="{{ asset('bundles/main/css/MetroJs.css') }}" rel="stylesheet">{% endblock %}
 {% block title %}Trang chủ{% endblock %}
 {% block content %}
-    <div class="blog-banner">
+    <div class="blog-banner hidden-tablet visible-pc">
         <div class="row">
             <div class="col-sm-8 blog-banner-main">
                 {% for slider in specialGroup %}
@@ -36,7 +36,18 @@
             </div>
         </div>
     </div>
-
+    <div class="newest-mobile hidden-pc visible-tablet">
+        {% for slider in sliderGroups %}
+            <ul id="group-{{ slider.id }}">
+                {% for article in slider.articles %}
+                    <li>
+                        <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ slider.url }}/{{ article.url }}" title="{{ article.title|stripslashes }}"><img src="{{ asset('uploads/article/300x300/') }}m_{{ article.image }}" alt="{{ article.title }}"></a>
+                        <a class="opacity" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ slider.url }}/{{ article.url }}" title="{{ article.title|stripslashes }}">{{ article.title|stripslashes }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </div>
     <div class="row">
 
         <div class="col-sm-8 blog-main index">
