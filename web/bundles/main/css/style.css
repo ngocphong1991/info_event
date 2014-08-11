@@ -618,5 +618,9 @@ a:hover{
     .related-post ul{max-width: 100%}
     .sidebar-module.ad{display: none}
     .blog-post-description img{max-width: 100%; width: 100%}
-
+}
+.box-scroll {
+    height: 100%;
+    overflow: auto;
+    width: 100%;
 }

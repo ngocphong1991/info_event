@@ -241,7 +241,7 @@ class DefaultController extends Controller
             return array('menuTop' => $menuTop, 'position' => $position);
         }
 
-        if($position == 'bot'){
+        if($position == 'bot'  || $position == 'mobile'){
 
             $menuBot = $this->getDoctrine()
                 ->getRepository('CMSAdminBundle:GroupArticle')

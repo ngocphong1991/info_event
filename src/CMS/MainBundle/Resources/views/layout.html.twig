@@ -60,28 +60,7 @@
     <div class="right-nav-bg">&nbsp;</div>
 </div>
 <!-- Mobile navbar -->
-<div class="menu-mobile hidden-pc visible-tablet">
-    <button onClick="menuMain.toggle();" class="sideviewtoggle">&nbsp;</button>
-</div>
-<div id="togglemenu" class="sidetogglemenu hidden-pc">
-
-    <ul>
-        <li><a class="logo-menu-mobile" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" title="Home"><img src="{{ asset('bundles/main/img/logo-mobile.png') }}" alt="{{ app.session.get('settingWebsite').websiteName }}"></a></li>
-        <li class="category">Chuyên mục</li>
-        <li class="item"><a href="http://www.dynamicdrive.com/forums/">Trang chủ</a></li>
-        <li class="item"><a href="http://www.dynamicdrive.com/forums/">Giáo dục</a></li>
-        <li class="footer">
-            <div class="logo-mobile"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" title="Home"><img src="{{ asset('bundles/main/img/footer-logo-mobile.png') }}" alt="{{ app.session.get('settingWebsite').websiteName }}"></a></div>
-            <div class="static-menu">
-                <a href="#" title="">Giới thiệu</a>
-                <a href="#" title="">Giới thiệu</a>
-                <a href="#" title="">Giới thiệu</a>
-                <a href="#" title="">Giới thiệu</a>
-                <a href="#" title="">Giới thiệu</a>
-            </div>
-        </li>
-    </ul>
-</div>
+{{ render(controller("CMSMainBundle:Default:menu", {'position':'mobile'}))}}
 
 <div class="container wrapper">
     {% block content %}
@@ -99,6 +78,7 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
+<script src="{{ asset('bundles/main/js/jquery.nicescroll.js') }}"></script>
 <script src="{{ asset('bundles/main/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('bundles/main/js/docs.min.js') }}"></script>
 <script src="{{ asset('bundles/main/js/sidetogglemenu.js') }}"></script>
@@ -109,6 +89,7 @@
     var menuMain;
 
     $(document).ready(function(){
+        $(".box-scroll").niceScroll({touchbehavior:true,cursorcolor:"#7f7f7f",cursoropacitymax:0.7,cursorwidth:5,cursorborderradius:"6px",background:"#e6e6e6",autohidemode:false});
         //Fix bug on chrome
         $(window).load(function(){
             //Toggle menu setup
