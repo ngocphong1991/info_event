@@ -492,18 +492,10 @@ a:hover{
     .visible-tablet{display: block!important;}
 }
 /* Responsive for device from 768px to 960px */
-@media (min-width: 768px) and (max-width: 959px){
-
-    .container{width: 720px; padding: 0}
-}
-@media (min-width: 320px) and (max-width: 767px){
-
-    .container{width: 320px; padding: 0 10px}
-}
 @media (min-width: 320px) and (max-width: 959px){
     /*----Header----*/
-    .header {text-align: center}
-    .header .container{text-align: center; padding: 0; margin: 20px auto}
+    .header {text-align: center; padding: 20px 0; background-color: white}
+    .header .container{text-align: center; padding: 0; margin: 0 auto}
     .header .logo{margin: 0 auto}
     .header .banner{display: none}
     .row{margin: 0}
@@ -514,39 +506,29 @@ a:hover{
     .menu-mobile button{padding: 10px; border: none; width: 70px; height: 70px; background: #7d7d7d url("../img/icon-menu-mobile.png") no-repeat scroll 7px 7px;}
     /*----Menu Togged Style---*/
     .logo-menu-mobile img{width: 100%}
-    .sidetogglemenu .category{border-top: 1px solid #333538; border-bottom: 1px solid #333538; padding: 10px; background-color: #161618; text-transform: uppercase; color: #898989; font-size: 22px; text-align: center}
-    .sidetogglemenu a{font-weight: normal}
-    .sidetogglemenu{ /* shared class for side toggle menus */
+    .sb-slidebar .category{border-top: 1px solid #333538; border-bottom: 1px solid #333538; padding: 10px; background-color: #161618; text-transform: uppercase; color: #898989; font-size: 22px; text-align: center}
+    .sb-slidebar a{font-weight: normal}
+    .sb-slidebar{ /* shared class for side toggle menus */
         border-left: 1px solid #ffffff;
         background: url("../img/bg-menu-mobile.png") repeat ;
         width: 512px; /* default menu width */
-        overflow: hidden;
-        height: 100%;
-        position: fixed;
-        top: -100%;
-        clear: both;
-        display: block;
-        visibility: hidden;
-        -moz-transition: all 100ms ease-in-out; /* change 100ms to slide in animation time */
-        -webkit-transition: all 100ms ease-in-out;
-        transition: all 100ms ease-in-out;
     }
 
-    .sidetogglemenu .footer{background-color: #464646; border-bottom: 4px solid #ffc40e}
-    .sidetogglemenu .footer .logo-mobile{text-align: center}
-    .sidetogglemenu .footer .static-menu{text-align: center; margin-bottom: 20px}
-    .sidetogglemenu .footer .static-menu a{padding:  20px 18px 0 20px; display: inline-block; background: url("../img/slash-footer-mobile.png") no-repeat 100% 20px; font-size: 16px; color: #ffffff; text-transform: uppercase}
-    .sidetogglemenu .footer .static-menu a:last-child{background: none}
-    .sidetogglemenu .item{border-bottom: 1px solid #343639}
-    .sidetogglemenu .item a{padding: 40px; color: #d3d3d4; text-transform: capitalize; font-size: 34px; border-bottom: 1px solid #141416}
+    .sb-slidebar .footer{background-color: #464646; border-bottom: 4px solid #ffc40e}
+    .sb-slidebar .footer .logo-mobile{text-align: center}
+    .sb-slidebar .footer .static-menu{text-align: center; margin-bottom: 20px}
+    .sb-slidebar .footer .static-menu a{padding:  20px 18px 0 20px; display: inline-block; background: url("../img/slash-footer-mobile.png") no-repeat 100% 20px; font-size: 16px; color: #ffffff; text-transform: uppercase}
+    .sb-slidebar .footer .static-menu a:last-child{background: none}
+    .sb-slidebar .item{border-bottom: 1px solid #343639}
+    .sb-slidebar .item a{padding: 40px; color: #d3d3d4; text-transform: capitalize; font-size: 34px; border-bottom: 1px solid #141416}
 
-    .sidetogglemenu ul{
+    .sb-slidebar ul{
         padding: 0;
         margin: 0;
         list-style: none;
     }
 
-    .sidetogglemenu a{
+    .sb-slidebar a{
         padding: 10px;
         display: block;
         color: #595959;
@@ -568,7 +550,8 @@ a:hover{
     .newest-mobile.active{
 
     }
-    .newest-mobile ul{padding: 0; display: inline-block}
+    .newest-mobile ul{padding: 0; display: none; margin-left: -15px;}
+    .newest-mobile ul:first-child{display: block}
     .newest-mobile li{
         list-style: none;
         margin-bottom: 5px;
@@ -618,9 +601,33 @@ a:hover{
     .related-post ul{max-width: 100%}
     .sidebar-module.ad{display: none}
     .blog-post-description img{max-width: 100%; width: 100%}
+    .banner-menu{position: relative}
+    button.close-slidebar{
+        background: url("../img/close-slidebar.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+        border: medium none;
+        padding: 8px 16px;
+        position: absolute;
+        right: 20px;
+        top: 35%;
+    }
 }
 .box-scroll {
     height: 100%;
     overflow: auto;
     width: 100%;
+}
+
+
+@media (min-width: 768px) and (max-width: 959px){
+
+    .container{width: 720px; padding: 0}
+}
+@media (min-width: 320px) and (max-width: 767px){
+
+    .container{width: 320px; padding: 0 10px}
+    .newest-mobile{display: none!important;}
+    .blog-main{padding-top: 0; border: none}
+    .sb-slidebar .category{font-size: 16px}
+    .sb-slidebar .item a{font-size: 26px; padding: 30px}
+    button.close-slidebar{top: 30%}
 }

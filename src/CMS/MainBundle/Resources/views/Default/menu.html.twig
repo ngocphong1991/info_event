@@ -15,28 +15,26 @@
 {% endif %}
 
 {% if position == 'mobile' %}
-<div class="menu-mobile hidden-pc visible-tablet">
-    <button onClick="menuMain.toggle();" class="sideviewtoggle">&nbsp;</button>
+<div class="menu-mobile hidden-pc visible-tablet sb-slide sb-slide-header">
+    <button class="sb-toggle-left">&nbsp;</button>
 </div>
-<div id="togglemenu" class="sidetogglemenu hidden-pc">
-    <div class="box-scroll">
-        <ul>
-            <li><a class="logo-menu-mobile" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" title="Home"><img src="{{ asset('bundles/main/img/logo-mobile.png') }}" alt="{{ app.session.get('settingWebsite').websiteName }}"></a></li>
-            <li class="category">Chuyên mục</li>
-            <li class="item"><a title="Thông tin sự kiện" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}">Trang chủ</a></li>
-            {% for entity in menuBot %}
-            <li class="item"><a title="{{ entity.name|stripslashes }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.url }}">{{ entity.name|stripslashes }}</a></li>
-            {%  endfor %}
-            <li class="footer">
-                <div class="logo-mobile"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" title="Home"><img src="{{ asset('bundles/main/img/footer-logo-mobile.png') }}" alt="{{ app.session.get('settingWebsite').websiteName }}"></a></div>
-                <div class="static-menu">
-                    {% for page in cms  %}
-                        <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ page.url }}" title="{{ page.title|stripslashes }}">{{ page.title|stripslashes }}</a>
-                    {% endfor %}
-                </div>
-            </li>
-        </ul>
-    </div>
+<div class="sb-slidebar sb-left">
+    <ul>
+        <li class="banner-menu"><a class="logo-menu-mobile" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" title="Home"><img src="{{ asset('bundles/main/img/logo-mobile.png') }}" alt="{{ app.session.get('settingWebsite').websiteName }}"></a><button class="close-slidebar sb-close">&nbsp;</button></li>
+        <li class="category">Chuyên mục</li>
+        <li class="item"><a title="Thông tin sự kiện" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}">Trang chủ</a></li>
+        {% for entity in menuBot %}
+        <li class="item"><a title="{{ entity.name|stripslashes }}" href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/chuyen-muc/{{ entity.url }}">{{ entity.name|stripslashes }}</a></li>
+        {%  endfor %}
+        <li class="footer">
+            <div class="logo-mobile"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" title="Home"><img src="{{ asset('bundles/main/img/footer-logo-mobile.png') }}" alt="{{ app.session.get('settingWebsite').websiteName }}"></a></div>
+            <div class="static-menu">
+                {% for page in cms  %}
+                    <a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}/{{ page.url }}" title="{{ page.title|stripslashes }}">{{ page.title|stripslashes }}</a>
+                {% endfor %}
+            </div>
+        </li>
+    </ul>
 </div>
 {% endif %}
 

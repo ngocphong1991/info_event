@@ -18,6 +18,7 @@
 
     <!-- Custom styles for this template -->
     <link href="{{ asset('bundles/main/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/main/css/slidebars.css') }}" rel="stylesheet">
     {% block stylesheets %}{% endblock %}
 
     <script src="{{ asset('bundles/main/js/jquery.min.js') }}"></script>
@@ -46,7 +47,7 @@
     }(document, 'script', 'facebook-jssdk'));
 </script>
 
-<div class="header">
+<div class="header sb-slide sb-slide-header">
     <div class="container">
         <div class="logo"><a href="{{ app.request.schemeAndHttpHost }}{{ app.request.getBaseURL() }}" title="Home"><img src="{{ asset('uploads/banner/') }}{{ app.session.get('settingWebsite').websiteBanner }}" alt="{{ app.session.get('settingWebsite').websiteName }}"></a></div>
         <div class="banner">{{ render(controller("CMSMainBundle:Default:bannerTop", {'slug': app.request.pathInfo}))}}</div>
@@ -62,12 +63,12 @@
 <!-- Mobile navbar -->
 {{ render(controller("CMSMainBundle:Default:menu", {'position':'mobile'}))}}
 
-<div class="container wrapper">
+<div id="sb-site" class="container wrapper">
     {% block content %}
     {% endblock %}
 </div>
 
-<div class="footer desktop-footer">
+<div id="footer" class="footer desktop-footer sb-slide sb-slide-footer">
     {{ render(controller("CMSMainBundle:Default:menu", {'position':'bot'}))}}
 </div>
 
@@ -78,37 +79,29 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="{{ asset('bundles/main/js/jquery.nicescroll.js') }}"></script>
 <script src="{{ asset('bundles/main/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('bundles/main/js/docs.min.js') }}"></script>
-<script src="{{ asset('bundles/main/js/sidetogglemenu.js') }}"></script>
+<script src="{{ asset('bundles/main/js/slidebars.js') }}"></script>
 {% block javascripts %}{% endblock %}
 <script src="{{ asset('bundles/main/js/common.js') }}"></script>
 <script>
 
-    var menuMain;
-
+    var idTimeOut;
+    function showMobileNewestSlide(){
+        $.each($('.newest-mobile ul'), function(index, value){
+            setTimeout(function(){
+                $('.newest-mobile ul').fadeOut('slow');
+                $(value).fadeIn('slow');
+            }, index*4000);
+        });
+        clearTimeout(idTimeOut);
+        idTimeOut = setTimeout(showMobileNewestSlide, 4000*$('.newest-mobile ul').size());
+    }
     $(document).ready(function(){
-        $(".box-scroll").niceScroll({touchbehavior:true,cursorcolor:"#7f7f7f",cursoropacitymax:0.7,cursorwidth:5,cursorborderradius:"6px",background:"#e6e6e6",autohidemode:false});
-        //Fix bug on chrome
+        $.slidebars();
+         //Fix bug on chrome
         $(window).load(function(){
-            //Toggle menu setup
-            menuMain = new sidetogglemenu({  // initialize first menu example
-                id: 'togglemenu',
-                marginoffset: 10,
-                dismissonclick: false
-            });
-
-            //Reset toggle menu when user change size of browser
-            $(window).resize(function () {
-                menuMain = new sidetogglemenu({  // initialize first menu example
-                    id: 'togglemenu',
-                    marginoffset: 10,
-                    dismissonclick: false
-                });
-                $('body').css('left',0);
-            }).resize();
-
+            showMobileNewestSlide();
             /* --- Setup right slide bar scroll ---*/
             // define value
             var $scrollDom = $('.blog-sidebar .view-best');
