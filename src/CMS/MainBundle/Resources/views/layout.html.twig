@@ -88,14 +88,15 @@
 
     var idTimeOut;
     function showMobileNewestSlide(){
-        $.each($('.newest-mobile ul'), function(index, value){
+        var $newestMobile = $('.newest-mobile ul');
+        $.each($newestMobile, function(index, value){
             setTimeout(function(){
-                $('.newest-mobile ul').fadeOut('slow');
+                $newestMobile.fadeOut('slow');
                 $(value).fadeIn('slow');
-            }, index*4000);
+            }, index*5000);
         });
         clearTimeout(idTimeOut);
-        idTimeOut = setTimeout(showMobileNewestSlide, 4000*$('.newest-mobile ul').size());
+        idTimeOut = setTimeout(showMobileNewestSlide, 5000*$newestMobile.size());
     }
     $(document).ready(function(){
         $.slidebars();
